@@ -9,7 +9,8 @@ class TestDataSet(combivep_template.Tester):
 
 
     def setUp(self):
-        self.test_data_dir = os.path.join(self.root_test_data_dir, 'dataset')
+        self.__test_data_dir = os.path.join(self.get_root_data_dir(__file__),
+                                            'dataset')
 
     def test_general(self):
         """
@@ -17,9 +18,10 @@ class TestDataSet(combivep_template.Tester):
         check if number of rows, columns, and features are correctly counted.
         
         """
-        __dataset = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_MASTER_DATASET_DIR, 'test_dataset'))
-        self.assertEqual(__dataset.n_data, 1718)
-        self.assertEqual(__dataset.n_cols, 8)
-        self.assertEqual(__dataset.n_features, 6)
+        dataset = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_MASTER_DATASET_DIR,
+                                                        'test_dataset'))
+        self.assertEqual(dataset.n_data, 1718)
+        self.assertEqual(dataset.n_cols, 8)
+        self.assertEqual(dataset.n_features, 6)
 
 

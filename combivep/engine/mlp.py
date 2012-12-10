@@ -1,11 +1,14 @@
 import numpy as np
+#import os.path
 import combivep.config as combivep_config
 
 class Mlp:
     """MultiLayer Perceptron class"""
 
 
-    def __init__(self, n_features, seed=None, n_hidden_nodes=4):
+    def __init__(self, n_features,
+                       seed=combivep_config.DEFAULT_SEED,
+                       n_hidden_nodes=combivep_config.DEFAULT_HIDDEN_NODES):
         #set initial configuration values and memorize input
         self.__n_features  = n_features
         self.best_weights1 = []
@@ -53,11 +56,6 @@ class Mlp:
                                                              self.__out2
                                                              )
                                                  )
-#        print self.__out2
-#        print targets
-#        print (self.__out2-targets)
-#        print model_error
-#        print self.__error_signal_output
         self.__error_signal_hidden = np.multiply(np.dot(self.__weights2.T, 
                                                         self.__error_signal_output
                                                         ), 
@@ -65,12 +63,8 @@ class Mlp:
                                                              (1-self.__out1)
                                                              )
                                                  ) * 0.5
-#        print self.__weights2.T
-#        print np.dot(self.__weights2.T, self.__error_signal_output)
-#        print np.multiply((1+self.__out1), (1-self.__out1))
-#        print self.__error_signal_hidden
         self.__error_signal_hidden = self.__error_signal_hidden[0:4]
-#        print self.__error_signal_hidden
+
         return np.sum(np.absolute(model_error), axis=1).item(0)
 
     def weight_update(self, training_dataset, coefficient=combivep_config.MLP_COEFFICIENT, step_size=combivep_config.STEP_SIZE):
@@ -84,37 +78,33 @@ class Mlp:
                                                 )
                                          )*(1-coefficient)
                                         )
-#        print np.dot(self.__error_signal_hidden, np.concatenate((training_feature_vectors, np.ones((1, n_data))), axis=0).T)
-#        print self.__momentums1
         self.__momentums2 = np.subtract((self.__momentums2*coefficient),
                                         (np.dot(self.__error_signal_output, 
                                                 self.__out1.T
                                                 )
                                          )*(1-coefficient)
                                         )
-#        print self.__momentums2
-#        print self.__weights1
         self.__weights1 = np.add(self.__weights1, np.multiply(self.__momentums1,
                                                               step_size)
                                  )
-#        print self.__weights1
-#        print self.__weights2
         self.__weights2 = np.add(self.__weights2, np.multiply(self.__momentums2,
                                                               step_size)
                                  )
-#        print self.__weights2
         return self.__weights1, self.__weights2
 
     def calculate_error(self, actual_output, expected_output):
         return np.subtract(actual_output, expected_output)
 
-    def export_best_parameters(self, file_name):
-        pass
+    def export_best_parameters(self, params_file=combivep_config.COMBIVEP_PARAMETERS_FILE):
+        np.savez(params_file, best_weights1=self.best_weights1, best_weights2=self.best_weights2)
 
-    def import_parameters(self, file_name):
-        pass
+    def import_parameters(self, params_file=combivep_config.COMBIVEP_PARAMETERS_FILE):
+        params = np.load(params_file)
+        self.__weights1 = params['best_weights1']
+        self.__weights2 = params['best_weights2']
 
     def get_weights1(self):
+        """for unit testing purpose"""
         return self.__weights1
 
 

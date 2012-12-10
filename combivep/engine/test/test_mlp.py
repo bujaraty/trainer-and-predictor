@@ -11,7 +11,8 @@ class TestMlp(combivep_template.Tester):
 
 
     def setUp(self):
-        self.test_data_dir = os.path.join(self.root_test_data_dir, 'mlp')
+        self.__test_data_dir = os.path.join(self.get_root_data_dir(__file__),
+                                            'mlp')
 
     def test_fix_random_weight(self):
         """
@@ -20,10 +21,11 @@ class TestMlp(combivep_template.Tester):
         random.
         
         """
-        __training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_MASTER_DATASET_DIR, 'dummy_training_dataset'))
-        __mlp = combivep_mlp.Mlp(__training_dataset.n_features, seed=20)
-        self.assertEqual(round(__mlp.get_weights1()[0][1], 4), 0.0090)
-        self.assertEqual(round(__mlp.get_weights1()[0][0], 4), 0.0059)
+        training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_MASTER_DATASET_DIR,
+                                                                   'dummy_training_dataset'))
+        mlp = combivep_mlp.Mlp(training_dataset.n_features, seed=20)
+        self.assertEqual(round(mlp.get_weights1()[0][1], 4), 0.0090)
+        self.assertEqual(round(mlp.get_weights1()[0][0], 4), 0.0059)
 
     def test_forward_propagation(self):
         """
@@ -32,16 +34,18 @@ class TestMlp(combivep_template.Tester):
         working properly.
         
         """
-        __training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_MASTER_DATASET_DIR, 'dummy_training_dataset'))
-        __mlp = combivep_mlp.Mlp(__training_dataset.n_features, seed=20)
-        __out = __mlp.forward_propagation(__training_dataset)
-        self.assertEqual(round(__out[0][0], 4), 0.5008)
+        training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_MASTER_DATASET_DIR,
+                                                                   'dummy_training_dataset'))
+        mlp = combivep_mlp.Mlp(training_dataset.n_features, seed=20)
+        out = mlp.forward_propagation(training_dataset)
+        self.assertEqual(round(out[0][0], 4), 0.5008)
 
     def test_one_round_forward_backward_weight_update(self):
-        __training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_MASTER_DATASET_DIR, 'dummy_training_dataset'))
-        __mlp = combivep_mlp.Mlp(__training_dataset.n_features, seed=20)
-        __mlp.forward_propagation(__training_dataset)
-        __mlp.backward_propagation(__training_dataset)
-        __mlp.weight_update(__training_dataset)
+        training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_MASTER_DATASET_DIR,
+                                                                   'dummy_training_dataset'))
+        mlp = combivep_mlp.Mlp(training_dataset.n_features, seed=20)
+        mlp.forward_propagation(training_dataset)
+        mlp.backward_propagation(training_dataset)
+        mlp.weight_update(training_dataset)
 
 

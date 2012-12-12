@@ -81,8 +81,10 @@ class Trainer(combivep_mlp.Mlp):
 
 class Trainers:
     """
+
     This class is to make use of Trainer classes, each with different
     configuration, to find parameters with the best performance.
+
     """
 
 
@@ -91,7 +93,9 @@ class Trainers:
 
 class Predictor(combivep_mlp.Mlp):
     """
+
     This class is to predict a probability how a variant likely to be deleterious.
+
     """
 
 

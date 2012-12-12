@@ -1,5 +1,4 @@
 import numpy as np
-#import os.path
 import combivep.config as combivep_config
 
 class Mlp:
@@ -95,10 +94,10 @@ class Mlp:
     def calculate_error(self, actual_output, expected_output):
         return np.subtract(actual_output, expected_output)
 
-    def export_best_parameters(self, params_file=combivep_config.COMBIVEP_PARAMETERS_FILE):
+    def export_best_parameters(self, params_file=combivep_config.COMBIVEP_MASTER_PARAMETERS_FILE):
         np.savez(params_file, best_weights1=self.best_weights1, best_weights2=self.best_weights2)
 
-    def import_parameters(self, params_file=combivep_config.COMBIVEP_PARAMETERS_FILE):
+    def import_parameters(self, params_file=combivep_config.COMBIVEP_MASTER_PARAMETERS_FILE):
         params = np.load(params_file)
         self.__weights1 = params['best_weights1']
         self.__weights2 = params['best_weights2']

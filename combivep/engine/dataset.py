@@ -1,7 +1,7 @@
 import numpy as np
 import combivep
 
-class DataSet:
+class DataSet(object):
     """
 
     For manipulating 3 kinds of dataset, training, validation, and test dataset

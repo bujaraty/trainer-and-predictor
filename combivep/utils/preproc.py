@@ -2,7 +2,7 @@ import os.path
 import vcf
 
 
-class PreProc:
+class PreProc(object):
     """
 
     a class to load raw data and preprocess it so that it can be used by

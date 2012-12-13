@@ -34,9 +34,9 @@ class TestTrainer(combivep_template.Tester):
 
         params_file  = os.path.join(self.__working_dir, 'params.npz')
         trainer.export_best_parameters(params_file=params_file)
-        self.assertEqual(os.stat(params_file).st_size, 666)
+        self.assertEqual(os.stat(params_file).st_size, 666, msg='Trainer does not functional properly')
         figure_file  = os.path.join(self.__working_dir, '04.eps')
-        self.assertEqual(os.stat(figure_file).st_size, 21484)
+        self.assertEqual(os.stat(figure_file).st_size, 21484, msg='Trainer does not functional properly')
 
     def tearDown(self):
         if not combivep_config.DEBUG_MODE:
@@ -62,6 +62,6 @@ class TestPredictor(combivep_template.Tester):
         params_file  = os.path.join(self.__test_data_dir, 'params.npz')
         predictor.import_parameters(params_file=params_file)
         out = predictor.predict(test_dataset)
-        self.assertEqual(round(out[0][0], 4), 0.2729)
+        self.assertEqual(round(out[0][0], 4), 0.2729, msg='Predictor does not functional properly')
 
 

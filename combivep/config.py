@@ -16,6 +16,8 @@ COMBIVEP_MASTER_DATA_ROOT         = os.path.join(PROJECT_ROOT, 'dat')
 COMBIVEP_MASTER_PARAMETERS_DIR    = os.path.join(COMBIVEP_MASTER_DATA_ROOT, 'params')
 COMBIVEP_MASTER_PARAMETERS_FILE   = os.path.join(COMBIVEP_MASTER_PARAMETERS_DIR, 'params.npz')
 COMBIVEP_MASTER_DB_DIR            = os.path.join(COMBIVEP_MASTER_DATA_ROOT, 'DB')
+COMBIVEP_MASTER_UCSC_REF_DB_DIR   = os.path.join(COMBIVEP_MASTER_DB_DIR, 'ref/UCSC')
+COMBIVEP_MASTER_LJB_REF_DB_DIR    = os.path.join(COMBIVEP_MASTER_DB_DIR, 'ref/LJB')
 COMBIVEP_UPDATER_WORKING_DIR      = os.path.join(COMBIVEP_MASTER_DB_DIR, 'tmp')
 
 #to keep 'central' data for testing and for demo. 'central' is for preventing redundancy.

@@ -1,7 +1,7 @@
 import numpy as np
 import combivep.config as combivep_config
 
-class Mlp:
+class Mlp(object):
     """MultiLayer Perceptron class"""
 
 

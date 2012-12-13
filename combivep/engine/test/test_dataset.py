@@ -20,8 +20,8 @@ class TestDataSet(combivep_template.Tester):
         """
         dataset = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
                                                         'test_dataset'))
-        self.assertEqual(dataset.n_data, 1718)
-        self.assertEqual(dataset.n_cols, 8)
-        self.assertEqual(dataset.n_features, 6)
+        self.assertEqual(dataset.n_data, 1718, msg='Dataset does not functional properly')
+        self.assertEqual(dataset.n_cols, 8, msg='Dataset does not functional properly')
+        self.assertEqual(dataset.n_features, 6, msg='Dataset does not functional properly')
 
 

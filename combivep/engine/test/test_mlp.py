@@ -24,8 +24,8 @@ class TestMlp(combivep_template.Tester):
         training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
                                                                    'dummy_training_dataset'))
         mlp = combivep_mlp.Mlp(training_dataset.n_features, seed=20)
-        self.assertEqual(round(mlp.get_weights1()[0][1], 4), 0.0090)
-        self.assertEqual(round(mlp.get_weights1()[0][0], 4), 0.0059)
+        self.assertEqual(round(mlp.get_weights1()[0][1], 4), 0.0090, msg='MLP is not ready for test because the random value is not fix')
+        self.assertEqual(round(mlp.get_weights1()[0][0], 4), 0.0059, msg='MLP is not ready for test because the random value is not fix')
 
     def test_forward_propagation(self):
         """
@@ -38,7 +38,7 @@ class TestMlp(combivep_template.Tester):
                                                                    'dummy_training_dataset'))
         mlp = combivep_mlp.Mlp(training_dataset.n_features, seed=20)
         out = mlp.forward_propagation(training_dataset)
-        self.assertEqual(round(out[0][0], 4), 0.5008)
+        self.assertEqual(round(out[0][0], 4), 0.5008, msg='forward propagation does not functional properly')
 
     def test_one_round_forward_backward_weight_update(self):
         """
@@ -53,6 +53,6 @@ class TestMlp(combivep_template.Tester):
         mlp.forward_propagation(training_dataset)
         mlp.backward_propagation(training_dataset)
         weights1, weights2 = mlp.weight_update(training_dataset)
-        self.assertEqual(round(weights1[0][0], 4), 0.0059)
+        self.assertEqual(round(weights1[0][0], 4), 0.0059, msg='one round of forward propagation, backward propagation and weight update, does not functional properly')
 
 

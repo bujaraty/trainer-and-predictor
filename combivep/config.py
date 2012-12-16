@@ -6,9 +6,9 @@ Please don't change the value of DEBUG_MODE if you are in the production environ
 This value is for testing purpose.
 
 """
-DEBUG_MODE = 1
+DEBUG_MODE = 0
 
-# > > > > > > > > > > > > > global data & folder < < < < < < < < < < 
+# > > > > > > > > > > > > > permanent global data & folder < < < < < < < < < < 
 PROJECT_ROOT                      = os.path.dirname(os.path.dirname(__file__))
 
 #to keep master data produced by application
@@ -16,14 +16,20 @@ COMBIVEP_MASTER_DATA_ROOT         = os.path.join(PROJECT_ROOT, 'dat')
 COMBIVEP_MASTER_PARAMETERS_DIR    = os.path.join(COMBIVEP_MASTER_DATA_ROOT, 'params')
 COMBIVEP_MASTER_PARAMETERS_FILE   = os.path.join(COMBIVEP_MASTER_PARAMETERS_DIR, 'params.npz')
 COMBIVEP_MASTER_DB_DIR            = os.path.join(COMBIVEP_MASTER_DATA_ROOT, 'DB')
+
+#to keep the new update file from UCSC and LJB
 COMBIVEP_MASTER_UCSC_REF_DB_DIR   = os.path.join(COMBIVEP_MASTER_DB_DIR, 'ref/UCSC')
 COMBIVEP_MASTER_LJB_REF_DB_DIR    = os.path.join(COMBIVEP_MASTER_DB_DIR, 'ref/LJB')
+
+#the only temporay working folder used for processing data
 COMBIVEP_UPDATER_WORKING_DIR      = os.path.join(COMBIVEP_MASTER_DB_DIR, 'tmp')
 
 #to keep 'central' data for testing and for demo. 'central' is for preventing redundancy.
 COMBIVEP_CENTRAL_TEST_DATA_ROOT   = os.path.join(PROJECT_ROOT, 'combivep/data')
 COMBIVEP_CENTRAL_TEST_DATASET_DIR = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'dataset')
 COMBIVEP_CENTRAL_TEST_VCF_DIR     = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'vcf')
+COMBIVEP_CENTRAL_TEST_UCSC_DIR    = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'UCSC')
+COMBIVEP_CENTRAL_TEST_LJB_DIR     = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'LJB')
 
 
 # > > > > > > > > > > > > > MLP configuration < < < < < < < < < < 

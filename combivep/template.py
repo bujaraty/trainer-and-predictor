@@ -1,11 +1,33 @@
 import unittest
 import os.path
+import shutil
+import subprocess
+import combivep.config as combivep_config
 
 
+class CombiVEPBase(object):
+    """ CombiVEP base class """
 
 
-class Tester(unittest.TestCase):
+    def remove_dir(self, dir_name):
+        if os.path.exists(dir_name):
+            shutil.rmtree(dir_name)
+
+    def create_dir(self, dir_name):
+        if not os.path.exists(dir_name):
+            os.makedirs(dir_name)
+
+    def copy_file(self, source, destination):
+        args = []
+        args.append('cp')
+        args.append(source)
+        args.append(destination)
+        return subprocess.call(args)
+
+
+class Tester(unittest.TestCase, CombiVEPBase):
     """ CombiVEP template for testing """
+    individual_debug = False
 
 
     def __init__(self, test_name):
@@ -30,4 +52,21 @@ class Tester(unittest.TestCase):
 
         """
         return os.path.join(os.path.dirname(__file), 'tmp')
+
+    def remove_dir(self, dir_name):
+        self.assertTrue(dir_name, '"None" is not a valid directory')
+        CombiVEPBase.remove_dir(self, dir_name)
+
+    def create_dir(self, dir_name):
+        self.assertTrue(dir_name, '"None" is not a valid directory')
+        CombiVEPBase.create_dir(self, dir_name)
+
+    def empty_working_dir(self):
+        if (not combivep_config.DEBUG_MODE) and (not self.individual_debug):
+            self.remove_dir(self.working_dir)
+        self.create_dir(self.working_dir)
+
+    def remove_working_dir(self):
+        if (not combivep_config.DEBUG_MODE) and (not self.individual_debug):
+            self.remove_dir(self.working_dir)
 

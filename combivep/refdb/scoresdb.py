@@ -1,7 +1,7 @@
 import os
 import re
 import combivep.config as combivep_config
-import combivep.utils.refdb as combivep_refdb
+import combivep.refdb.updater as combivep_updater
 
 
 class ScoresDatabase(object):

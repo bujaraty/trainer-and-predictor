@@ -1,8 +1,8 @@
 import unittest
 import os.path
-import combivep.utils.test.template as template
+import combivep.refdb.test.template as template
 import combivep.config as combivep_config
-import combivep.utils.refdb as combivep_refdb
+import combivep.refdb.updater as combivep_updater
 
 DISABLE_HIGH_BANDWIDTH_TEST = 1
 
@@ -14,7 +14,7 @@ class TestDownloader(template.SafeUtilsTester):
 
     def test_download(self):
         self.init_test('test_download')
-        downloader  = combivep_refdb.Downloader()
+        downloader  = combivep_updater.Downloader()
         target_url  = 'http://dbnsfp.houstonbioinformatics.org/dbNSFPzip/dbNSFP_light_v1.3.readme.txt'
         target_file = os.path.join(self.working_dir, os.path.basename(target_url))
         downloader.download(target_url, self.working_dir)
@@ -32,19 +32,19 @@ class TestUpdater(template.SafeUtilsTester):
 
     def test_ready1(self):
         self.init_test('test_ready1')
-        updater = combivep_refdb.Updater(working_dir=self.working_dir)
+        updater = combivep_updater.Updater(working_dir=self.working_dir)
         self.assertEqual(updater.check_new_file('135'), None, msg='Something went wrong in checking if the updater is ready to work')
 
     def test_ready2(self):
         self.init_test('test_ready2')
-        updater = combivep_refdb.Updater(working_dir=self.working_dir)
+        updater = combivep_updater.Updater(working_dir=self.working_dir)
         updater.folder_url      = 'http://dummy_url'
         updater.version_pattern = 'dummy_version_pattern'
         self.assertFalse(updater.check_new_file('135'), msg='Something went wrong in checking if the updater is ready to work')
 
     def test_ready3(self):
         self.init_test('test_ready3')
-        updater = combivep_refdb.Updater(working_dir=self.working_dir)
+        updater = combivep_updater.Updater(working_dir=self.working_dir)
         updater.files_pattern   = r"""href="(?P<file_name>snp\d{3}.sql)">.*>.*(?P<date>\d{2}-[a-zA-Z]{3}-\d{4})"""
         updater.version_pattern = 'dummy_version_pattern'
         self.assertFalse(updater.check_new_file('135'), msg='Something went wrong in checking if the updater is ready to work')
@@ -61,7 +61,7 @@ class TestUcscUpdater(template.SafeUtilsTester):
         self.test_class = 'ucsc_updater'
 
     def init_ucsc_updater_instance(self):
-        self.__ucsc_updater                  = combivep_refdb.UcscUpdater(working_dir=self.working_dir)
+        self.__ucsc_updater                  = combivep_updater.UcscUpdater(working_dir=self.working_dir)
         self.__ucsc_updater.files_pattern    = r"""href="(?P<file_name>snp\d{3}.sql)">.*>.*(?P<date>\d{2}-[a-zA-Z]{3}-\d{4})"""
         self.__ucsc_updater.tmp_file         = combivep_config.UCSC_LIST_FILE_NAME
         self.__ucsc_updater.local_ref_db_dir = self.working_dir
@@ -120,7 +120,7 @@ class TestLJBUpdater(template.SafeUtilsTester):
         self.test_class = 'ljb_updater'
 
     def init_ljb_updater_instance(self):
-        self.__ljb_updater                  = combivep_refdb.LjbUpdater(working_dir=self.working_dir)
+        self.__ljb_updater                  = combivep_updater.LjbUpdater(working_dir=self.working_dir)
         self.__ljb_updater.files_pattern    = r"""href="(?P<file_name>dbNSFPv[\d.]*.readme.txt)">"""
         self.__ljb_updater.tmp_file         = combivep_config.LJB_LIST_FILE_NAME
         self.__ljb_updater.local_ref_db_dir = self.working_dir
@@ -178,7 +178,7 @@ class TestMisc(template.SafeUtilsTester):
     def test_unzip(self):
         self.init_test('test_unzip')
         test_file = os.path.join(self.data_dir, 'dummy_ljb.zip')
-        out = combivep_refdb.unzip(test_file, self.working_dir)
+        out = combivep_updater.unzip(test_file, self.working_dir)
         self.assertEqual(out[0], os.path.join(self.working_dir, 'try.in'), msg='some files are missing')
         self.assertEqual(out[1], os.path.join(self.working_dir, 'search_dbNSFP_light_v1.3.readme.pdf'), msg='some files are missing')
         self.assertEqual(out[2], os.path.join(self.working_dir, 'search_dbNSFP_light_v1.3.readme.doc'), msg='some files are missing')
@@ -194,7 +194,7 @@ class TestMisc(template.SafeUtilsTester):
         test_file    = os.path.join(self.data_dir, 'test_gz.txt.gz')
         working_file = os.path.join(self.working_dir, 'test_gz.txt.gz')
         self.copy_file(test_file, working_file)
-        out = combivep_refdb.ungz(working_file)
+        out = combivep_updater.ungz(working_file)
         self.assertTrue(out, 'no output file from "ungz" function')
         self.assertTrue(os.path.exists(out), 'ungz function does not work properly')
 
@@ -202,7 +202,7 @@ class TestMisc(template.SafeUtilsTester):
         self.init_test('test_ljb_parse')
         test_file = os.path.join(self.data_dir, 'test_ljb_parse.txt')
         out_file  = os.path.join(self.working_dir, 'test_ljb_parsed.txt')
-        error     = combivep_refdb.ljb_parse(test_file, out_file)
+        error     = combivep_updater.ljb_parse(test_file, out_file)
         self.assertFalse(error)
         self.assertTrue(os.path.exists(out_file), 'ljb_parsse function does not work properly')
 

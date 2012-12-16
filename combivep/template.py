@@ -18,11 +18,7 @@ class CombiVEPBase(object):
             os.makedirs(dir_name)
 
     def copy_file(self, source, destination):
-        args = []
-        args.append('cp')
-        args.append(source)
-        args.append(destination)
-        return subprocess.call(args)
+        shutil.copy2(source, destination)
 
 
 class Tester(unittest.TestCase, CombiVEPBase):

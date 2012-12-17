@@ -3,7 +3,7 @@ import os.path
 import combivep.template as combivep_template
 
 
-class UtilsTester(combivep_template.Tester):
+class RefDBTester(combivep_template.Tester):
     """ General template for "utils" testing """
 
 
@@ -18,7 +18,7 @@ class UtilsTester(combivep_template.Tester):
 
 
 
-class SafeUtilsTester(UtilsTester):
+class SafeRefDBTester(RefDBTester):
     """
 
     General template for "utils" testing
@@ -32,7 +32,7 @@ class SafeUtilsTester(UtilsTester):
         unittest.TestCase.__init__(self, test_name)
 
 
-class RiskUtilsTester(UtilsTester):
+class RiskRefDBTester(RefDBTester):
     """
 
     General template for "utils" testing

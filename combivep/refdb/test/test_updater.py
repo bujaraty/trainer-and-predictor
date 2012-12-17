@@ -6,7 +6,7 @@ import combivep.refdb.updater as combivep_updater
 
 DISABLE_HIGH_BANDWIDTH_TEST = 1
 
-class TestDownloader(template.SafeUtilsTester):
+class TestDownloader(template.SafeRefDBTester):
 
 
     def setUp(self):
@@ -24,7 +24,7 @@ class TestDownloader(template.SafeUtilsTester):
         self.remove_working_dir()
 
 
-class TestUpdater(template.SafeUtilsTester):
+class TestUpdater(template.SafeRefDBTester):
 
 
     def setUp(self):
@@ -54,7 +54,7 @@ class TestUpdater(template.SafeUtilsTester):
 
 
 @unittest.skipIf(DISABLE_HIGH_BANDWIDTH_TEST, "temporary disable due to huge bandwidth usage")
-class TestUcscUpdater(template.SafeUtilsTester):
+class TestUcscUpdater(template.SafeRefDBTester):
 
 
     def setUp(self):
@@ -113,7 +113,7 @@ class TestUcscUpdater(template.SafeUtilsTester):
         self.remove_working_dir()
 
 
-class TestLJBUpdater(template.SafeUtilsTester):
+class TestLJBUpdater(template.SafeRefDBTester):
 
 
     def setUp(self):
@@ -168,7 +168,7 @@ class TestLJBUpdater(template.SafeUtilsTester):
         self.remove_working_dir()
 
 
-class TestMisc(template.SafeUtilsTester):
+class TestMisc(template.SafeRefDBTester):
     """ test (a few) miscellaneous function(s) """
 
 
@@ -184,8 +184,7 @@ class TestMisc(template.SafeUtilsTester):
         self.assertEqual(out[2], os.path.join(self.working_dir, 'search_dbNSFP_light_v1.3.readme.doc'), msg='some files are missing')
         self.assertEqual(out[3], os.path.join(self.working_dir, 'search_dbNSFP_light13.class'), msg='some files are missing')
         self.assertEqual(out[4], os.path.join(self.working_dir, 'dbNSFP_light_v1.3.readme.txt'), msg='some files are missing')
-        self.assertEqual(out[5], os.path.join(self.working_dir, 'dbNSFP_light1.3.chrY'), msg='some files are missing')
-        self.assertEqual(out[6], os.path.join(self.working_dir, 'abc/tryhg19.in'), msg='some files are missing')
+        self.assertEqual(out[5], os.path.join(self.working_dir, 'abc/tryhg19.in'), msg='some files are missing')
         for out_file in out:
             self.assertTrue(os.path.exists(out_file), msg='"%s" file is missing' % (out_file))
 

@@ -1,6 +1,8 @@
-===========
-My Towel
-===========
+============
+Installation
+============
+
+!!!!!!! Please change all the content below !!!!!!!!!
 
 Towel Stuff provides such and such and so and so. You might find
 it most useful for tasks involving <x> and also <y>. Typical usage
@@ -20,24 +22,25 @@ Paragraphs are separated by blank lines. *Italics*, **bold**,
 and ``monospace`` look like this.
 
 
-A Section
-=========
+=============
+Pre-requisite
+=============
+-pip
+-tabix
+-numpy
+-matplotlib
+-pyvcf
+-sudo apt-get install python-dev build-essential
+-http://docs.cython.org/src/quickstart/install.html
+-https://code.google.com/p/pysam/
 
-Lists look like this:
 
-* First
 
-* Second. Can be multiple lines
-  but must be indented properly.
+========
+Citation?
+========
 
-A Sub-Section
--------------
+-dbNSFP?
+-pyVCF?
+-UCSC?
 
-Numbered lists look like you'd expect:
-
-1. hi there
-
-2. must be going
-
-Urls are http://like.this and links can be
-written `like this <http://www.example.com/foo/bar>`_.

@@ -29,7 +29,7 @@ Pre-requisite
 -tabix
 -numpy
 -matplotlib
--pyvcf
+-pyvcf?
 -sudo apt-get install python-dev build-essential
 -http://docs.cython.org/src/quickstart/install.html
 -https://code.google.com/p/pysam/

@@ -1,7 +1,7 @@
 import os.path
 import numpy as np
 import matplotlib.pyplot as plt
-import combivep.config as combivep_config
+import combivep.settings as combivep_settings
 import combivep.engine.mlp as combivep_mlp
 
 class Trainer(combivep_mlp.Mlp):
@@ -10,9 +10,9 @@ class Trainer(combivep_mlp.Mlp):
 
     def __init__(self, training_dataset,
                        validation_dataset,
-                       seed=combivep_config.DEFAULT_SEED, 
-                       n_hidden_nodes=combivep_config.DEFAULT_HIDDEN_NODES, 
-                       figure_dir=combivep_config.DEFAULT_FIGURE_DIR):
+                       seed=combivep_settings.DEFAULT_SEED, 
+                       n_hidden_nodes=combivep_settings.DEFAULT_HIDDEN_NODES, 
+                       figure_dir=combivep_settings.DEFAULT_FIGURE_DIR):
         combivep_mlp.Mlp.__init__(self, training_dataset.n_features,
                                         seed=seed,
                                         n_hidden_nodes=n_hidden_nodes)
@@ -50,7 +50,7 @@ class Trainer(combivep_mlp.Mlp):
 
             #check ending condition
             current_validation_error = self.__validation_error[len(self.__validation_error)-1]
-            if (current_validation_error < combivep_config.MAXIMUM_ALLOWED_ERROR) and ((best_validation_error-current_validation_error) < combivep_config.MINIMUM_IMPROVEMENT):
+            if (current_validation_error < combivep_settings.MAXIMUM_ALLOWED_ERROR) and ((best_validation_error-current_validation_error) < combivep_settings.MINIMUM_IMPROVEMENT):
                 break
 
             #otherwise save parameters and record last error

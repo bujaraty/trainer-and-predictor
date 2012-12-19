@@ -1,13 +1,13 @@
 import numpy as np
-import combivep.config as combivep_config
+import combivep.settings as combivep_settings
 
 class Mlp(object):
     """MultiLayer Perceptron class"""
 
 
     def __init__(self, n_features,
-                       seed=combivep_config.DEFAULT_SEED,
-                       n_hidden_nodes=combivep_config.DEFAULT_HIDDEN_NODES):
+                       seed=combivep_settings.DEFAULT_SEED,
+                       n_hidden_nodes=combivep_settings.DEFAULT_HIDDEN_NODES):
         #set initial configuration values and memorize input
         self.__n_features  = n_features
         self.best_weights1 = []
@@ -66,7 +66,7 @@ class Mlp(object):
 
         return np.sum(np.absolute(model_error), axis=1).item(0)
 
-    def weight_update(self, training_dataset, coefficient=combivep_config.MLP_COEFFICIENT, step_size=combivep_config.STEP_SIZE):
+    def weight_update(self, training_dataset, coefficient=combivep_settings.MLP_COEFFICIENT, step_size=combivep_settings.STEP_SIZE):
         self.__momentums1 = np.subtract((self.__momentums1*coefficient),
                                         (np.dot(self.__error_signal_hidden, 
                                                 np.concatenate((training_dataset.feature_vectors,
@@ -94,10 +94,10 @@ class Mlp(object):
     def calculate_error(self, actual_output, expected_output):
         return np.subtract(actual_output, expected_output)
 
-    def export_best_parameters(self, params_file=combivep_config.COMBIVEP_MASTER_PARAMETERS_FILE):
+    def export_best_parameters(self, params_file=combivep_settings.COMBIVEP_MASTER_PARAMETERS_FILE):
         np.savez(params_file, best_weights1=self.best_weights1, best_weights2=self.best_weights2)
 
-    def import_parameters(self, params_file=combivep_config.COMBIVEP_MASTER_PARAMETERS_FILE):
+    def import_parameters(self, params_file=combivep_settings.COMBIVEP_MASTER_PARAMETERS_FILE):
         params = np.load(params_file)
         self.__weights1 = params['best_weights1']
         self.__weights2 = params['best_weights2']

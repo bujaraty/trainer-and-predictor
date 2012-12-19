@@ -1,15 +1,18 @@
-import os.path
+import os
 
 """
 
-Please don't change the value of DEBUG_MODE if you are in the production environment.
-This value is for testing purpose.
+This module is all about constant value that are used in this application
 
 """
+
 DEBUG_MODE = 0
 
 # > > > > > > > > > > > > > permanent global data & folder < < < < < < < < < <
 PROJECT_ROOT                      = os.path.dirname(os.path.dirname(__file__))
+
+#the only temporay working folder used for processing data
+COMBIVEP_WORKING_DIR              = os.path.join(PROJECT_ROOT, 'tmp')
 
 #to keep master data produced by application
 COMBIVEP_MASTER_DATA_ROOT         = os.path.join(PROJECT_ROOT, 'dat')
@@ -21,15 +24,22 @@ COMBIVEP_MASTER_DB_DIR            = os.path.join(COMBIVEP_MASTER_DATA_ROOT, 'DB'
 COMBIVEP_MASTER_UCSC_REF_DB_DIR   = os.path.join(COMBIVEP_MASTER_DB_DIR, 'ref/UCSC')
 COMBIVEP_MASTER_LJB_REF_DB_DIR    = os.path.join(COMBIVEP_MASTER_DB_DIR, 'ref/LJB')
 
-#the only temporay working folder used for processing data
-COMBIVEP_UPDATER_WORKING_DIR      = os.path.join(COMBIVEP_MASTER_DB_DIR, 'tmp')
-
 #to keep 'central' data for testing and for demo. 'central' is for preventing redundancy
 COMBIVEP_CENTRAL_TEST_DATA_ROOT   = os.path.join(PROJECT_ROOT, 'combivep/data')
 COMBIVEP_CENTRAL_TEST_DATASET_DIR = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'dataset')
 COMBIVEP_CENTRAL_TEST_VCF_DIR     = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'vcf')
 COMBIVEP_CENTRAL_TEST_UCSC_DIR    = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'UCSC')
 COMBIVEP_CENTRAL_TEST_LJB_DIR     = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'LJB')
+
+
+# > > > > > > > > > > > > > INI file < < < < < < < < < <
+COMBIVEP_CONFIGURATION_FILE  = os.path.join(COMBIVEP_MASTER_DATA_ROOT, 'config.txt')
+
+#key
+LATEST_UCSC_DATABASE_VERSION = 'latest_ucsc_database_version'
+LATEST_UCSC_FILE_NAME        = 'latest_ucsc_file_name'
+LATEST_LJB_DATABASE_VERSION  = 'latest_ljb_database_version'
+LATEST_LJB_FILE_NAMES        = 'latest_ljb_file_names'
 
 
 # > > > > > > > > > > > > > MLP configuration < < < < < < < < < <
@@ -80,7 +90,7 @@ UCSC_EXPECTED_LENGTH = 26
 # > > > > > > > > > > > > > LJB format configuration < < < < < < < < < <
 #general key
 KEY_LJB_CHROM     = 'ljb_chrom'
-KEY_LJB_START_POS = 'ljb_start_pos'
+KEY_LJB_START_POS = 'ljb_hg19_start_pos'
 KEY_LJB_REF       = 'ljb_ref'
 KEY_LJB_ALT       = 'ljb_alt'
 

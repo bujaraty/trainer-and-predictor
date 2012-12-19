@@ -1,0 +1,4 @@
+latest_ucsc_database_version=7.5
+latest_ucsc_file_name=ucsc_file7.5.txt
+latest_ljb_database_version=4.5
+latest_ljb_file_names=ljb_file4.5.1.txt,ljb_file4.5.2.txt,ljb_file4.5.3.txt,ljb_file4.5.4.txt

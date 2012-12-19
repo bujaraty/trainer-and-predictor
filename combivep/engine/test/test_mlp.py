@@ -4,7 +4,7 @@ import numpy as np
 import combivep.engine.mlp as combivep_mlp
 import combivep.engine.dataset as combivep_dataset
 import combivep.template as combivep_template
-import combivep.config as combivep_config
+import combivep.settings as combivep_settings
 
 class TestMlp(combivep_template.Tester):
     """ to test mlp.py"""
@@ -21,7 +21,7 @@ class TestMlp(combivep_template.Tester):
         random.
 
         """
-        training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
+        training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
                                                                    'dummy_training_dataset'))
         mlp = combivep_mlp.Mlp(training_dataset.n_features, seed=20)
         self.assertEqual(round(mlp.get_weights1()[0][1], 4), 0.0090, msg='MLP is not ready for test because the random value is not fix')
@@ -34,7 +34,7 @@ class TestMlp(combivep_template.Tester):
         working properly.
 
         """
-        training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
+        training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
                                                                    'dummy_training_dataset'))
         mlp = combivep_mlp.Mlp(training_dataset.n_features, seed=20)
         out = mlp.forward_propagation(training_dataset)
@@ -47,7 +47,7 @@ class TestMlp(combivep_template.Tester):
         "weight update"
 
         """
-        training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_config.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
+        training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
                                                                    'dummy_training_dataset'))
         mlp = combivep_mlp.Mlp(training_dataset.n_features, seed=20)
         mlp.forward_propagation(training_dataset)

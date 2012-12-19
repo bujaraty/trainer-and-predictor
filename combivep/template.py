@@ -1,8 +1,8 @@
 import unittest
-import os.path
+import os
 import shutil
 import subprocess
-import combivep.config as combivep_config
+import combivep.settings as combivep_settings
 
 
 class CombiVEPBase(object):
@@ -30,7 +30,9 @@ class CombiVEPBase(object):
 class Tester(unittest.TestCase, CombiVEPBase):
     """ CombiVEP template for testing """
     individual_debug = False
-
+#    working_dir      = ''
+#    data_dir         = ''
+#    test_function    = ''
 
     def __init__(self, test_name):
         unittest.TestCase.__init__(self, test_name)
@@ -64,13 +66,22 @@ class Tester(unittest.TestCase, CombiVEPBase):
         CombiVEPBase.create_dir(self, dir_name)
 
     def empty_working_dir(self):
-        if (not combivep_config.DEBUG_MODE) and (not self.individual_debug):
+        if (not combivep_settings.DEBUG_MODE) and (not self.individual_debug):
             self.remove_dir(self.working_dir)
         self.create_dir(self.working_dir)
 
     def remove_working_dir(self):
-        if (not combivep_config.DEBUG_MODE) and (not self.individual_debug):
+        if (not combivep_settings.DEBUG_MODE) and (not self.individual_debug):
             self.remove_dir(self.working_dir)
+
+    def set_dir(self):
+        self.working_dir = os.path.join(os.path.join(os.path.join(os.path.dirname(__file__), 'tmp'), self.test_class), self.test_function)
+        self.data_dir    = os.path.join(os.path.join(os.path.dirname(__file__), 'data'), self.test_class)
+
+    def init_test(self, test_function):
+        self.test_function = test_function
+        self.set_dir()
+        self.empty_working_dir()
 
 
 

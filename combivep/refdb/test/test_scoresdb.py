@@ -3,7 +3,7 @@ import os
 import shutil
 import filecmp
 import combivep.refdb.test.template as template
-import combivep.config as combivep_config
+import combivep.settings as combivep_settings
 import combivep.refdb.scoresdb as combivep_scoresdb
 import combivep.refdb.reader as combivep_reader
 
@@ -34,12 +34,12 @@ class TestScoresDB(template.SafeRefDBTester):
         reader = combivep_reader.UcscReader()
         reader.read(working_file+'.gz')
         for rec in reader.fetch_snps('chr3', 138211840, 138212000):
-            self.assertEqual(rec[combivep_config.KEY_UCSC_START_POS], '138211844', "Tabix doesn't work correctly")
+            self.assertEqual(rec[combivep_settings.KEY_UCSC_START_POS], '138211844', "Tabix doesn't work correctly")
             break
 
     def test_join(self):
         #init
-#        self.individual_debug = True
+        self.individual_debug = True
         self.init_test('test_join')
         self.init_scores_db_instance()
         ljb_file  = os.path.join(self.data_dir, 'test_ljb_join.txt')

@@ -2,7 +2,7 @@ import subprocess
 import os
 import re
 import zipfile
-import combivep.config as combivep_config
+import combivep.settings as combivep_settings
 import combivep.template as template
 
 
@@ -73,8 +73,7 @@ class Downloader(template.CombiVEPBase):
 class Updater(Downloader):
 
 
-    def __init__(self, working_dir=combivep_config.COMBIVEP_UPDATER_WORKING_DIR):
-        self.create_dir(working_dir)
+    def __init__(self, working_dir=combivep_settings.COMBIVEP_WORKING_DIR):
         self.working_dir = working_dir
 
         #specific configuration
@@ -94,6 +93,7 @@ class Updater(Downloader):
             os.makedirs(self.local_ref_db_dir)
         if not self.__ready():
             return None
+        self.create_dir(self.working_dir)
         tmp_list_file  = os.path.join(self.working_dir, self.tmp_file)
         self.download(self.folder_url,
                       self.working_dir,
@@ -105,6 +105,7 @@ class Updater(Downloader):
         else:
             self.new_file = os.path.join(self.folder_url, files_list[max_version])
             return self.new_file
+        self.remove_dir(self.working_dir)
 
     def parse(self, list_file):
         out          = {}
@@ -135,10 +136,10 @@ class UcscUpdater(Updater):
         Updater.__init__(self, working_dir)
 
         #specific configuration
-        self.folder_url       = combivep_config.UCSC_FOLDER_URL
-        self.files_pattern    = combivep_config.UCSC_FILES_PATTERN
-        self.version_pattern  = combivep_config.UCSC_VERSION_PATTERN
-        self.local_ref_db_dir = combivep_config.COMBIVEP_MASTER_UCSC_REF_DB_DIR
+        self.folder_url       = combivep_settings.UCSC_FOLDER_URL
+        self.files_pattern    = combivep_settings.UCSC_FILES_PATTERN
+        self.version_pattern  = combivep_settings.UCSC_VERSION_PATTERN
+        self.local_ref_db_dir = combivep_settings.COMBIVEP_MASTER_UCSC_REF_DB_DIR
 
     def download_new_file(self):
         if not Updater.download_new_file(self):
@@ -157,10 +158,10 @@ class LjbUpdater(Updater):
         Updater.__init__(self, working_dir)
 
         #specific configuration
-        self.folder_url       = combivep_config.LJB_FOLDER_URL
-        self.files_pattern    = combivep_config.LJB_FILES_PATTERN
-        self.version_pattern  = combivep_config.LJB_VERSION_PATTERN
-        self.local_ref_db_dir = combivep_config.COMBIVEP_MASTER_LJB_REF_DB_DIR
+        self.folder_url       = combivep_settings.LJB_FOLDER_URL
+        self.files_pattern    = combivep_settings.LJB_FILES_PATTERN
+        self.version_pattern  = combivep_settings.LJB_VERSION_PATTERN
+        self.local_ref_db_dir = combivep_settings.COMBIVEP_MASTER_LJB_REF_DB_DIR
 
     def download_new_file(self):
         if not Updater.download_new_file(self):

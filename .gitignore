@@ -3,7 +3,7 @@
 MANIFEST
 build/
 dist/
-combivep/utils/test/tmp/
-combivep/engine/test/tmp/
 dat/DB/ref/
+*/tmp/
+combivep/refdb/test/tmp
 

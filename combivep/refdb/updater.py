@@ -171,22 +171,6 @@ class LjbUpdater(Updater):
             return self.downloaded_file
 
 
-class ScoresDatabase(object):
-    """
-
-    This database is to produce feature vectors and to aid cleaning data
-
-    """
-
-
-    def __init__(self):
-        pass
-
-    def update(self):
-        pass
-
-    def load(self):
-        pass
 
 
 

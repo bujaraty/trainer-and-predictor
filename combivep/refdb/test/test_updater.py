@@ -53,7 +53,7 @@ class TestUpdater(template.SafeRefDBTester):
         self.remove_working_dir()
 
 
-@unittest.skipIf(DISABLE_HIGH_BANDWIDTH_TEST, "temporary disable due to huge bandwidth usage")
+@unittest.skipIf(DISABLE_HIGH_BANDWIDTH_TEST, "temporary disable due to high bandwidth usage")
 class TestUcscUpdater(template.SafeRefDBTester):
 
 
@@ -148,7 +148,7 @@ class TestLJBUpdater(template.SafeRefDBTester):
         downloaded_file = self.__ljb_updater.download_new_file()
         self.assertTrue(os.path.exists(downloaded_file), msg='some thing went wrong in LJB updating process: file %s does not exist' % (downloaded_file))
 
-#    @unittest.skip("temporary disable due to huge bandwidth usage")
+#    @unittest.skip("temporary disable due to high bandwidth usage")
 #    def test_full_update2(self):
 #        self.__ljb_updater.files_pattern = combivep_config.LJB_FILES_PATTERN
 #        new_file = self.__ljb_updater.check_new_file('1.2')

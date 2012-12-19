@@ -36,12 +36,13 @@ class TestUcscReader(template.SafeRefDBTester):
         test_file = os.path.join(self.data_dir, 'test_ucsc_reader.txt.gz')
         self.__ucsc_reader.read(test_file)
         for rec in self.__ucsc_reader.fetch_snps('3', 110030150, 110030300):
-            self.assertEqual(rec[combivep_config.CHROM], 'chr3', "Incorrect UCSC formatting")
-            self.assertEqual(rec[combivep_config.START_POS], '110030157', "Incorrect UCSC formatting")
-            self.assertEqual(rec[combivep_config.END_POS], '110030158', "Incorrect UCSC formatting")
-            self.assertEqual(rec[combivep_config.STRAND], '+', "Incorrect UCSC formatting")
-            self.assertEqual(rec[combivep_config.REF], 'C', "Incorrect UCSC formatting")
-            self.assertEqual(rec[combivep_config.OBSERVED], 'C/T', "Incorrect UCSC formatting")
+            self.assertEqual(rec[combivep_config.KEY_UCSC_CHROM], 'chr3', "Incorrect UCSC formatting")
+            self.assertEqual(rec[combivep_config.KEY_UCSC_START_POS], '110030157', "Incorrect UCSC formatting")
+            self.assertEqual(rec[combivep_config.KEY_UCSC_END_POS], '110030158', "Incorrect UCSC formatting")
+            self.assertEqual(rec[combivep_config.KEY_UCSC_STRAND], '+', "Incorrect UCSC formatting")
+            self.assertEqual(rec[combivep_config.KEY_UCSC_REF], 'C', "Incorrect UCSC formatting")
+            self.assertEqual(rec[combivep_config.KEY_UCSC_OBSERVED], 'C/T', "Incorrect UCSC formatting")
+#            self.assertEqual(rec[combivep_config.JOIN_KEY], 'chr3|110030157', "Incorrect UCSC formatting")
             break
 
     def tearDown(self):
@@ -71,17 +72,17 @@ class TestLjbReader(template.SafeRefDBTester):
         test_file = os.path.join(self.data_dir, 'test_ljb_reader.txt')
         self.__ljb_reader.read(test_file)
         for rec in self.__ljb_reader.fetch_snps():
-            self.assertEqual(rec[combivep_config.CHROM], 'chr3', "Incorrect LJB formatting")
-            self.assertEqual(rec[combivep_config.START_POS], '110024464', "Incorrect LJB formatting")
-            self.assertEqual(rec[combivep_config.END_POS], '110024465', "Incorrect LJB formatting")
-            self.assertEqual(rec[combivep_config.REF], 'A', "Incorrect LJB formatting")
-            self.assertEqual(rec[combivep_config.ALT], 'C', "Incorrect LJB formatting")
+            self.assertEqual(rec[combivep_config.KEY_LJB_CHROM], '3', "Incorrect LJB formatting")
+            self.assertEqual(rec[combivep_config.KEY_LJB_START_POS], '110024465', "Incorrect LJB formatting")
+            self.assertEqual(rec[combivep_config.KEY_LJB_REF], 'A', "Incorrect LJB formatting")
+            self.assertEqual(rec[combivep_config.KEY_LJB_ALT], 'C', "Incorrect LJB formatting")
             self.assertEqual(rec[combivep_config.PHYLOP_SCORE], '0.998941', "Incorrect LJB formatting")
             self.assertEqual(rec[combivep_config.SIFT_SCORE], '1.0', "Incorrect LJB formatting")
             self.assertEqual(rec[combivep_config.PP2_SCORE], '0.058', "Incorrect LJB formatting")
             self.assertEqual(rec[combivep_config.LRT_SCORE], '0.824444', "Incorrect LJB formatting")
             self.assertEqual(rec[combivep_config.MT_SCORE], '1.000000', "Incorrect LJB formatting")
             self.assertEqual(rec[combivep_config.GERP_SCORE], '4.93', "Incorrect LJB formatting")
+#            self.assertEqual(rec[combivep_config.JOIN_KEY], 'chr3|110024464', "Incorrect UCSC formatting")
             break
 
     def tearDown(self):

@@ -20,6 +20,12 @@ class CombiVEPBase(object):
     def copy_file(self, source, destination):
         shutil.copy2(source, destination)
 
+    def exec_sh(self, cmd):
+        p = subprocess.Popen(cmd, shell=True)
+        error = p.wait()
+        if error:
+            raise "Error found during execute command '%s' with error code %d" % (cmd, error)
+
 
 class Tester(unittest.TestCase, CombiVEPBase):
     """ CombiVEP template for testing """

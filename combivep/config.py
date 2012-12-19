@@ -59,23 +59,14 @@ LJB_FILES_PATTERN    = r"""href="(?P<file_name>dbNSFP_.*.zip)">"""
 LJB_VERSION_PATTERN  = r"""[a-zA-Z_]*(?P<version>[\d.]*)[.][a-zA-Z.]*"""
 
 
-# > > > > > > > > > > > > > SNPs format configuration < < < < < < < < < <
+# > > > > > > > > > > > > > UCSC format configuration < < < < < < < < < <
 #general key
-CHROM     = 'chrom'
-START_POS = 'start_pos'
-END_POS   = 'end_pos'
-STRAND    = 'strand'
-REF       = 'ref'
-ALT       = 'alt'
-OBSERVED  = 'observed'
-
-#score key
-PHYLOP_SCORE = 'phylop'
-SIFT_SCORE   = 'sift'
-PP2_SCORE    = 'pp2'
-LRT_SCORE    = 'lrt'
-MT_SCORE     = 'mt'
-GERP_SCORE   = 'gerp'
+KEY_UCSC_CHROM     = 'ucsc_chrom'
+KEY_UCSC_START_POS = 'ucsc_start_pos'
+KEY_UCSC_END_POS   = 'ucsc_end_pos'
+KEY_UCSC_STRAND    = 'ucsc_strand'
+KEY_UCSC_REF       = 'ucsc_ref'
+KEY_UCSC_OBSERVED  = 'ucsc_observed'
 
 #UCSC index
 UCSC_INDEX_CHROM     = 1
@@ -86,17 +77,32 @@ UCSC_INDEX_REF       = 8
 UCSC_INDEX_OBSERVED  = 9
 UCSC_EXPECTED_LENGTH = 26
 
+# > > > > > > > > > > > > > LJB format configuration < < < < < < < < < <
+#general key
+KEY_LJB_CHROM     = 'ljb_chrom'
+KEY_LJB_START_POS = 'ljb_start_pos'
+KEY_LJB_REF       = 'ljb_ref'
+KEY_LJB_ALT       = 'ljb_alt'
+
+#score key
+PHYLOP_SCORE = 'phylop_score'
+SIFT_SCORE   = 'sift_score'
+PP2_SCORE    = 'pp2_score'
+LRT_SCORE    = 'lrt_score'
+MT_SCORE     = 'mt_score'
+GERP_SCORE   = 'gerp_score'
+
 #LJB index
 LJB_INDEX_CHROM        = 0
 LJB_INDEX_START_POS    = 1
-LJB_INDEX_REF          = 3
-LJB_INDEX_ALT          = 4
-LJB_INDEX_PHYLOP_SCORE = 5
-LJB_INDEX_SIFT_SCORE   = 6
-LJB_INDEX_PP2_SCORE    = 7
-LJB_INDEX_LRT_SCORE    = 8
-LJB_INDEX_MT_SCORE     = 9
-LJB_INDEX_GERP_SCORE   = 10
-LJB_EXPECTED_LENGTH    = 11
+LJB_INDEX_REF          = 2
+LJB_INDEX_ALT          = 3
+LJB_INDEX_PHYLOP_SCORE = 4
+LJB_INDEX_SIFT_SCORE   = 5
+LJB_INDEX_PP2_SCORE    = 6
+LJB_INDEX_LRT_SCORE    = 7
+LJB_INDEX_MT_SCORE     = 8
+LJB_INDEX_GERP_SCORE   = 9
+LJB_EXPECTED_LENGTH    = 10
 
 

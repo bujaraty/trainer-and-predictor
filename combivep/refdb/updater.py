@@ -43,6 +43,7 @@ def ljb_parse(input_file, output_file):
     p = subprocess.Popen(cmd, shell=True)
     return os.waitpid(p.pid, 0)[1]
 
+
 class Downloader(template.CombiVEPBase):
     """to download file"""
 
@@ -129,6 +130,7 @@ class Updater(Downloader):
 
 
 class UcscUpdater(Updater):
+    """ to check if local UCSC DB is up-to-date """
 
 
     def __init__(self, working_dir):
@@ -145,12 +147,13 @@ class UcscUpdater(Updater):
         if not Updater.download_new_file(self):
             return False
         if self.new_file.endswith('.gz'):
-            return ungz(self.downloaded_file)
+            self.raw_db_file = ungz(self.downloaded_file)
         else:
-            return self.downloaded_file
-
+            self.raw_db_file = self.downloaded_file
+        return self.raw_db_file
 
 class LjbUpdater(Updater):
+    """ to check if local LJB DB is up-to-date """
 
 
     def __init__(self, working_dir):
@@ -167,9 +170,10 @@ class LjbUpdater(Updater):
         if not Updater.download_new_file(self):
             return False
         if self.new_file.endswith('.zip'):
-            return unzip(self.downloaded_file, self.local_ref_db_dir)
+            self.raw_db_files = unzip(self.downloaded_file, self.local_ref_db_dir)
         else:
-            return self.downloaded_file
+            self.raw_db_files = self.downloaded_file
+        return self.raw_db_files
 
 
 

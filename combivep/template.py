@@ -17,6 +17,10 @@ class CombiVEPBase(object):
         if not os.path.exists(dir_name):
             os.makedirs(dir_name)
 
+    def delete_file(self, file_name):
+        if os.path.exists(file_name):
+            os.remove(file_name)
+
     def copy_file(self, source, destination):
         shutil.copy2(source, destination)
 
@@ -29,6 +33,8 @@ class CombiVEPBase(object):
 
 class Tester(unittest.TestCase, CombiVEPBase):
     """ CombiVEP template for testing """
+
+
     individual_debug = False
 #    working_dir      = ''
 #    data_dir         = ''

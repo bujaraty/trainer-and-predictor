@@ -2,7 +2,7 @@ import unittest
 import os
 import shutil
 import combivep.refdb.test.template as template
-import combivep.config as combivep_config
+import combivep.settings as combivep_settings
 import combivep.refdb.scoresdb as combivep_scoresdb
 import combivep.refdb.reader as combivep_reader
 
@@ -22,6 +22,7 @@ are 'runable'
 """
 
 
+@unittest.skip("temporary disable due to long running time")
 class TestScoresDB(template.RiskRefDBTester):
 
 
@@ -37,7 +38,7 @@ class TestScoresDB(template.RiskRefDBTester):
         self.init_scores_db_instance()
         ljb_file  = '/home/jessada/development/scilifelab/master_data/LJB/tmp1'
         ucsc_file = '/home/jessada/development/scilifelab/master_data/UCSC/snp137_chr3.txt.gz'
-        out_file  = os.path.join(combivep_config.COMBIVEP_MASTER_DB_DIR, 'join_result.txt')
+        out_file  = os.path.join(combivep_settings.COMBIVEP_MASTER_DB_DIR, 'join_result.txt')
 #        expected_out_file = os.path.join(self.data_dir, 'expected_join_result.txt')
 
         #test if the output file is correctly produced

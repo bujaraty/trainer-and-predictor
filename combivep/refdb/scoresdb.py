@@ -100,13 +100,6 @@ class ScoresDB(template.CombiVEPBase):
             counter        = 0
         f.close()
 
-    def tabix(self, file_name):
-        """to create the tabix index for UCSC SNPs file"""
-        cmd = 'bgzip ' + file_name
-        self.exec_sh(cmd)
-        cmd = 'tabix -s 2 -b 3 -e 3 ' + file_name + '.gz'
-        self.exec_sh(cmd)
-
 
 
 

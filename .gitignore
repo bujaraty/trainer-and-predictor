@@ -1,9 +1,11 @@
 *.pyc
+*.bak
 *~
 MANIFEST
 build/
 dist/
 dat/DB/ref/
-*/tmp/
+*big_data/
+*tmp/
 combivep/refdb/test/tmp
 

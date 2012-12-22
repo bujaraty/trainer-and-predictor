@@ -1,5 +1,5 @@
 import unittest
-import os.path
+import os
 import combivep.refdb.test.template as template
 import combivep.settings as combivep_settings
 import combivep.refdb.updater as combivep_updater

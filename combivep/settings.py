@@ -11,9 +11,6 @@ DEBUG_MODE = 0
 # > > > > > > > > > > > > > permanent global data & folder < < < < < < < < < <
 PROJECT_ROOT                      = os.path.dirname(os.path.dirname(__file__))
 
-#the only temporay working folder used for processing data
-COMBIVEP_WORKING_DIR              = os.path.join(PROJECT_ROOT, 'tmp')
-
 #to keep master data produced by application
 COMBIVEP_MASTER_DATA_ROOT         = os.path.join(PROJECT_ROOT, 'dat')
 COMBIVEP_MASTER_PARAMETERS_DIR    = os.path.join(COMBIVEP_MASTER_DATA_ROOT, 'params')
@@ -30,6 +27,15 @@ COMBIVEP_CENTRAL_TEST_DATASET_DIR = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT
 COMBIVEP_CENTRAL_TEST_VCF_DIR     = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'vcf')
 COMBIVEP_CENTRAL_TEST_UCSC_DIR    = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'UCSC')
 COMBIVEP_CENTRAL_TEST_LJB_DIR     = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'LJB')
+
+
+# > > > > > > > > > > > > > temporay files and folder < < < < < < < < < <
+#the only temporay working folder used for processing data
+COMBIVEP_WORKING_DIR         = os.path.join(PROJECT_ROOT, 'tmp')
+
+#temporary files for reference database processing
+TMP_UCSC_CLEAN_DB_FILE       = os.path.join(COMBIVEP_WORKING_DIR, 'tmp_ucsc_clean_db.txt')
+TMP_LJB_CLEAN_DB_FILE        = os.path.join(COMBIVEP_WORKING_DIR, 'tmp_ljb_clean_db.txt')
 
 
 # > > > > > > > > > > > > > INI file < < < < < < < < < <
@@ -79,13 +85,14 @@ KEY_UCSC_REF       = 'ucsc_ref'
 KEY_UCSC_OBSERVED  = 'ucsc_observed'
 
 #UCSC index
-UCSC_INDEX_CHROM     = 1
-UCSC_INDEX_START_POS = 2
-UCSC_INDEX_END_POS   = 3
-UCSC_INDEX_STRAND    = 6
-UCSC_INDEX_REF       = 8
-UCSC_INDEX_OBSERVED  = 9
-UCSC_EXPECTED_LENGTH = 26
+#0-based index, used by python
+UCSC_0_INDEX_CHROM     = 1
+UCSC_0_INDEX_START_POS = 2
+UCSC_0_INDEX_END_POS   = 3
+UCSC_0_INDEX_STRAND    = 6
+UCSC_0_INDEX_REF       = 8
+UCSC_0_INDEX_OBSERVED  = 9
+UCSC_EXPECTED_LENGTH   = 26
 
 # > > > > > > > > > > > > > LJB format configuration < < < < < < < < < <
 #general key
@@ -103,16 +110,56 @@ MT_SCORE     = 'mt_score'
 GERP_SCORE   = 'gerp_score'
 
 #LJB index
-LJB_INDEX_CHROM        = 0
-LJB_INDEX_START_POS    = 1
-LJB_INDEX_REF          = 2
-LJB_INDEX_ALT          = 3
-LJB_INDEX_PHYLOP_SCORE = 4
-LJB_INDEX_SIFT_SCORE   = 5
-LJB_INDEX_PP2_SCORE    = 6
-LJB_INDEX_LRT_SCORE    = 7
-LJB_INDEX_MT_SCORE     = 8
-LJB_INDEX_GERP_SCORE   = 9
-LJB_EXPECTED_LENGTH    = 10
+#1-based index, used by awk for parsing
+LJB_RAW_1_INDEX_CHROM        = 1
+LJB_RAW_1_INDEX_START_POS    = 7
+LJB_RAW_1_INDEX_REF          = 3
+LJB_RAW_1_INDEX_ALT          = 4
+LJB_RAW_1_INDEX_PHYLOP_SCORE = 8
+LJB_RAW_1_INDEX_SIFT_SCORE   = 9
+LJB_RAW_1_INDEX_PP2_SCORE    = 10
+LJB_RAW_1_INDEX_LRT_SCORE    = 11
+LJB_RAW_1_INDEX_MT_SCORE     = 13
+LJB_RAW_1_INDEX_GERP_SCORE   = 17
+#LJB_RAW_EXPECTED_LENGTH      = 10
+
+#0-based index, used by python for reading
+LJB_PARSED_0_INDEX_CHROM        = 0
+LJB_PARSED_0_INDEX_START_POS    = 1
+LJB_PARSED_0_INDEX_REF          = 2
+LJB_PARSED_0_INDEX_ALT          = 3
+LJB_PARSED_0_INDEX_PHYLOP_SCORE = 4
+LJB_PARSED_0_INDEX_SIFT_SCORE   = 5
+LJB_PARSED_0_INDEX_PP2_SCORE    = 6
+LJB_PARSED_0_INDEX_LRT_SCORE    = 7
+LJB_PARSED_0_INDEX_MT_SCORE     = 8
+LJB_PARSED_0_INDEX_GERP_SCORE   = 9
+LJB_PARSED_EXPECTED_LENGTH      = 10
+
+##raw index, 1-based index, used by awk
+#LJB_RAW_INDEX_CHROM        = 1
+#LJB_RAW_INDEX_START_POS    = 2
+#LJB_RAW_INDEX_REF          = 3
+#LJB_RAW_INDEX_ALT          = 4
+#LJB_RAW_INDEX_PHYLOP_SCORE = 8
+#LJB_RAW_INDEX_SIFT_SCORE   = 9
+#LJB_RAW_INDEX_PP2_SCORE    = 10
+#LJB_RAW_INDEX_LRT_SCORE    = 11
+#LJB_RAW_INDEX_MT_SCORE     = 13
+#LJB_RAW_INDEX_GERP_SCORE   = 17
+#LJB_RAW_EXPECTED_LENGTH    = 10
+
+##0-based index, used by python
+#LJB_PARSED_INDEX_CHROM        = 0
+#LJB_PARSED_INDEX_START_POS    = 1
+#LJB_PARSED_INDEX_REF          = 2
+#LJB_PARSED_INDEX_ALT          = 3
+#LJB_PARSED_INDEX_PHYLOP_SCORE = 4
+#LJB_PARSED_INDEX_SIFT_SCORE   = 5
+#LJB_PARSED_INDEX_PP2_SCORE    = 6
+#LJB_PARSED_INDEX_LRT_SCORE    = 7
+#LJB_PARSED_INDEX_MT_SCORE     = 8
+#LJB_PARSED_INDEX_GERP_SCORE   = 9
+#LJB_PARSED_EXPECTED_LENGTH    = 10
 
 

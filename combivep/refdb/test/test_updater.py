@@ -32,19 +32,22 @@ class TestUpdater(template.SafeRefDBTester):
 
     def test_ready1(self):
         self.init_test('test_ready1')
-        updater = combivep_updater.Updater(working_dir=self.working_dir)
+        updater = combivep_updater.Updater()
+        updater.working_dir = self.working_dir
         self.assertEqual(updater.check_new_file('135'), None, msg='Something went wrong in checking if the updater is ready to work')
 
     def test_ready2(self):
         self.init_test('test_ready2')
-        updater = combivep_updater.Updater(working_dir=self.working_dir)
+        updater = combivep_updater.Updater()
+        updater.working_dir = self.working_dir
         updater.folder_url      = 'http://dummy_url'
         updater.version_pattern = 'dummy_version_pattern'
         self.assertFalse(updater.check_new_file('135'), msg='Something went wrong in checking if the updater is ready to work')
 
     def test_ready3(self):
         self.init_test('test_ready3')
-        updater = combivep_updater.Updater(working_dir=self.working_dir)
+        updater = combivep_updater.Updater()
+        updater.working_dir = self.working_dir
         updater.files_pattern   = r"""href="(?P<file_name>snp\d{3}.sql)">.*>.*(?P<date>\d{2}-[a-zA-Z]{3}-\d{4})"""
         updater.version_pattern = 'dummy_version_pattern'
         self.assertFalse(updater.check_new_file('135'), msg='Something went wrong in checking if the updater is ready to work')
@@ -53,7 +56,7 @@ class TestUpdater(template.SafeRefDBTester):
         self.remove_working_dir()
 
 
-@unittest.skipIf(DISABLE_HIGH_BANDWIDTH_TEST, "temporary disable due to high bandwidth usage")
+#@unittest.skipIf(DISABLE_HIGH_BANDWIDTH_TEST, "temporary disable due to high bandwidth usage")
 class TestUcscUpdater(template.SafeRefDBTester):
 
 
@@ -61,37 +64,50 @@ class TestUcscUpdater(template.SafeRefDBTester):
         self.test_class = 'ucsc_updater'
 
     def init_ucsc_updater_instance(self):
-        self.__ucsc_updater                  = combivep_updater.UcscUpdater(working_dir=self.working_dir)
+        self.__ucsc_updater                  = combivep_updater.UcscUpdater()
+        self.__ucsc_updater.working_dir      = self.working_dir
         self.__ucsc_updater.files_pattern    = r"""href="(?P<file_name>snp\d{3}.sql)">.*>.*(?P<date>\d{2}-[a-zA-Z]{3}-\d{4})"""
         self.__ucsc_updater.tmp_file         = combivep_settings.UCSC_LIST_FILE_NAME
         self.__ucsc_updater.local_ref_db_dir = self.working_dir
 
+    @unittest.skip("temporary disable due to high bandwidth usage")
     def test_update1(self):
 #        self.individual_debug = True
         self.init_test('test_update1')
         self.init_ucsc_updater_instance()
-        self.assertTrue(self.__ucsc_updater.check_new_file('135').endswith('.sql'), msg='incorrectly identify updating result')
+        new_file, new_version = self.__ucsc_updater.check_new_file('135')
+        self.assertTrue(new_file.endswith('.sql'), msg='incorrectly identify updating result')
 
+    @unittest.skip("temporary disable due to high bandwidth usage")
     def test_update2(self):
         self.init_test('test_update2')
         self.init_ucsc_updater_instance()
-        self.assertTrue(self.__ucsc_updater.check_new_file('136').endswith('.sql'), msg='incorrectly identify updating result')
+        new_file, new_version = self.__ucsc_updater.check_new_file('136')
+        self.assertTrue(new_file.endswith('.sql'), msg='incorrectly identify updating result')
 
+    @unittest.skip("temporary disable due to high bandwidth usage")
     def test_not_update1(self):
         self.init_test('test_not_update1')
         self.init_ucsc_updater_instance()
-        self.assertFalse(self.__ucsc_updater.check_new_file('137'), msg='incorrectly identify updating result')
+        new_file, new_version = self.__ucsc_updater.check_new_file('137')
+        self.assertEqual(new_version, None, msg='incorrectly identify updating result')
 
+    @unittest.skip("temporary disable due to high bandwidth usage")
     def test_not_update2(self):
         self.init_test('test_not_update2')
         self.init_ucsc_updater_instance()
-        self.assertFalse(self.__ucsc_updater.check_new_file('138'), msg='incorrectly identify updating result')
+        new_file, new_version = self.__ucsc_updater.check_new_file('138')
+        self.assertEqual(new_version, None, msg='incorrectly identify updating result')
 
+    @unittest.skip("temporary disable due to high bandwidth usage")
     def test_full_update1(self):
+        #init
         self.init_test('test_full_update1')
         self.init_ucsc_updater_instance()
-        new_file = self.__ucsc_updater.check_new_file('135')
+        #run test
+        new_file, new_version = self.__ucsc_updater.check_new_file('135')
         self.assertTrue(new_file.endswith('.sql'), msg='some thing went wrong in UCSC updating process: new file is not the correct file')
+        self.assertEqual(new_version, '137', msg='some thing went wrong in UCSC updating process: incorrect new version number')
         downloaded_file = self.__ucsc_updater.download_new_file()
         self.assertTrue(os.path.exists(downloaded_file), msg='some thing went wrong in UCSC updating process: file %s does not exist' % (downloaded_file))
 
@@ -120,7 +136,8 @@ class TestLJBUpdater(template.SafeRefDBTester):
         self.test_class = 'ljb_updater'
 
     def init_ljb_updater_instance(self):
-        self.__ljb_updater                  = combivep_updater.LjbUpdater(working_dir=self.working_dir)
+        self.__ljb_updater                  = combivep_updater.LjbUpdater()
+        self.__ljb_updater.working_dir      = self.working_dir
         self.__ljb_updater.files_pattern    = r"""href="(?P<file_name>dbNSFPv[\d.]*.readme.txt)">"""
         self.__ljb_updater.tmp_file         = combivep_settings.LJB_LIST_FILE_NAME
         self.__ljb_updater.local_ref_db_dir = self.working_dir
@@ -128,23 +145,29 @@ class TestLJBUpdater(template.SafeRefDBTester):
     def test_update1(self):
         self.init_test('test_update1')
         self.init_ljb_updater_instance()
-        self.assertTrue(self.__ljb_updater.check_new_file('1.2'), msg='incorrectly identify updating result')
+        new_file, new_version = self.__ljb_updater.check_new_file('1.2')
+        self.assertNotEqual(new_version, None, msg='incorrectly identify updating result')
 
     def test_not_update1(self):
         self.init_test('test_not_update1')
         self.init_ljb_updater_instance()
-        self.assertFalse(self.__ljb_updater.check_new_file('1.3'), msg='incorrectly identify updating result')
+        new_file, new_version = self.__ljb_updater.check_new_file('1.3')
+        self.assertEqual(new_version, None, msg='incorrectly identify updating result')
 
     def test_not_update2(self):
         self.init_test('test_not_update2')
         self.init_ljb_updater_instance()
-        self.assertFalse(self.__ljb_updater.check_new_file('1.4'), msg='incorrectly identify updating result')
+        new_file, new_version = self.__ljb_updater.check_new_file('1.4')
+        self.assertEqual(new_version, None, msg='incorrectly identify updating result')
 
     def test_full_update1(self):
+        #init
         self.init_test('test_full_update1')
         self.init_ljb_updater_instance()
-        new_file = self.__ljb_updater.check_new_file('1.2')
+        #run test
+        new_file, new_version = self.__ljb_updater.check_new_file('1.2')
         self.assertTrue(new_file.endswith('.readme.txt'), msg='some thing went wrong in LJB updating process: new file is not the correct file')
+        self.assertEqual(new_version, '1.3', msg='some thing went wrong in LJB updating process: incorrect new version number')
         downloaded_file = self.__ljb_updater.download_new_file()
         self.assertTrue(os.path.exists(downloaded_file), msg='some thing went wrong in LJB updating process: file %s does not exist' % (downloaded_file))
 
@@ -196,14 +219,6 @@ class TestMisc(template.SafeRefDBTester):
         out = combivep_updater.ungz(working_file)
         self.assertTrue(out, 'no output file from "ungz" function')
         self.assertTrue(os.path.exists(out), 'ungz function does not work properly')
-
-    def test_ljb_parse(self):
-        self.init_test('test_ljb_parse')
-        test_file = os.path.join(self.data_dir, 'test_ljb_parse.txt')
-        out_file  = os.path.join(self.working_dir, 'test_ljb_parsed.txt')
-        error     = combivep_updater.ljb_parse(test_file, out_file)
-        self.assertFalse(error)
-        self.assertTrue(os.path.exists(out_file), 'ljb_parsse function does not work properly')
 
     def tearDown(self):
         self.remove_working_dir()

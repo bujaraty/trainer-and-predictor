@@ -22,7 +22,6 @@ are only 'runable'
 """
 
 
-@unittest.skip("temporary disable due to long running time(last test on Dec 20)")
 class TestUcscController(template.RiskRefDBTester):
 
 
@@ -32,6 +31,29 @@ class TestUcscController(template.RiskRefDBTester):
     def init_ucsc_controller_instance(self):
         self.__ucsc_controller = combivep_control.UcscController()
 
+    @unittest.skip("temporary disable due to long running time(last test on Dec 22)")
+    def test_not_update(self):
+        #init
+        self.init_test('test_not_update')
+        self.init_ucsc_controller_instance()
+        test_config_file = os.path.join(self.data_dir, 'test_not_update_config_file.txt')
+        self.copy_file(test_config_file, combivep_settings.COMBIVEP_CONFIGURATION_FILE)
+        #run test
+        self.assertFalse(self.__ucsc_controller.update(), "UCSC controller cannot identify correct update status")
+
+    @unittest.skip("temporary disable due to long running time(last test on Dec 22 : took around 35 mins)")
+    def test_update(self):
+        #init
+        self.init_test('test_update')
+        self.init_ucsc_controller_instance()
+        test_config_file = os.path.join(self.data_dir, 'test_update_config_file.txt')
+        self.copy_file(test_config_file, combivep_settings.COMBIVEP_CONFIGURATION_FILE)
+        #run test
+        self.assertTrue(self.__ucsc_controller.update(), "UCSC controller cannot identify correct update status")
+        self.assertTrue(os.path.exists(self.__ucsc_controller.config_values[combivep_settings.LATEST_UCSC_FILE_NAME]),
+                        msg='"%s" file is missing' % (self.__ucsc_controller.config_values[combivep_settings.LATEST_UCSC_FILE_NAME]))
+
+    @unittest.skip("temporary disable due to long running time(last test on Dec 20)")
     def test_clean_raw_database(self):
         #initialize variables
         self.individual_debug = True
@@ -75,10 +97,10 @@ class TestUcscController(template.RiskRefDBTester):
 #            break
 
     def tearDown(self):
+        self.delete_file(combivep_settings.COMBIVEP_CONFIGURATION_FILE)
         self.remove_working_dir()
 
 
-@unittest.skip("temporary disable due to long running time(last test on Dec 22 : took around 15 seconds)")
 class TestLjbController(template.RiskRefDBTester):
 
 
@@ -88,6 +110,28 @@ class TestLjbController(template.RiskRefDBTester):
     def init_ljb_controller_instance(self):
         self.__ljb_controller = combivep_control.LjbController()
 
+    def test_not_update(self):
+        #init
+        self.init_test('test_not_update')
+        self.init_ljb_controller_instance()
+        test_config_file = os.path.join(self.data_dir, 'test_not_update_config_file.txt')
+        self.copy_file(test_config_file, combivep_settings.COMBIVEP_CONFIGURATION_FILE)
+        #run test
+        self.assertFalse(self.__ljb_controller.update(), "LJB controller cannot identify correct update status")
+
+    @unittest.skip("temporary disable due to long running time(last test on Dec 24 : took around 55 mins for downloading and 7 mins for indexing)")
+    def test_update(self):
+        #init
+        self.init_test('test_update')
+        self.init_ljb_controller_instance()
+        test_config_file = os.path.join(self.data_dir, 'test_update_config_file.txt')
+        self.copy_file(test_config_file, combivep_settings.COMBIVEP_CONFIGURATION_FILE)
+        #run test
+        self.assertTrue(self.__ljb_controller.update(), "LJB controller cannot identify correct update status")
+        self.assertTrue(os.path.exists(self.__ljb_controller.config_values[combivep_settings.LATEST_LJB_FILE_PREFIX] + '.txt.gz'),
+                        msg='"%s" file is missing' % (self.__ljb_controller.config_values[combivep_settings.LATEST_LJB_FILE_PREFIX] + '.txt.gz'))
+
+    @unittest.skip("temporary disable due to long running time(last test on Dec 22 : took around 15 seconds)")
     def test_clean_raw_database(self):
         #initialize variables
         self.individual_debug = True

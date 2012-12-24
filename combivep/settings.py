@@ -45,7 +45,7 @@ COMBIVEP_CONFIGURATION_FILE  = os.path.join(COMBIVEP_MASTER_DATA_ROOT, 'config.t
 LATEST_UCSC_DATABASE_VERSION = 'latest_ucsc_database_version'
 LATEST_UCSC_FILE_NAME        = 'latest_ucsc_file_name'
 LATEST_LJB_DATABASE_VERSION  = 'latest_ljb_database_version'
-LATEST_LJB_FILE_NAMES        = 'latest_ljb_file_names'
+LATEST_LJB_FILE_PREFIX       = 'latest_ljb_file_prefix'
 
 
 # > > > > > > > > > > > > > MLP configuration < < < < < < < < < <
@@ -71,7 +71,7 @@ UCSC_VERSION_PATTERN = r"""[a-zA-Z]*(?P<version>[\d]*)[a-zA-Z.]*"""
 #LJB
 LJB_FOLDER_URL       = 'http://dbnsfp.houstonbioinformatics.org/dbNSFPzip/'
 LJB_LIST_FILE_NAME   = 'ljb_list_file'
-LJB_FILES_PATTERN    = r"""href="(?P<file_name>dbNSFP_.*.zip)">"""
+LJB_FILES_PATTERN    = r"""href="(?P<file_name>dbNSFP_light.*.zip)">"""
 LJB_VERSION_PATTERN  = r"""[a-zA-Z_]*(?P<version>[\d.]*)[.][a-zA-Z.]*"""
 
 
@@ -121,7 +121,6 @@ LJB_RAW_1_INDEX_PP2_SCORE    = 10
 LJB_RAW_1_INDEX_LRT_SCORE    = 11
 LJB_RAW_1_INDEX_MT_SCORE     = 13
 LJB_RAW_1_INDEX_GERP_SCORE   = 17
-#LJB_RAW_EXPECTED_LENGTH      = 10
 
 #0-based index, used by python for reading
 LJB_PARSED_0_INDEX_CHROM        = 0
@@ -136,30 +135,5 @@ LJB_PARSED_0_INDEX_MT_SCORE     = 8
 LJB_PARSED_0_INDEX_GERP_SCORE   = 9
 LJB_PARSED_EXPECTED_LENGTH      = 10
 
-##raw index, 1-based index, used by awk
-#LJB_RAW_INDEX_CHROM        = 1
-#LJB_RAW_INDEX_START_POS    = 2
-#LJB_RAW_INDEX_REF          = 3
-#LJB_RAW_INDEX_ALT          = 4
-#LJB_RAW_INDEX_PHYLOP_SCORE = 8
-#LJB_RAW_INDEX_SIFT_SCORE   = 9
-#LJB_RAW_INDEX_PP2_SCORE    = 10
-#LJB_RAW_INDEX_LRT_SCORE    = 11
-#LJB_RAW_INDEX_MT_SCORE     = 13
-#LJB_RAW_INDEX_GERP_SCORE   = 17
-#LJB_RAW_EXPECTED_LENGTH    = 10
-
-##0-based index, used by python
-#LJB_PARSED_INDEX_CHROM        = 0
-#LJB_PARSED_INDEX_START_POS    = 1
-#LJB_PARSED_INDEX_REF          = 2
-#LJB_PARSED_INDEX_ALT          = 3
-#LJB_PARSED_INDEX_PHYLOP_SCORE = 4
-#LJB_PARSED_INDEX_SIFT_SCORE   = 5
-#LJB_PARSED_INDEX_PP2_SCORE    = 6
-#LJB_PARSED_INDEX_LRT_SCORE    = 7
-#LJB_PARSED_INDEX_MT_SCORE     = 8
-#LJB_PARSED_INDEX_GERP_SCORE   = 9
-#LJB_PARSED_EXPECTED_LENGTH    = 10
 
 

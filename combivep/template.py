@@ -28,7 +28,7 @@ class CombiVEPBase(object):
         p = subprocess.Popen(cmd, shell=True)
         error = p.wait()
         if error:
-            raise "Error found during execute command '%s' with error code %d" % (cmd, error)
+            raise Exception("Error found during execute command '%s' with error code %d" % (cmd, error))
 
 
 class Tester(unittest.TestCase, CombiVEPBase):

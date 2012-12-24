@@ -1,6 +1,7 @@
 import subprocess
 import os
 import re
+import sys
 import zipfile
 import combivep.settings as combivep_settings
 import combivep.template as template
@@ -35,13 +36,13 @@ def unzip(zip_file, out_dir):
             out_files.append(out_file)
     return out_files
 
-def ljb_parse(input_file, output_file):
-    cmd = 'awk -F\'\\t\' \'{printf "%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\n", $1, $2, $2, $3, $4, $8, $9, $10, $11, $13, $17}\' '
-    cmd += input_file
-    cmd += ' | grep -Pv "\\tNA\\t" | grep -v "^#" > '
-    cmd += output_file
-    p = subprocess.Popen(cmd, shell=True)
-    return os.waitpid(p.pid, 0)[1]
+#def ljb_parse(input_file, output_file):
+#    cmd = 'awk -F\'\\t\' \'{printf "%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\n", $1, $2, $2, $3, $4, $8, $9, $10, $11, $13, $17}\' '
+#    cmd += input_file
+#    cmd += ' | grep -Pv "\\tNA\\t" | grep -v "^#" > '
+#    cmd += output_file
+#    p = subprocess.Popen(cmd, shell=True)
+#    return os.waitpid(p.pid, 0)[1]
 
 
 class Downloader(template.CombiVEPBase):
@@ -74,8 +75,8 @@ class Downloader(template.CombiVEPBase):
 class Updater(Downloader):
 
 
-    def __init__(self, working_dir=combivep_settings.COMBIVEP_WORKING_DIR):
-        self.working_dir = working_dir
+    def __init__(self):
+        self.working_dir = combivep_settings.COMBIVEP_WORKING_DIR
 
         #specific configuration
         #URL of the folder that contain target files
@@ -90,25 +91,28 @@ class Updater(Downloader):
         self.tmp_file         = 'tmp_list'
 
     def check_new_file(self, last_version):
-        if self.local_ref_db_dir and (not os.path.exists(self.local_ref_db_dir)):
-            os.makedirs(self.local_ref_db_dir)
         if not self.__ready():
             return None
         self.create_dir(self.working_dir)
         tmp_list_file  = os.path.join(self.working_dir, self.tmp_file)
+        print >> sys.stderr, 'Checking new database version . . . . '
         self.download(self.folder_url,
                       self.working_dir,
                       output_file_name=tmp_list_file)
-        files_list  = self.parse(tmp_list_file)
+        files_list  = self.__parse(tmp_list_file)
         max_version = max(sorted(files_list.keys()))
+#        self.remove_dir(self.working_dir)
         if max_version <= last_version:
-            return False
+            return None, None
         else:
-            self.new_file = os.path.join(self.folder_url, files_list[max_version])
-            return self.new_file
-        self.remove_dir(self.working_dir)
+            self.new_file    = os.path.join(self.folder_url, files_list[max_version])
+            self.new_version = max_version
+            return self.new_file, self.new_version
 
     def parse(self, list_file):
+        return self.__parse(list_file)
+
+    def __parse(self, list_file):
         out          = {}
         files_parser = re.compile(self.files_pattern)
         matches      = files_parser.finditer(open(list_file).read())
@@ -119,6 +123,9 @@ class Updater(Downloader):
         return out
 
     def download_new_file(self):
+        if not os.path.exists(self.local_ref_db_dir):
+            os.makedirs(self.local_ref_db_dir)
+        print >> sys.stderr, 'Downloading %s . . . . ' % (self.new_file)
         error = self.download(self.new_file, self.local_ref_db_dir)
         if error:
             return None
@@ -133,9 +140,9 @@ class UcscUpdater(Updater):
     """ to check if local UCSC DB is up-to-date """
 
 
-    def __init__(self, working_dir):
+    def __init__(self):
         #common configuration
-        Updater.__init__(self, working_dir)
+        Updater.__init__(self)
 
         #specific configuration
         self.folder_url       = combivep_settings.UCSC_FOLDER_URL
@@ -156,9 +163,9 @@ class LjbUpdater(Updater):
     """ to check if local LJB DB is up-to-date """
 
 
-    def __init__(self, working_dir):
+    def __init__(self):
         #common configuration
-        Updater.__init__(self, working_dir)
+        Updater.__init__(self)
 
         #specific configuration
         self.folder_url       = combivep_settings.LJB_FOLDER_URL

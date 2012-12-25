@@ -9,6 +9,9 @@ class CombiVEPBase(object):
     """ CombiVEP base class """
 
 
+    def __init__(self):
+        pass
+
     def remove_dir(self, dir_name):
         if os.path.exists(dir_name):
             shutil.rmtree(dir_name)
@@ -32,36 +35,34 @@ class CombiVEPBase(object):
 
 
 class Tester(unittest.TestCase, CombiVEPBase):
-    """ CombiVEP template for testing """
+    """ general CombiVEP template for testing """
 
 
     individual_debug = False
-#    working_dir      = ''
-#    data_dir         = ''
-#    test_function    = ''
 
     def __init__(self, test_name):
         unittest.TestCase.__init__(self, test_name)
+        CombiVEPBase.__init__(self)
 
-    def get_root_data_dir(self, __file):
-        """
-
-        It's 'root' because several module gonna use this folder as well.
-        To use this function properly, the caller module has to create their
-        own sub-folders
-
-        """
-        return os.path.join(os.path.dirname(__file), 'data')
-
-    def get_root_working_dir(self, __file):
-        """
-
-        It's 'root' because several module gonna use this folder as well.
-        To use this function properly, the caller module has to create their
-        own sub-folders
-
-        """
-        return os.path.join(os.path.dirname(__file), 'tmp')
+#    def get_root_data_dir(self, __file):
+#        """
+#
+#        It's 'root' because several module gonna use this folder as well.
+#        To use this function properly, the caller module has to create their
+#        own sub-folders
+#
+#        """
+#        return os.path.join(os.path.dirname(__file), 'data')
+#
+#    def get_root_working_dir(self, __file):
+#        """
+#
+#        It's 'root' because several module gonna use this folder as well.
+#        To use this function properly, the caller module has to create their
+#        own sub-folders
+#
+#        """
+#        return os.path.join(os.path.dirname(__file), 'tmp')
 
     def remove_dir(self, dir_name):
         self.assertTrue(dir_name, '"None" is not a valid directory')
@@ -89,5 +90,36 @@ class Tester(unittest.TestCase, CombiVEPBase):
         self.set_dir()
         self.empty_working_dir()
 
+
+class SafeTester(Tester):
+    """
+
+    General template for testing
+    that can be run in both dev and production environment
+    The purpose of this template is to test general functionality
+
+    """
+
+    def __init__(self, test_name):
+        Tester.__init__(self, test_name)
+
+
+class RiskyTester(Tester):
+    """
+
+    General template for testing
+    that can be run only in devevelopment environment
+
+    The purpose of this template is to test
+    if the modules can function properly in real environment
+
+    """
+
+    def __init__(self, test_name):
+        Tester.__init__(self, test_name)
+
+    def remove_user_dir(self):
+        if (not combivep_settings.DEBUG_MODE) and (not self.individual_debug):
+            self.remove_dir(combivep_settings.USER_DATA_ROOT)
 
 

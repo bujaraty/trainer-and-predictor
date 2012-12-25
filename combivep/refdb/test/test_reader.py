@@ -8,6 +8,9 @@ import combivep.refdb.reader as combivep_reader
 class TestUcscReader(template.SafeRefDBTester):
 
 
+    def __init__(self, test_name):
+        template.SafeRefDBTester.__init__(self, test_name)
+
     def setUp(self):
         self.test_class = 'ucsc_reader'
 
@@ -78,6 +81,9 @@ class TestUcscReader(template.SafeRefDBTester):
 
 class TestLjbReader(template.SafeRefDBTester):
 
+
+    def __init__(self, test_name):
+        template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'ljb_reader'

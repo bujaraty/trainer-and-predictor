@@ -9,6 +9,9 @@ import combivep.refdb.control as combivep_control
 class TestUcscController(template.SafeRefDBTester):
 
 
+    def __init__(self, test_name):
+        template.SafeRefDBTester.__init__(self, test_name)
+
     def setUp(self):
         self.test_class = 'ucsc_controller'
 
@@ -68,6 +71,9 @@ class TestUcscController(template.SafeRefDBTester):
 
 class TestLjbController(template.SafeRefDBTester):
 
+
+    def __init__(self, test_name):
+        template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'ljb_controller'

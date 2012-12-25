@@ -6,6 +6,8 @@ import combivep.template as template
 class UcscReader(template.CombiVEPBase):
     """to read UCSC parsed file in tabix format"""
 
+    def __init__(self):
+        template.CombiVEPBase.__init__(self)
 
     def read(self, tabix_file):
         self.db_file_name = tabix_file
@@ -36,6 +38,9 @@ class UcscReader(template.CombiVEPBase):
 class LjbReader(template.CombiVEPBase):
     """to read parsed LJB file"""
 
+
+    def __init__(self):
+        template.CombiVEPBase.__init__(self)
 
     def read(self, ljb_file):
         self.db_file_name = ljb_file

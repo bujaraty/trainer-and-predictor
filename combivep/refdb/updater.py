@@ -50,7 +50,7 @@ class Downloader(template.CombiVEPBase):
 
 
     def __init__(self):
-        pass
+        template.CombiVEPBase.__init__(self)
 
     def download(self, target_url, output_dir, output_file_name=None):
         """
@@ -76,6 +76,7 @@ class Updater(Downloader):
 
 
     def __init__(self):
+        Downloader.__init__(self)
         self.working_dir = combivep_settings.COMBIVEP_WORKING_DIR
 
         #specific configuration
@@ -141,14 +142,13 @@ class UcscUpdater(Updater):
 
 
     def __init__(self):
-        #common configuration
         Updater.__init__(self)
 
         #specific configuration
         self.folder_url       = combivep_settings.UCSC_FOLDER_URL
         self.files_pattern    = combivep_settings.UCSC_FILES_PATTERN
         self.version_pattern  = combivep_settings.UCSC_VERSION_PATTERN
-        self.local_ref_db_dir = combivep_settings.COMBIVEP_MASTER_UCSC_REF_DB_DIR
+        self.local_ref_db_dir = combivep_settings.USER_UCSC_REF_DB_DIR
 
     def download_new_file(self):
         if not Updater.download_new_file(self):
@@ -164,14 +164,13 @@ class LjbUpdater(Updater):
 
 
     def __init__(self):
-        #common configuration
         Updater.__init__(self)
 
         #specific configuration
         self.folder_url       = combivep_settings.LJB_FOLDER_URL
         self.files_pattern    = combivep_settings.LJB_FILES_PATTERN
         self.version_pattern  = combivep_settings.LJB_VERSION_PATTERN
-        self.local_ref_db_dir = combivep_settings.COMBIVEP_MASTER_LJB_REF_DB_DIR
+        self.local_ref_db_dir = combivep_settings.USER_LJB_REF_DB_DIR
 
     def download_new_file(self):
         if not Updater.download_new_file(self):

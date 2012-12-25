@@ -23,7 +23,7 @@ are 'runable'
 
 
 @unittest.skip("temporary disable due to long running time")
-class TestScoresDB(template.RiskRefDBTester):
+class TestScoresDB(template.RiskyRefDBTester):
 
 
     def setUp(self):

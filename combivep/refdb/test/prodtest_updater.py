@@ -5,7 +5,7 @@ import combivep.settings as combivep_settings
 import combivep.refdb.updater as combivep_updater
 
 
-class TestLJBUpdater(template.RiskRefDBTester):
+class TestLJBUpdater(template.RiskyRefDBTester):
 
 
     def setUp(self):

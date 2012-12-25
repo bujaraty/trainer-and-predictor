@@ -8,20 +8,10 @@ This module is all about constant value that are used in this application
 
 DEBUG_MODE = 0
 
-# > > > > > > > > > > > > > permanent global data & folder < < < < < < < < < <
+# > > > > > > > > > > > > > development files & folders < < < < < < < < < <
 PROJECT_ROOT                      = os.path.dirname(os.path.dirname(__file__))
 
-#to keep master data produced by application
-COMBIVEP_MASTER_DATA_ROOT         = os.path.join(PROJECT_ROOT, 'dat')
-COMBIVEP_MASTER_PARAMETERS_DIR    = os.path.join(COMBIVEP_MASTER_DATA_ROOT, 'params')
-COMBIVEP_MASTER_PARAMETERS_FILE   = os.path.join(COMBIVEP_MASTER_PARAMETERS_DIR, 'params.npz')
-COMBIVEP_MASTER_DB_DIR            = os.path.join(COMBIVEP_MASTER_DATA_ROOT, 'DB')
-
-#to keep the new update file from UCSC and LJB
-COMBIVEP_MASTER_UCSC_REF_DB_DIR   = os.path.join(COMBIVEP_MASTER_DB_DIR, 'ref/UCSC')
-COMBIVEP_MASTER_LJB_REF_DB_DIR    = os.path.join(COMBIVEP_MASTER_DB_DIR, 'ref/LJB')
-
-#to keep 'central' data for testing and for demo. 'central' is for preventing redundancy
+#'central' data for testing and for demo. 'central' is for preventing redundancy
 COMBIVEP_CENTRAL_TEST_DATA_ROOT   = os.path.join(PROJECT_ROOT, 'combivep/data')
 COMBIVEP_CENTRAL_TEST_DATASET_DIR = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'dataset')
 COMBIVEP_CENTRAL_TEST_VCF_DIR     = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'vcf')
@@ -29,23 +19,35 @@ COMBIVEP_CENTRAL_TEST_UCSC_DIR    = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT
 COMBIVEP_CENTRAL_TEST_LJB_DIR     = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'LJB')
 
 
-# > > > > > > > > > > > > > temporay files and folder < < < < < < < < < <
-#the only temporay working folder used for processing data
-COMBIVEP_WORKING_DIR         = os.path.join(PROJECT_ROOT, 'tmp')
+# > > > > > > > > > > > > > User files & folders < < < < < < < < < <
+USER_DATA_ROOT               = os.path.expanduser('~/.CombiVEP')
 
-#temporary files for reference database processing
-TMP_UCSC_CLEAN_DB_FILE       = os.path.join(COMBIVEP_WORKING_DIR, 'tmp_ucsc_clean_db.txt')
-TMP_LJB_CLEAN_DB_FILE        = os.path.join(COMBIVEP_WORKING_DIR, 'tmp_ljb_clean_db.txt')
+#to keep user data produced by CombiVEP engine
+USER_PARAMETERS_DIR          = os.path.join(USER_DATA_ROOT, 'params')
+USER_PARAMETERS_FILE         = os.path.join(USER_PARAMETERS_DIR, 'params.npz')
+
+#to keep the reference database from UCSC and LJB
+USER_UCSC_REF_DB_DIR         = os.path.join(USER_DATA_ROOT, 'ref/UCSC')
+USER_LJB_REF_DB_DIR          = os.path.join(USER_DATA_ROOT, 'ref/LJB')
 
 
-# > > > > > > > > > > > > > INI file < < < < < < < < < <
-COMBIVEP_CONFIGURATION_FILE  = os.path.join(COMBIVEP_MASTER_DATA_ROOT, 'config.txt')
+# > > > > > > > > > > > > > status file < < < < < < < < < <
+COMBIVEP_CONFIGURATION_FILE  = os.path.join(USER_DATA_ROOT, 'config.txt')
 
 #key
 LATEST_UCSC_DATABASE_VERSION = 'latest_ucsc_database_version'
 LATEST_UCSC_FILE_NAME        = 'latest_ucsc_file_name'
 LATEST_LJB_DATABASE_VERSION  = 'latest_ljb_database_version'
 LATEST_LJB_FILE_PREFIX       = 'latest_ljb_file_prefix'
+
+
+# > > > > > > > > > > > > > temporay files and folder < < < < < < < < < <
+#the only temporay working folder used for processing data
+COMBIVEP_WORKING_DIR         = os.path.join(USER_DATA_ROOT, 'tmp')
+
+#temporary files for reference database processing
+TMP_UCSC_CLEAN_DB_FILE       = os.path.join(COMBIVEP_WORKING_DIR, 'tmp_ucsc_clean_db.txt')
+TMP_LJB_CLEAN_DB_FILE        = os.path.join(COMBIVEP_WORKING_DIR, 'tmp_ljb_clean_db.txt')
 
 
 # > > > > > > > > > > > > > MLP configuration < < < < < < < < < <

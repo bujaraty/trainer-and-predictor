@@ -4,10 +4,12 @@ import combivep.refdb.test.template as template
 import combivep.settings as combivep_settings
 import combivep.refdb.updater as combivep_updater
 
-DISABLE_HIGH_BANDWIDTH_TEST = 1
 
 class TestDownloader(template.SafeRefDBTester):
 
+
+    def __init__(self, test_name):
+        template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'downloader'
@@ -26,6 +28,9 @@ class TestDownloader(template.SafeRefDBTester):
 
 class TestUpdater(template.SafeRefDBTester):
 
+
+    def __init__(self, test_name):
+        template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'updater'
@@ -56,9 +61,12 @@ class TestUpdater(template.SafeRefDBTester):
         self.remove_working_dir()
 
 
-#@unittest.skipIf(DISABLE_HIGH_BANDWIDTH_TEST, "temporary disable due to high bandwidth usage")
+#@unittest.skip("temporary disable due to high bandwidth usage")
 class TestUcscUpdater(template.SafeRefDBTester):
 
+
+    def __init__(self, test_name):
+        template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'ucsc_updater'
@@ -132,6 +140,9 @@ class TestUcscUpdater(template.SafeRefDBTester):
 class TestLJBUpdater(template.SafeRefDBTester):
 
 
+    def __init__(self, test_name):
+        template.SafeRefDBTester.__init__(self, test_name)
+
     def setUp(self):
         self.test_class = 'ljb_updater'
 
@@ -194,6 +205,9 @@ class TestLJBUpdater(template.SafeRefDBTester):
 class TestMisc(template.SafeRefDBTester):
     """ test (a few) miscellaneous function(s) """
 
+
+    def __init__(self, test_name):
+        template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'misc'

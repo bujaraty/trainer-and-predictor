@@ -9,9 +9,12 @@ class Configure(object):
     def __init__(self):
         self.config_file = combivep_settings.COMBIVEP_CONFIGURATION_FILE
         self.config_values  = {}
+        self.config_values[combivep_settings.LATEST_UCSC_DATABASE_VERSION] = '0'
+        self.config_values[combivep_settings.LATEST_UCSC_FILE_NAME]        = ''
+        self.config_values[combivep_settings.LATEST_LJB_DATABASE_VERSION]  = '0.1'
+        self.config_values[combivep_settings.LATEST_LJB_FILE_PREFIX]       = ''
 
     def load_config(self):
-        self.config_values.clear()
         f = open(self.config_file, 'r')
         for line in f:
             rec = line.strip().split('=')
@@ -26,7 +29,6 @@ class Configure(object):
         f.close()
         return self.config_values
 
-
     def __save(self):
         f = open(self.config_file, 'w')
         f.write("%s=%s\n" % (combivep_settings.LATEST_UCSC_DATABASE_VERSION, self.config_values[combivep_settings.LATEST_UCSC_DATABASE_VERSION]))
@@ -36,7 +38,8 @@ class Configure(object):
         f.close()
 
     def write_ljb_config(self, version, file_prefix):
-        self.load_config()
+        if os.path.exists(self.config_file):
+            self.load_config()
         self.config_values[combivep_settings.LATEST_LJB_DATABASE_VERSION] = version
         self.config_values[combivep_settings.LATEST_LJB_FILE_PREFIX]      = file_prefix
         self.__save()

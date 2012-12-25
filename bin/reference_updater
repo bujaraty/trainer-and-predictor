@@ -1,0 +1,10 @@
+#!/usr/bin/python
+import combivep.refdb.control as control
+
+#update LJB reference database
+ljb_controller = control.LjbController()
+ljb_controller.update()
+#update UCSC reference database
+ucsc_controller = control.UcscController()
+ucsc_controller.update()
+

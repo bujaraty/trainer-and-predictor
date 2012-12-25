@@ -9,6 +9,7 @@ setup(
 	author='Jessada Thutkawkorapin',
 	author_email='tester@test.com',
 	packages=['combivep', 'combivep.engine', 'combivep.engine.test', 'combivep.refdb', 'combivep.refdb.test'],
+	scripts=['bin/reference_updater'],
 	url='http://pypi.python.org/pypi/combivep/',
 	license='LICENSE.txt',
 	description='CombiVEP',

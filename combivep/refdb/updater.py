@@ -96,7 +96,6 @@ class Updater(Downloader):
             return None
         self.create_dir(self.working_dir)
         tmp_list_file  = os.path.join(self.working_dir, self.tmp_file)
-        print >> sys.stderr, 'Checking new database version . . . . '
         self.download(self.folder_url,
                       self.working_dir,
                       output_file_name=tmp_list_file)

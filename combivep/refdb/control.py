@@ -18,14 +18,9 @@ class UcscController(combivep_reader.UcscReader, combivep_updater.UcscUpdater, c
         combivep_updater.UcscUpdater.__init__(self)
         combivep_cfg.Configure.__init__(self)
 
-#        #the raw db file is the output from updating process
-#        self.__raw_db_file         = None
-#        #the clean db file can be any temporary file.
-#        #this file connects the 'clean' and 'transform' processes
-#        self.__clean_db_file       = None
-#
     def update(self):
         self.load_config()
+        print >> sys.stderr, 'Checking new UCSC database version . . . . '
         new_file, new_version = self.check_new_file(self.config_values[combivep_settings.LATEST_UCSC_DATABASE_VERSION])
         if not new_version:
             print >> sys.stderr, 'UCSC reference database is already up-to-date (version %s) . . . . . ' % (self.config_values[combivep_settings.LATEST_UCSC_DATABASE_VERSION])
@@ -66,6 +61,7 @@ class LjbController(combivep_reader.LjbReader, combivep_updater.LjbUpdater, comb
 
     def update(self):
         self.load_config()
+        print >> sys.stderr, 'Checking new LJB database version . . . . '
         new_file, new_version = self.check_new_file(self.config_values[combivep_settings.LATEST_LJB_DATABASE_VERSION])
         if not new_version:
             print >> sys.stderr, 'LJB reference database is already up-to-date (version %s) . . . . . ' % (self.config_values[combivep_settings.LATEST_LJB_DATABASE_VERSION])
@@ -158,7 +154,6 @@ class LjbController(combivep_reader.LjbReader, combivep_updater.LjbUpdater, comb
         cmd.append(' > ')
         cmd.append(output_file)
         return self.exec_sh(''.join(cmd))
-#        return ''.join(cmd)
 
     def tabix_database(self, file_name):
         """ interface for testing purpose """
@@ -177,9 +172,6 @@ class LjbController(combivep_reader.LjbReader, combivep_updater.LjbUpdater, comb
                                  zerobased = False)
 
 
-if __name__=="__main__":
-    ljb_controller = LjbController()
-    ljb_controller.update()
 
 
 

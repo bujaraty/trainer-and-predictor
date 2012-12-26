@@ -96,25 +96,39 @@ UCSC_0_INDEX_REF       = 8
 UCSC_0_INDEX_OBSERVED  = 9
 UCSC_EXPECTED_LENGTH   = 26
 
+
+# > > > > > > > > > > > > > Dataset data structure < < < < < < < < < <
+#key
+KEY_SNP_INFO      = 'snp_info'
+KEY_SCORES        = 'scores'
+KEY_TARGET_VALUE  = 'target_value'
+
+#global SNP information key
+KEY_CHROM = 'chrom'
+KEY_POS   = 'pos'
+KEY_REF   = 'ref'
+KEY_ALT   = 'alt'
+
+
 # > > > > > > > > > > > > > LJB format configuration < < < < < < < < < <
-#general key
+#SNP information key
 KEY_LJB_CHROM     = 'ljb_chrom'
-KEY_LJB_START_POS = 'ljb_hg19_start_pos'
+KEY_LJB_POS       = 'ljb_hg19_pos'
 KEY_LJB_REF       = 'ljb_ref'
 KEY_LJB_ALT       = 'ljb_alt'
 
 #score key
-PHYLOP_SCORE = 'phylop_score'
-SIFT_SCORE   = 'sift_score'
-PP2_SCORE    = 'pp2_score'
-LRT_SCORE    = 'lrt_score'
-MT_SCORE     = 'mt_score'
-GERP_SCORE   = 'gerp_score'
+KEY_PHYLOP_SCORE = 'phylop_score'
+KEY_SIFT_SCORE   = 'sift_score'
+KEY_PP2_SCORE    = 'pp2_score'
+KEY_LRT_SCORE    = 'lrt_score'
+KEY_MT_SCORE     = 'mt_score'
+KEY_GERP_SCORE   = 'gerp_score'
 
 #LJB index
 #1-based index, used by awk for parsing
 LJB_RAW_1_INDEX_CHROM        = 1
-LJB_RAW_1_INDEX_START_POS    = 7
+LJB_RAW_1_INDEX_POS          = 7
 LJB_RAW_1_INDEX_REF          = 3
 LJB_RAW_1_INDEX_ALT          = 4
 LJB_RAW_1_INDEX_PHYLOP_SCORE = 8
@@ -126,7 +140,7 @@ LJB_RAW_1_INDEX_GERP_SCORE   = 17
 
 #0-based index, used by python for reading
 LJB_PARSED_0_INDEX_CHROM        = 0
-LJB_PARSED_0_INDEX_START_POS    = 1
+LJB_PARSED_0_INDEX_POS          = 1
 LJB_PARSED_0_INDEX_REF          = 2
 LJB_PARSED_0_INDEX_ALT          = 3
 LJB_PARSED_0_INDEX_PHYLOP_SCORE = 4
@@ -136,6 +150,21 @@ LJB_PARSED_0_INDEX_LRT_SCORE    = 7
 LJB_PARSED_0_INDEX_MT_SCORE     = 8
 LJB_PARSED_0_INDEX_GERP_SCORE   = 9
 LJB_PARSED_EXPECTED_LENGTH      = 10
+
+
+# > > > > > > > > > > > > > VCF format configuration < < < < < < < < < <
+#SNP information key
+KEY_VCF_CHROM = 'vcf_chrom'
+KEY_VCF_POS   = 'vcf_pos'
+KEY_VCF_REF   = 'vcf_ref'
+KEY_VCF_ALT   = 'vcf_ALT'
+
+#VCF index
+#0-based index, used by python
+VCF_0_INDEX_CHROM = 0
+VCF_0_INDEX_POS   = 1
+VCF_0_INDEX_REF   = 3
+VCF_0_INDEX_ALT   = 4
 
 
 

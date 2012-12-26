@@ -44,26 +44,6 @@ class Tester(unittest.TestCase, CombiVEPBase):
         unittest.TestCase.__init__(self, test_name)
         CombiVEPBase.__init__(self)
 
-#    def get_root_data_dir(self, __file):
-#        """
-#
-#        It's 'root' because several module gonna use this folder as well.
-#        To use this function properly, the caller module has to create their
-#        own sub-folders
-#
-#        """
-#        return os.path.join(os.path.dirname(__file), 'data')
-#
-#    def get_root_working_dir(self, __file):
-#        """
-#
-#        It's 'root' because several module gonna use this folder as well.
-#        To use this function properly, the caller module has to create their
-#        own sub-folders
-#
-#        """
-#        return os.path.join(os.path.dirname(__file), 'tmp')
-
     def remove_dir(self, dir_name):
         self.assertTrue(dir_name, '"None" is not a valid directory')
         CombiVEPBase.remove_dir(self, dir_name)

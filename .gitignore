@@ -8,4 +8,6 @@ dat/DB/ref/
 *big_data/
 *tmp/
 combivep/refdb/test/tmp
+*scores*
+*disable*
 

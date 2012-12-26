@@ -1,15 +1,15 @@
 import unittest
 import os
-import combivep.refdb.test.template as template
+import combivep.refdb.test.template as test_template
 import combivep.settings as combivep_settings
 import combivep.refdb.updater as combivep_updater
 
 
-class TestDownloader(template.SafeRefDBTester):
+class TestDownloader(test_template.SafeRefDBTester):
 
 
     def __init__(self, test_name):
-        template.SafeRefDBTester.__init__(self, test_name)
+        test_template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'downloader'
@@ -26,11 +26,11 @@ class TestDownloader(template.SafeRefDBTester):
         self.remove_working_dir()
 
 
-class TestUpdater(template.SafeRefDBTester):
+class TestUpdater(test_template.SafeRefDBTester):
 
 
     def __init__(self, test_name):
-        template.SafeRefDBTester.__init__(self, test_name)
+        test_template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'updater'
@@ -62,11 +62,11 @@ class TestUpdater(template.SafeRefDBTester):
 
 
 #@unittest.skip("temporary disable due to high bandwidth usage")
-class TestUcscUpdater(template.SafeRefDBTester):
+class TestUcscUpdater(test_template.SafeRefDBTester):
 
 
     def __init__(self, test_name):
-        template.SafeRefDBTester.__init__(self, test_name)
+        test_template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'ucsc_updater'
@@ -137,11 +137,11 @@ class TestUcscUpdater(template.SafeRefDBTester):
         self.remove_working_dir()
 
 
-class TestLJBUpdater(template.SafeRefDBTester):
+class TestLJBUpdater(test_template.SafeRefDBTester):
 
 
     def __init__(self, test_name):
-        template.SafeRefDBTester.__init__(self, test_name)
+        test_template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'ljb_updater'
@@ -202,12 +202,12 @@ class TestLJBUpdater(template.SafeRefDBTester):
         self.remove_working_dir()
 
 
-class TestMisc(template.SafeRefDBTester):
+class TestMisc(test_template.SafeRefDBTester):
     """ test (a few) miscellaneous function(s) """
 
 
     def __init__(self, test_name):
-        template.SafeRefDBTester.__init__(self, test_name)
+        test_template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'misc'

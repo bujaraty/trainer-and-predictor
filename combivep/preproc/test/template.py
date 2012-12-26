@@ -4,8 +4,7 @@ import combivep.template as main_template
 import combivep.settings as combivep_settings
 
 
-class SafeGeneralTester(main_template.SafeTester):
-    """ General template for "utils" testing """
+class SafePreProcTester(main_template.SafeTester):
 
 
     def __init__(self, test_name):
@@ -16,8 +15,7 @@ class SafeGeneralTester(main_template.SafeTester):
         self.data_dir    = os.path.join(os.path.join(os.path.dirname(__file__), 'data'), self.test_class)
 
 
-class RiskyGeneralTester(main_template.RiskyTester):
-    """ General template for "utils" testing """
+class RiskyPreProcTester(main_template.RiskyTester):
 
 
     def __init__(self, test_name):
@@ -26,8 +24,4 @@ class RiskyGeneralTester(main_template.RiskyTester):
     def set_dir(self):
         self.working_dir = combivep_settings.COMBIVEP_WORKING_DIR
         self.data_dir    = os.path.join(os.path.join(os.path.dirname(__file__), 'big_data'), self.test_class)
-
-
-
-
 

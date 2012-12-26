@@ -1,26 +1,22 @@
-import subprocess
 import sys
 import os
 import pysam
 import combivep.settings as combivep_settings
-import combivep.template as template
-import combivep.refdb.reader as combivep_reader
 import combivep.refdb.updater as combivep_updater
 import combivep.cfg as combivep_cfg
 
 
-class UcscController(combivep_reader.UcscReader, combivep_updater.UcscUpdater, combivep_cfg.Configure):
+class UcscController(combivep_updater.UcscUpdater, combivep_cfg.Configure):
     """UCSC database controller"""
 
 
     def __init__(self):
-        combivep_reader.UcscReader.__init__(self)
         combivep_updater.UcscUpdater.__init__(self)
         combivep_cfg.Configure.__init__(self)
 
     def update(self):
         self.load_config()
-        print >> sys.stderr, 'Checking new UCSC database version . . . . '
+        print >> sys.stderr, 'Checking new UCSC reference database version . . . . '
         new_file, new_version = self.check_new_file(self.config_values[combivep_settings.LATEST_UCSC_DATABASE_VERSION])
         if not new_version:
             print >> sys.stderr, 'UCSC reference database is already up-to-date (version %s) . . . . . ' % (self.config_values[combivep_settings.LATEST_UCSC_DATABASE_VERSION])
@@ -28,6 +24,7 @@ class UcscController(combivep_reader.UcscReader, combivep_updater.UcscUpdater, c
         self.download_new_file()
         new_database = self.__tabix_database()
         self.write_ucsc_config(new_version, new_database)
+        print >> sys.stderr, 'Finish updating UCSC reference database . . . . '
         return True
 
     def tabix_database(self, file_name):
@@ -49,19 +46,18 @@ class UcscController(combivep_reader.UcscReader, combivep_updater.UcscUpdater, c
                                  zerobased = True)
 
 
-class LjbController(combivep_reader.LjbReader, combivep_updater.LjbUpdater, combivep_cfg.Configure):
+class LjbController(combivep_updater.LjbUpdater, combivep_cfg.Configure):
     """LJB database controller"""
 
 
     def __init__(self):
-        combivep_reader.LjbReader.__init__(self)
         combivep_updater.LjbUpdater.__init__(self)
         combivep_cfg.Configure.__init__(self)
         self.chromosome_list = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', 'X', 'Y']
 
     def update(self):
         self.load_config()
-        print >> sys.stderr, 'Checking new LJB database version . . . . '
+        print >> sys.stderr, 'Checking new LJB reference database version . . . . '
         new_file, new_version = self.check_new_file(self.config_values[combivep_settings.LATEST_LJB_DATABASE_VERSION])
         if not new_version:
             print >> sys.stderr, 'LJB reference database is already up-to-date (version %s) . . . . . ' % (self.config_values[combivep_settings.LATEST_LJB_DATABASE_VERSION])
@@ -83,6 +79,7 @@ class LjbController(combivep_reader.LjbReader, combivep_updater.LjbUpdater, comb
         for chromosome_file in self.__get_chromosome_files(file_prefix):
             self.delete_file(chromosome_file)
             self.delete_file(chromosome_file + '.clean')
+        print >> sys.stderr, 'Finish updating LJB reference database . . . . '
         return True
 
     def __get_chromosome_files(self, file_prefix):
@@ -130,7 +127,7 @@ class LjbController(combivep_reader.LjbReader, combivep_updater.LjbUpdater, comb
         cmd.append(' | awk -F\'\\t\' \'{printf "%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\n", $')
         cmd.append(str(combivep_settings.LJB_RAW_1_INDEX_CHROM))
         cmd.append(', $')
-        cmd.append(str(combivep_settings.LJB_RAW_1_INDEX_START_POS))
+        cmd.append(str(combivep_settings.LJB_RAW_1_INDEX_POS))
         cmd.append(', $')
         cmd.append(str(combivep_settings.LJB_RAW_1_INDEX_REF))
         cmd.append(', $')
@@ -167,8 +164,8 @@ class LjbController(combivep_reader.LjbReader, combivep_updater.LjbUpdater, comb
         return pysam.tabix_index(file_name,
                                  force     = True,
                                  seq_col   = combivep_settings.LJB_PARSED_0_INDEX_CHROM,
-                                 start_col = combivep_settings.LJB_PARSED_0_INDEX_START_POS,
-                                 end_col   = combivep_settings.LJB_PARSED_0_INDEX_START_POS,
+                                 start_col = combivep_settings.LJB_PARSED_0_INDEX_POS,
+                                 end_col   = combivep_settings.LJB_PARSED_0_INDEX_POS,
                                  zerobased = False)
 
 

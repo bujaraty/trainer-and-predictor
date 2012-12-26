@@ -1,16 +1,17 @@
 import unittest
 import os
 import filecmp
-import combivep.refdb.test.template as template
+import combivep.refdb.test.template as test_template
 import combivep.settings as combivep_settings
 import combivep.refdb.control as combivep_control
+import combivep.preproc.reader as combivep_reader
 
 
-class TestUcscController(template.SafeRefDBTester):
+class TestUcscController(test_template.SafeRefDBTester):
 
 
     def __init__(self, test_name):
-        template.SafeRefDBTester.__init__(self, test_name)
+        test_template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'ucsc_controller'
@@ -48,9 +49,10 @@ class TestUcscController(template.SafeRefDBTester):
         self.assertTrue(os.path.exists(out_file+'.tbi'), "Tabix doesn't work correctly")
 
         #test if it is readable
-        self.__ucsc_controller.read(out_file)
+        ucsc_reader = combivep_reader.UcscReader()
+        ucsc_reader.read(out_file)
         readable = False
-        for rec in self.__ucsc_controller.fetch_array_snps('chr3', 108572604, 108572605):
+        for rec in ucsc_reader.fetch_array_snps('chr3', 108572604, 108572605):
             readable = True
             self.assertEqual(rec[combivep_settings.UCSC_0_INDEX_START_POS], '108572604', "Database tabixing doesn't work correctly")
             break
@@ -69,11 +71,11 @@ class TestUcscController(template.SafeRefDBTester):
         self.remove_working_dir()
 
 
-class TestLjbController(template.SafeRefDBTester):
+class TestLjbController(test_template.SafeRefDBTester):
 
 
     def __init__(self, test_name):
-        template.SafeRefDBTester.__init__(self, test_name)
+        test_template.SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'ljb_controller'
@@ -111,11 +113,12 @@ class TestLjbController(template.SafeRefDBTester):
         self.assertTrue(os.path.exists(out_file+'.tbi'), "Tabix doesn't work correctly")
 
         #test if it is readable
-        self.__ljb_controller.read(out_file)
+        ljb_reader = combivep_reader.LjbReader()
+        ljb_reader.read(out_file)
         readable = False
-        for rec in self.__ljb_controller.fetch_array_snps('3', 108549516, 108549517): #to be tested again
+        for rec in ljb_reader.fetch_array_snps('3', 108549516, 108549517): #to be tested again
             readable = True
-            self.assertEqual(rec[combivep_settings.LJB_PARSED_0_INDEX_START_POS], '108549517', "Database tabixing doesn't work correctly")
+            self.assertEqual(rec[combivep_settings.LJB_PARSED_0_INDEX_POS], '108549517', "Database tabixing doesn't work correctly")
             break
         self.assertTrue(readable, "Tabixed ljb database is not readable")
 

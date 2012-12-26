@@ -4,7 +4,7 @@ import re
 import sys
 import zipfile
 import combivep.settings as combivep_settings
-import combivep.template as template
+import combivep.template as main_template
 
 
 def ungz(gz_file):
@@ -45,12 +45,12 @@ def unzip(zip_file, out_dir):
 #    return os.waitpid(p.pid, 0)[1]
 
 
-class Downloader(template.CombiVEPBase):
+class Downloader(main_template.CombiVEPBase):
     """to download file"""
 
 
     def __init__(self):
-        template.CombiVEPBase.__init__(self)
+        main_template.CombiVEPBase.__init__(self)
 
     def download(self, target_url, output_dir, output_file_name=None):
         """

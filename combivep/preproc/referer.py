@@ -45,21 +45,21 @@ class Referer(combivep_cfg.Configure):
     def get_scores(self, chrom, pos, ref, alt):
         """
 
-        This function return precomputed prediction scores from LJB database
+        This function returns precomputed prediction scores from LJB database
 
         The inputs of this function are in string format except "pos", which is integer.
         "chrom" can be either in format "chr1" or "1"
         "pos" is 1-based index
 
-        return hash if the snp is precomputed and None otherwise
+        return hash scores if the snp is precomputed and None otherwise
 
         """
         for rec in self.__ljb_reader.fetch_hash_snps(chrom, int(pos)-1, int(pos)):
-            if rec[combivep_settings.KEY_SNP_INFO][combivep_settings.KEY_LJB_REF] != ref:
+            if rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_LJB_REF] != ref:
                 continue
-            if rec[combivep_settings.KEY_SNP_INFO][combivep_settings.KEY_LJB_ALT] != alt:
+            if rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_LJB_ALT] != alt:
                 continue
-            return rec
+            return rec[combivep_settings.KEY_SCORES_SECTION]
         return None
 
 

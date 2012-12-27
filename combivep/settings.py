@@ -62,6 +62,15 @@ DEFAULT_HIDDEN_NODES  = 4
 DEFAULT_SEED          = None
 DEFAULT_FIGURE_DIR    = None
 
+#proportion of data partitioning
+PROPORTION_TRAINING_DATA   = 70
+PROPORTION_VALIDATION_DATA = 15
+PROPORTION_TEST_DATA       = 15
+
+
+# > > > > > > > > > > > > > Demo configuration < < < < < < < < < <
+DEMO_SEED = 20
+
 
 # > > > > > > > > > > > > > reference database configuration < < < < < < < < < <
 #UCSC
@@ -99,9 +108,9 @@ UCSC_EXPECTED_LENGTH   = 26
 
 # > > > > > > > > > > > > > Dataset data structure < < < < < < < < < <
 #key
-KEY_SNP_INFO      = 'snp_info'
-KEY_SCORES        = 'scores'
-KEY_TARGET_VALUE  = 'target_value'
+KEY_SNP_INFO_SECTION      = 'snp_info'
+KEY_SCORES_SECTION        = 'scores'
+#KEY_TARGET_VALUE  = 'target_value'
 
 #global SNP information key
 KEY_CHROM = 'chrom'

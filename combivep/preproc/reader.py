@@ -32,7 +32,7 @@ class UcscReader(main_template.CombiVEPBase):
                         combivep_settings.KEY_UCSC_REF       : rec[combivep_settings.UCSC_0_INDEX_REF],
                         combivep_settings.KEY_UCSC_OBSERVED  : rec[combivep_settings.UCSC_0_INDEX_OBSERVED],
                         }
-            yield {combivep_settings.KEY_SNP_INFO : snp_info}
+            yield {combivep_settings.KEY_SNP_INFO_SECTION : snp_info}
 
 
 class LjbReader(main_template.CombiVEPBase):
@@ -66,8 +66,8 @@ class LjbReader(main_template.CombiVEPBase):
                         combivep_settings.KEY_MT_SCORE      : rec[combivep_settings.LJB_PARSED_0_INDEX_MT_SCORE],
                         combivep_settings.KEY_GERP_SCORE    : rec[combivep_settings.LJB_PARSED_0_INDEX_GERP_SCORE],
                         }
-            yield {combivep_settings.KEY_SNP_INFO : snp_info,
-                   combivep_settings.KEY_SCORES   : scores,
+            yield {combivep_settings.KEY_SNP_INFO_SECTION : snp_info,
+                   combivep_settings.KEY_SCORES_SECTION   : scores,
                    }
 
 
@@ -90,11 +90,12 @@ class VcfReader(main_template.CombiVEPBase):
 
     def fetch_hash_snps(self):
         for rec in self.fetch_array_snps():
-            yield {combivep_settings.KEY_VCF_CHROM : rec[combivep_settings.VCF_0_INDEX_CHROM],
-                   combivep_settings.KEY_VCF_POS   : rec[combivep_settings.VCF_0_INDEX_POS],
-                   combivep_settings.KEY_VCF_REF   : rec[combivep_settings.VCF_0_INDEX_REF],
-                   combivep_settings.KEY_VCF_ALT   : rec[combivep_settings.VCF_0_INDEX_ALT],
-                   }
+            snp_info = {combivep_settings.KEY_VCF_CHROM : rec[combivep_settings.VCF_0_INDEX_CHROM],
+                        combivep_settings.KEY_VCF_POS   : rec[combivep_settings.VCF_0_INDEX_POS],
+                        combivep_settings.KEY_VCF_REF   : rec[combivep_settings.VCF_0_INDEX_REF],
+                        combivep_settings.KEY_VCF_ALT   : rec[combivep_settings.VCF_0_INDEX_ALT],
+                        }
+            yield {combivep_settings.KEY_SNP_INFO_SECTION : snp_info}
 
 
 

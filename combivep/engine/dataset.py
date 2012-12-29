@@ -10,6 +10,8 @@ class DataSet(object):
 
 
     def __init__(self, file_name):
+        object.__init__(self)
+
         __data = np.loadtxt(file_name, dtype='S20')
         self.n_data, self.n_cols = __data.shape
         self.n_features          = self.n_cols - 2

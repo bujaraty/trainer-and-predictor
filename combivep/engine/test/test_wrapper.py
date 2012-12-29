@@ -33,14 +33,16 @@ class TestTrainer(test_template.SafeEngineTester):
                                                                    'training_dataset'))
         validation_dataset = combivep_dataset.DataSet(os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
                                                                    'validation_dataset'))
-        trainer = combivep_wrapper.Trainer(training_dataset, validation_dataset, seed=20, figure_dir=self.working_dir)
+        trainer = combivep_wrapper.Trainer(training_dataset, validation_dataset, seed=20, n_hidden_nodes=17, figure_dir=self.working_dir)
         trainer.train(iteration=50)
 
         params_file  = os.path.join(self.working_dir, 'params.npz')
         trainer.export_best_parameters(params_file=params_file)
-        self.assertEqual(os.stat(params_file).st_size, 666, msg='Trainer does not functional properly')
+#        self.assertEqual(os.stat(params_file).st_size, 1498)
+        self.assertEqual(os.stat(params_file).st_size, 1498, msg='Trainer does not functional properly')
         figure_file  = os.path.join(self.working_dir, '04.eps')
-        self.assertEqual(os.stat(figure_file).st_size, 21497, msg='Trainer does not functional properly')
+        self.assertEqual(os.stat(figure_file).st_size, 21497)
+#        self.assertEqual(os.stat(figure_file).st_size, 21497, msg='Trainer does not functional properly')
 
     def tearDown(self):
         self.remove_working_dir()

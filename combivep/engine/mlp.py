@@ -8,10 +8,12 @@ class Mlp(object):
     def __init__(self, n_features,
                        seed=combivep_settings.DEFAULT_SEED,
                        n_hidden_nodes=combivep_settings.DEFAULT_HIDDEN_NODES):
+        object.__init__(self)
         #set initial configuration values and memorize input
-        self.__n_features  = n_features
-        self.best_weights1 = []
-        self.best_weights2 = []
+        self.__n_features      = n_features
+        self.__n_hidden_nodes  = n_hidden_nodes
+        self.best_weights1     = []
+        self.best_weights2     = []
 
         #set initial values of weight matrixs to random small values
         np.random.seed(seed)
@@ -62,7 +64,7 @@ class Mlp(object):
                                                              (1-self.__out1)
                                                              )
                                                  ) * 0.5
-        self.__error_signal_hidden = self.__error_signal_hidden[0:4]
+        self.__error_signal_hidden = self.__error_signal_hidden[0:self.__n_hidden_nodes]
 
         return np.sum(np.absolute(model_error), axis=1).item(0)
 

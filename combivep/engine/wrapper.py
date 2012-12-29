@@ -33,18 +33,18 @@ class Trainer(combivep_mlp.Mlp):
             self.backward_propagation(self.__training_dataset)
             weights1, weights2 = self.weight_update(self.__training_dataset)
             self.__training_error.append(np.sum(np.absolute(self.calculate_error(out, 
-                                                                          self.__training_dataset.targets
-                                                                          )
-                                                     ), 
+                                                                                 self.__training_dataset.targets
+                                                                                 )
+                                                            ), 
                                          axis=1
                                          ).item(0) / self.__training_dataset.n_data)
 
             #evaluate model using validation dataset
             out = self.forward_propagation(self.__validation_dataset)
             self.__validation_error.append(np.sum(np.absolute(self.calculate_error(out,
-                                                                            self.__validation_dataset.targets
-                                                                            )
-                                                       ),
+                                                                                   self.__validation_dataset.targets
+                                                                                   )
+                                                              ),
                                            axis=1
                                            ).item(0) / self.__validation_dataset.n_data)
 

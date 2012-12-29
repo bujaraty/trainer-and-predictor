@@ -9,14 +9,15 @@ This module is all about constant value that are used in this application
 DEBUG_MODE = 0
 
 # > > > > > > > > > > > > > development files & folders < < < < < < < < < <
-PROJECT_ROOT                      = os.path.dirname(os.path.dirname(__file__))
+PROJECT_ROOT                        = os.path.dirname(os.path.dirname(__file__))
 
 #'central' data for testing and for demo. 'central' is for preventing redundancy
-COMBIVEP_CENTRAL_TEST_DATA_ROOT   = os.path.join(PROJECT_ROOT, 'combivep/data')
-COMBIVEP_CENTRAL_TEST_DATASET_DIR = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'dataset')
-COMBIVEP_CENTRAL_TEST_VCF_DIR     = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'vcf')
-COMBIVEP_CENTRAL_TEST_UCSC_DIR    = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'UCSC')
-COMBIVEP_CENTRAL_TEST_LJB_DIR     = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'LJB')
+COMBIVEP_CENTRAL_TEST_DATA_ROOT     = os.path.join(PROJECT_ROOT, 'combivep/data')
+COMBIVEP_CENTRAL_TEST_DATASET_DIR   = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'dataset')
+COMBIVEP_CENTRAL_TEST_VARIBENCH_DIR = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'VariBench')
+COMBIVEP_CENTRAL_TEST_VCF_DIR       = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'vcf')
+COMBIVEP_CENTRAL_TEST_UCSC_DIR      = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'UCSC')
+COMBIVEP_CENTRAL_TEST_LJB_DIR       = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'LJB')
 
 
 # > > > > > > > > > > > > > User files & folders < < < < < < < < < <
@@ -107,16 +108,23 @@ UCSC_EXPECTED_LENGTH   = 26
 
 
 # > > > > > > > > > > > > > Dataset data structure < < < < < < < < < <
-#key
-KEY_SNP_INFO_SECTION      = 'snp_info'
-KEY_SCORES_SECTION        = 'scores'
-#KEY_TARGET_VALUE  = 'target_value'
+#section key
+KEY_SNP_INFO_SECTION   = 'snp_info'
+KEY_SCORES_SECTION     = 'scores'
+KEY_PREDICTION_SECTION = 'prediction'
 
-#global SNP information key
+#global SNP information keys
 KEY_CHROM = 'chrom'
 KEY_POS   = 'pos'
 KEY_REF   = 'ref'
 KEY_ALT   = 'alt'
+
+#predection key
+KEY_TARGETS = 'targets'
+
+#file type
+FILE_TYPE_VARIBENCH = 'VariBench'
+FILE_TYPE_VCF       = 'VCF'
 
 
 # > > > > > > > > > > > > > LJB format configuration < < < < < < < < < <
@@ -166,7 +174,7 @@ LJB_PARSED_EXPECTED_LENGTH      = 10
 KEY_VCF_CHROM = 'vcf_chrom'
 KEY_VCF_POS   = 'vcf_pos'
 KEY_VCF_REF   = 'vcf_ref'
-KEY_VCF_ALT   = 'vcf_ALT'
+KEY_VCF_ALT   = 'vcf_alt'
 
 #VCF index
 #0-based index, used by python
@@ -174,6 +182,23 @@ VCF_0_INDEX_CHROM = 0
 VCF_0_INDEX_POS   = 1
 VCF_0_INDEX_REF   = 3
 VCF_0_INDEX_ALT   = 4
+
+
+# > > > > > > > > > > > > > VariBench format configuration < < < < < < < < < <
+#SNP information key
+KEY_VARIBENCH_CHROM   = 'varibench_chrom'
+KEY_VARIBENCH_POS     = 'varibench_pos'
+KEY_VARIBENCH_REF     = 'varibench_ref'
+KEY_VARIBENCH_ALT     = 'varibench_alt'
+KEY_VARIBENCH_TARGETS = 'varibench_targets'
+
+#VariBench index
+#0-based index, used by python
+VARIBENCH_0_INDEX_CHROM   = 0
+VARIBENCH_0_INDEX_POS     = 1
+VARIBENCH_0_INDEX_REF     = 2
+VARIBENCH_0_INDEX_ALT     = 3
+VARIBENCH_0_INDEX_TARGETS = 4
 
 
 

@@ -98,6 +98,36 @@ class VcfReader(main_template.CombiVEPBase):
             yield {combivep_settings.KEY_SNP_INFO_SECTION : snp_info}
 
 
+class VariBenchReader(main_template.CombiVEPBase):
+    """to read parsed VariBench file"""
+
+
+    def __init__(self):
+        main_template.CombiVEPBase.__init__(self)
+
+    def read(self, varibench_file):
+        self.varibench_file_name = varibench_file
+
+    def fetch_array_snps(self):
+        varibench_file = open(self.varibench_file_name)
+        for line in varibench_file:
+            if line[0] == '#':
+                continue
+            yield line.rstrip('\n').split('\t')
+
+    def fetch_hash_snps(self):
+        for rec in self.fetch_array_snps():
+            snp_info = {combivep_settings.KEY_VARIBENCH_CHROM : rec[combivep_settings.VARIBENCH_0_INDEX_CHROM],
+                        combivep_settings.KEY_VARIBENCH_POS   : rec[combivep_settings.VARIBENCH_0_INDEX_POS],
+                        combivep_settings.KEY_VARIBENCH_REF   : rec[combivep_settings.VARIBENCH_0_INDEX_REF],
+                        combivep_settings.KEY_VARIBENCH_ALT   : rec[combivep_settings.VARIBENCH_0_INDEX_ALT],
+                        }
+            prediction = {combivep_settings.KEY_VARIBENCH_TARGETS : rec[combivep_settings.VARIBENCH_0_INDEX_TARGETS]}
+            yield {combivep_settings.KEY_SNP_INFO_SECTION   : snp_info,
+                   combivep_settings.KEY_PREDICTION_SECTION : prediction,
+                   }
+
+
 
 
 

@@ -170,5 +170,44 @@ class TestVcfReader(test_template.SafePreProcTester):
         self.remove_working_dir()
 
 
+class TestVariBenchReader(test_template.SafePreProcTester):
+
+
+    def __init__(self, test_name):
+        test_template.SafePreProcTester.__init__(self, test_name)
+
+    def setUp(self):
+        self.test_class = 'varibench_reader'
+
+    def init_varibench_reader_instance(self):
+        self.__varibench_reader = combivep_reader.VariBenchReader()
+
+    def test_formatting(self):
+        self.init_test('test_formatting')
+        self.init_varibench_reader_instance()
+        test_file = os.path.join(self.data_dir, 'test_formatting.varibench')
+        self.__varibench_reader.read(test_file)
+        readable = False
+        for rec in self.__varibench_reader.fetch_hash_snps():
+            readable = True
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_CHROM], '1', "Incorrect VariBench formatting")
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_POS], '19566382', "Incorrect VariBench formatting")
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_REF], 'T', "Incorrect VariBench formatting")
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_ALT], 'C', "Incorrect VariBench formatting")
+            self.assertEqual(rec[combivep_settings.KEY_PREDICTION_SECTION][combivep_settings.KEY_VARIBENCH_TARGETS], '1', "Incorrect VariBench formatting")
+            break
+        self.assertTrue(readable, "VariBench reader does not work properly")
+
+    def test_counting(self):
+        self.init_test('test_formatting')
+        self.init_varibench_reader_instance()
+        test_file = os.path.join(self.data_dir, 'test_formatting.varibench')
+        self.__varibench_reader.read(test_file)
+        self.assertEqual(len(list(self.__varibench_reader.fetch_hash_snps())), 11, 'VariBenchReader does not read input file properly')
+
+    def tearDown(self):
+        self.remove_working_dir()
+
+
 
 

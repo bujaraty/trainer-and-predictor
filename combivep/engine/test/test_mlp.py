@@ -3,16 +3,20 @@ import os.path
 import numpy as np
 import combivep.engine.mlp as combivep_mlp
 import combivep.engine.dataset as combivep_dataset
-import combivep.template as combivep_template
+import combivep.engine.test.template as test_template
 import combivep.settings as combivep_settings
 
-class TestMlp(combivep_template.Tester):
-    """ to test mlp.py"""
+class TestMlp(test_template.SafeEngineTester):
 
+
+    def __init__(self, test_name):
+        test_template.SafeEngineTester.__init__(self, test_name)
 
     def setUp(self):
-        self.__test_data_dir = os.path.join(self.get_root_data_dir(__file__),
-                                            'mlp')
+        self.test_class = 'trainer'
+
+    def init_trainer_instance(self):
+        pass
 
     def test_fix_random_weight(self):
         """
@@ -30,7 +34,7 @@ class TestMlp(combivep_template.Tester):
     def test_forward_propagation(self):
         """
 
-        check if the matrix multiplications in forward propagationin are 
+        check if the matrix multiplications in forward propagationin are
         working properly.
 
         """

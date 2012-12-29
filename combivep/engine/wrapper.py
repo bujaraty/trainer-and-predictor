@@ -39,7 +39,7 @@ class Trainer(combivep_mlp.Mlp):
                                          axis=1
                                          ).item(0) / self.__training_dataset.n_data)
 
-            #evaluate model
+            #evaluate model using validation dataset
             out = self.forward_propagation(self.__validation_dataset)
             self.__validation_error.append(np.sum(np.absolute(self.calculate_error(out,
                                                                             self.__validation_dataset.targets
@@ -48,7 +48,7 @@ class Trainer(combivep_mlp.Mlp):
                                            axis=1
                                            ).item(0) / self.__validation_dataset.n_data)
 
-            #check ending condition
+            #check ending condition (acceptable error rate and not much improvement in each iteration)
             current_validation_error = self.__validation_error[len(self.__validation_error)-1]
             if (current_validation_error < combivep_settings.MAXIMUM_ALLOWED_ERROR) and ((best_validation_error-current_validation_error) < combivep_settings.MINIMUM_IMPROVEMENT):
                 break

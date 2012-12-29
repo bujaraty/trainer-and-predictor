@@ -33,7 +33,7 @@ Pre-requisite
 -sudo apt-get install python-dev build-essential
 -http://docs.cython.org/src/quickstart/install.html
 -https://code.google.com/p/pysam/
-
+-python 2.6 or higher
 
 
 ========

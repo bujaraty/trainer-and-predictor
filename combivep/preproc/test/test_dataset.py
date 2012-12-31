@@ -24,12 +24,12 @@ class TestDataSetManager(test_template.SafePreProcTester):
         self.__dataset_manager.load_data(test_file)
         self.assertEqual(len(self.__dataset_manager.dataset), 10, 'DataSetManager does not load VCF data correctly')
 
-    def test_cvf_load(self):
-        self.init_test('test_cvf_load')
+    def test_cbv_load(self):
+        self.init_test('test_cbv_load')
         self.init_dataset_instance()
-        test_file = os.path.join(self.data_dir, 'test_cvf_load.cvf')
-        self.__dataset_manager.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CVF)
-        self.assertEqual(len(self.__dataset_manager.dataset), 11, 'DataSetManager does not load CVF data correctly')
+        test_file = os.path.join(self.data_dir, 'test_cbv_load.cbv')
+        self.__dataset_manager.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CBV)
+        self.assertEqual(len(self.__dataset_manager.dataset), 11, 'DataSetManager does not load CBV data correctly')
 
     def test_validate_data(self):
         self.init_test('test_validate_data')
@@ -63,8 +63,8 @@ class TestDataSetManager(test_template.SafePreProcTester):
     def test_partition_data(self):
         self.init_test('test_partition_data')
         self.init_dataset_instance()
-        test_file = os.path.join(self.data_dir, 'test_partition.cvf')
-        self.__dataset_manager.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CVF)
+        test_file = os.path.join(self.data_dir, 'test_partition.cbv')
+        self.__dataset_manager.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CBV)
         self.__dataset_manager.validate_data()
         self.__dataset_manager.calculate_scores()
         self.__dataset_manager.set_shuffle_seed(combivep_settings.DEMO_SEED)
@@ -87,11 +87,11 @@ class TestDataSetManager(test_template.SafePreProcTester):
         self.assertEqual(training_dataset.n_features, 6, msg='Dataset does not functional properly')
         self.assertEqual(training_dataset.n_data, 8, msg='Dataset does not functional properly')
 
-    def test_cvf_dataset(self):
+    def test_cbv_dataset(self):
         self.init_test('test_dataset')
         self.init_dataset_instance()
-        test_file = os.path.join(self.data_dir, 'test_cvf_dataset.cvf')
-        self.__dataset_manager.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CVF)
+        test_file = os.path.join(self.data_dir, 'test_cbv_dataset.cbv')
+        self.__dataset_manager.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CBV)
         self.__dataset_manager.validate_data
         self.__dataset_manager.calculate_scores()
         self.__dataset_manager.set_shuffle_seed(combivep_settings.DEMO_SEED)
@@ -103,17 +103,17 @@ class TestDataSetManager(test_template.SafePreProcTester):
 
     def test_add_dataset(self):
         self.init_test('test_add_dataset')
-        test_file = os.path.join(self.data_dir, 'test_add_dataset1.cvf')
+        test_file = os.path.join(self.data_dir, 'test_add_dataset1.cbv')
         self.dataset_manager1 = combivep_dataset.DataSetManager(config_file=combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE)
-        self.dataset_manager1.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CVF)
+        self.dataset_manager1.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CBV)
         self.dataset_manager1.validate_data()
         self.dataset_manager1.calculate_scores()
         self.dataset_manager1.shuffle_data()
         self.dataset_manager1.partition_data()
         training_dataset1 = self.dataset_manager1.get_training_data()
-        test_file = os.path.join(self.data_dir, 'test_add_dataset2.cvf')
+        test_file = os.path.join(self.data_dir, 'test_add_dataset2.cbv')
         self.dataset_manager2 = combivep_dataset.DataSetManager(config_file=combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE)
-        self.dataset_manager2.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CVF)
+        self.dataset_manager2.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CBV)
         self.dataset_manager2.validate_data()
         self.dataset_manager2.calculate_scores()
         self.dataset_manager2.shuffle_data()

@@ -97,8 +97,8 @@ class DataSetManager(main_template.CombiVEPBase):
     def load_data(self, file_name, file_type=combivep_settings.FILE_TYPE_VCF):
         if file_type == combivep_settings.FILE_TYPE_VCF:
             return self.__load_vcf_data(file_name)
-        if file_type == combivep_settings.FILE_TYPE_CVF:
-            return self.__load_cvf_data(file_name)
+        if file_type == combivep_settings.FILE_TYPE_CBV:
+            return self.__load_cbv_data(file_name)
 
     def __load_vcf_data(self, file_name):
         self.__clear_data()
@@ -114,17 +114,17 @@ class DataSetManager(main_template.CombiVEPBase):
             self.dataset.append({combivep_settings.KEY_SNP_INFO_SECTION   : snp_data,
                                  combivep_settings.KEY_PREDICTION_SECTION : prediction})
 
-    def __load_cvf_data(self, file_name):
+    def __load_cbv_data(self, file_name):
         self.__clear_data()
-        cvf_reader = combivep_reader.CvfReader()
-        cvf_reader.read(file_name)
-        for rec in cvf_reader.fetch_hash_snps():
-            snp_data = {combivep_settings.KEY_CHROM : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_CHROM],
-                        combivep_settings.KEY_POS   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_POS],
-                        combivep_settings.KEY_REF   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_REF],
-                        combivep_settings.KEY_ALT   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_ALT],
+        cbv_reader = combivep_reader.CbvReader()
+        cbv_reader.read(file_name)
+        for rec in cbv_reader.fetch_hash_snps():
+            snp_data = {combivep_settings.KEY_CHROM : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CBV_CHROM],
+                        combivep_settings.KEY_POS   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CBV_POS],
+                        combivep_settings.KEY_REF   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CBV_REF],
+                        combivep_settings.KEY_ALT   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CBV_ALT],
                         }
-            prediction = {combivep_settings.KEY_TARGETS : rec[combivep_settings.KEY_PREDICTION_SECTION][combivep_settings.KEY_CVF_TARGETS]}
+            prediction = {combivep_settings.KEY_TARGETS : rec[combivep_settings.KEY_PREDICTION_SECTION][combivep_settings.KEY_CBV_TARGETS]}
             self.dataset.append({combivep_settings.KEY_SNP_INFO_SECTION : snp_data,
                                  combivep_settings.KEY_PREDICTION_SECTION : prediction})
 

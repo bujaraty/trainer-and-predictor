@@ -170,40 +170,40 @@ class TestVcfReader(test_template.SafePreProcTester):
         self.remove_working_dir()
 
 
-class TestCvfReader(test_template.SafePreProcTester):
+class TestCbvReader(test_template.SafePreProcTester):
 
 
     def __init__(self, test_name):
         test_template.SafePreProcTester.__init__(self, test_name)
 
     def setUp(self):
-        self.test_class = 'cvf_reader'
+        self.test_class = 'cbv_reader'
 
-    def init_cvf_reader_instance(self):
-        self.__cvf_reader = combivep_reader.CvfReader()
+    def init_cbv_reader_instance(self):
+        self.__cbv_reader = combivep_reader.CbvReader()
 
     def test_formatting(self):
         self.init_test('test_formatting')
-        self.init_cvf_reader_instance()
-        test_file = os.path.join(self.data_dir, 'test_formatting.cvf')
-        self.__cvf_reader.read(test_file)
+        self.init_cbv_reader_instance()
+        test_file = os.path.join(self.data_dir, 'test_formatting.cbv')
+        self.__cbv_reader.read(test_file)
         readable = False
-        for rec in self.__cvf_reader.fetch_hash_snps():
+        for rec in self.__cbv_reader.fetch_hash_snps():
             readable = True
-            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_CHROM], '1', "Incorrect CVF formatting")
-            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_POS], '19566382', "Incorrect CVF formatting")
-            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_REF], 'T', "Incorrect CVF formatting")
-            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_ALT], 'C', "Incorrect CVF formatting")
-            self.assertEqual(rec[combivep_settings.KEY_PREDICTION_SECTION][combivep_settings.KEY_CVF_TARGETS], '1', "Incorrect CVF formatting")
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CBV_CHROM], '1', "Incorrect CBV formatting")
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CBV_POS], '19566382', "Incorrect CBV formatting")
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CBV_REF], 'T', "Incorrect CBV formatting")
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CBV_ALT], 'C', "Incorrect CBV formatting")
+            self.assertEqual(rec[combivep_settings.KEY_PREDICTION_SECTION][combivep_settings.KEY_CBV_TARGETS], '1', "Incorrect CBV formatting")
             break
-        self.assertTrue(readable, "CVF reader does not work properly")
+        self.assertTrue(readable, "CBV reader does not work properly")
 
     def test_counting(self):
         self.init_test('test_formatting')
-        self.init_cvf_reader_instance()
-        test_file = os.path.join(self.data_dir, 'test_formatting.cvf')
-        self.__cvf_reader.read(test_file)
-        self.assertEqual(len(list(self.__cvf_reader.fetch_hash_snps())), 11, 'CvfReader does not read input file properly')
+        self.init_cbv_reader_instance()
+        test_file = os.path.join(self.data_dir, 'test_formatting.cbv')
+        self.__cbv_reader.read(test_file)
+        self.assertEqual(len(list(self.__cbv_reader.fetch_hash_snps())), 11, 'CbvReader does not read input file properly')
 
     def tearDown(self):
         self.remove_working_dir()

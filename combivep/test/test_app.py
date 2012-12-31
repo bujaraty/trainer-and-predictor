@@ -17,14 +17,14 @@ class TestApp(test_template.SafeGeneralTester):
     def init_configure_instance(self):
         pass
 
-    def test_train_combivep_using_cvf_data(self):
+    def test_train_combivep_using_cbv_data(self):
         #init
         self.individual_debug = True
-        self.init_test('train_combivep_using_cvf_data')
-        test_file    = os.path.join(self.data_dir, 'test_train_combivep.cvf')
+        self.init_test('train_combivep_using_cbv_data')
+        test_file    = os.path.join(self.data_dir, 'test_train_combivep.cbv')
         params_file  = os.path.join(self.working_dir, 'params.npz')
         #run test
-        combivep_app.train_combivep_using_cvf_data(test_file,
+        combivep_app.train_combivep_using_cbv_data(test_file,
                                                    random_seed=20,
                                                    n_hidden_nodes=7,
                                                    iterations=50,
@@ -35,16 +35,16 @@ class TestApp(test_template.SafeGeneralTester):
         figure_file  = os.path.join(self.working_dir, '07.eps')
         self.assertTrue(os.path.exists(figure_file), msg='Trainer does not functional properly')
 
-    def test_predict_deleterious_probability_cvf(self):
+    def test_predict_deleterious_probability_cbv(self):
         #init
         self.individual_debug = True
-        self.init_test('predict_deleterious_probability_cvf')
-        test_file = os.path.join(self.data_dir, 'test_test_combivep.cvf')
-        output_file  = os.path.join(self.working_dir, 'cvf_output.txt')
+        self.init_test('predict_deleterious_probability_cbv')
+        test_file = os.path.join(self.data_dir, 'test_test_combivep.cbv')
+        output_file  = os.path.join(self.working_dir, 'cbv_output.txt')
         #run test
         combivep_app.predict_deleterious_probability(test_file,
                                                      params_file=combivep_settings.COMBIVEP_CENTRAL_TEST_PARAMETER_FILE,
-                                                     file_type=combivep_settings.FILE_TYPE_CVF,
+                                                     file_type=combivep_settings.FILE_TYPE_CBV,
                                                      config_file=combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE,
                                                      output_file=output_file,
                                                      )

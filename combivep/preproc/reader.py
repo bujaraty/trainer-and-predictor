@@ -111,7 +111,7 @@ class VcfReader(main_template.CombiVEPBase):
             yield {combivep_settings.KEY_SNP_INFO_SECTION : snp_info}
 
 
-class CvfReader(main_template.CombiVEPBase):
+class CbvReader(main_template.CombiVEPBase):
     """
 
     to read parsed SNPS file
@@ -124,24 +124,24 @@ class CvfReader(main_template.CombiVEPBase):
     def __init__(self):
         main_template.CombiVEPBase.__init__(self)
 
-    def read(self, cvf_file):
-        self.cvf_file_name = cvf_file
+    def read(self, cbv_file):
+        self.cbv_file_name = cbv_file
 
     def fetch_array_snps(self):
-        cvf_file = open(self.cvf_file_name)
-        for line in cvf_file:
+        cbv_file = open(self.cbv_file_name)
+        for line in cbv_file:
             if line[0] == '#':
                 continue
             yield line.rstrip('\n').split('\t')
 
     def fetch_hash_snps(self):
         for rec in self.fetch_array_snps():
-            snp_info = {combivep_settings.KEY_CVF_CHROM : rec[combivep_settings.CVF_0_INDEX_CHROM],
-                        combivep_settings.KEY_CVF_POS   : rec[combivep_settings.CVF_0_INDEX_POS],
-                        combivep_settings.KEY_CVF_REF   : rec[combivep_settings.CVF_0_INDEX_REF],
-                        combivep_settings.KEY_CVF_ALT   : rec[combivep_settings.CVF_0_INDEX_ALT],
+            snp_info = {combivep_settings.KEY_CBV_CHROM : rec[combivep_settings.CBV_0_INDEX_CHROM],
+                        combivep_settings.KEY_CBV_POS   : rec[combivep_settings.CBV_0_INDEX_POS],
+                        combivep_settings.KEY_CBV_REF   : rec[combivep_settings.CBV_0_INDEX_REF],
+                        combivep_settings.KEY_CBV_ALT   : rec[combivep_settings.CBV_0_INDEX_ALT],
                         }
-            prediction = {combivep_settings.KEY_CVF_TARGETS : rec[combivep_settings.CVF_0_INDEX_TARGETS]}
+            prediction = {combivep_settings.KEY_CBV_TARGETS : rec[combivep_settings.CBV_0_INDEX_TARGETS]}
             yield {combivep_settings.KEY_SNP_INFO_SECTION   : snp_info,
                    combivep_settings.KEY_PREDICTION_SECTION : prediction,
                    }

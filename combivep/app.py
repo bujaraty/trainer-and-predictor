@@ -6,7 +6,7 @@ import combivep.preproc.dataset as combivep_dataset
 import combivep.engine.wrapper as combivep_wrapper
 
 
-def train_combivep_using_cvf_data(training_data_file, 
+def train_combivep_using_cbv_data(training_data_file, 
                                   params_out_file=combivep_settings.USER_PARAMETERS_FILE,
                                   random_seed=combivep_settings.DEFAULT_SEED,
                                   n_hidden_nodes=combivep_settings.DEFAULT_HIDDEN_NODES,
@@ -16,17 +16,17 @@ def train_combivep_using_cvf_data(training_data_file,
                                   ):
     """
 
-    CVF (CombiVEP format) is a parsed format intended to be used by CombiVEP.
-    CVF has 5 fields, CHROM, POS, REF, ALT, EFFECT (1=deleterious, 0=neutral). All are tab separated
+    CBV (CombiVEP format) is a parsed format intended to be used by CombiVEP.
+    CBV has 5 fields, CHROM, POS, REF, ALT, EFFECT (1=deleterious, 0=neutral). All are tab separated
     Required arguments
-    - neutral_data_file : list of SNPs with no harmful effect, CVF format
-    - pathognice_data_file : list of SNPs with deleterious effect, CVF format
+    - neutral_data_file : list of SNPs with no harmful effect, CBV format
+    - pathognice_data_file : list of SNPs with deleterious effect, CBV format
 
     """
     #pre-processing dataset
     print >> sys.stderr, 'pre-processing dataset . . . . '
     dm = combivep_dataset.DataSetManager(config_file=config_file)
-    dm.load_data(training_data_file, file_type=combivep_settings.FILE_TYPE_CVF)
+    dm.load_data(training_data_file, file_type=combivep_settings.FILE_TYPE_CBV)
     dm.validate_data()
     dm.calculate_scores()
     dm.set_shuffle_seed(random_seed)
@@ -53,10 +53,10 @@ def predict_deleterious_probability(SNPs_file,
                                     ):
     """
 
-    CVF (CombiVEP format) is a parsed format intended to be used by CombiVEP.
-    CVF has 5 fields, CHROM, POS, REF, ALT, EFFECT (1=deleterious, 0=neutral). All are tab separated
+    CBV (CombiVEP format) is a parsed format intended to be used by CombiVEP.
+    CBV has 5 fields, CHROM, POS, REF, ALT, EFFECT (1=deleterious, 0=neutral). All are tab separated
     Required arguments
-    - SNPs_file : list of SNPs to be predicted, can be either VCF or CVF (default is VCF)
+    - SNPs_file : list of SNPs to be predicted, can be either VCF or CBV (default is VCF)
 
     """
     #pre-processing test dataset

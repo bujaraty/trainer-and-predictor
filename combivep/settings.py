@@ -127,7 +127,7 @@ KEY_ALT   = 'alt'
 KEY_TARGETS = 'targets'
 
 #file type
-FILE_TYPE_CVF = 'CVF' #CombiVEP format
+FILE_TYPE_CBV = 'CBV' #CombiVEP format
 FILE_TYPE_VCF = 'VCF'
 
 
@@ -188,21 +188,21 @@ VCF_0_INDEX_REF   = 3
 VCF_0_INDEX_ALT   = 4
 
 
-# > > > > > > > > > > > > > CVF format (CombiVEP format) configuration < < < < < < < < < <
+# > > > > > > > > > > > > > CBV format (CombiVEP format) configuration < < < < < < < < < <
 #SNP information key
-KEY_CVF_CHROM   = 'CVF_chrom'
-KEY_CVF_POS     = 'CVF_pos'
-KEY_CVF_REF     = 'CVF_ref'
-KEY_CVF_ALT     = 'CVF_alt'
-KEY_CVF_TARGETS = 'CVF_targets'
+KEY_CBV_CHROM   = 'CBV_chrom'
+KEY_CBV_POS     = 'CBV_pos'
+KEY_CBV_REF     = 'CBV_ref'
+KEY_CBV_ALT     = 'CBV_alt'
+KEY_CBV_TARGETS = 'CBV_targets'
 
-#CVF index
+#CBV index
 #0-based index, used by python
-CVF_0_INDEX_CHROM   = 0
-CVF_0_INDEX_POS     = 1
-CVF_0_INDEX_REF     = 2
-CVF_0_INDEX_ALT     = 3
-CVF_0_INDEX_TARGETS = 4
+CBV_0_INDEX_CHROM   = 0
+CBV_0_INDEX_POS     = 1
+CBV_0_INDEX_REF     = 2
+CBV_0_INDEX_ALT     = 3
+CBV_0_INDEX_TARGETS = 4
 
 
 

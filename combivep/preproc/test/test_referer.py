@@ -20,6 +20,7 @@ class TestReferer(test_template.SafePreProcTester):
     def test_validate_snp(self):
         self.init_test('test_validate_snp')
         self.init_referer_instance()
+        self.__referer.config_file = combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE
         self.__referer.load_config()
         self.assertTrue(self.__referer.validate_snp('1'     , 887560  , 'A', 'C'), "Incorrect SNP validating")
         self.assertTrue(self.__referer.validate_snp('chr3'  , 25836088, 'C', 'A'), "Incorrect SNP validating")
@@ -31,6 +32,7 @@ class TestReferer(test_template.SafePreProcTester):
     def test_get_scores(self):
         self.init_test('test_get_scores')
         self.init_referer_instance()
+        self.__referer.config_file = combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE
         self.__referer.load_config()
         rec = self.__referer.get_scores('3', 108541778, 'T', 'C')
 #        self.assertEqual(rec[combivep_settings.KEY_SNP_INFO][combivep_settings.KEY_LJB_CHROM], '3', "Incorrect LJB formatting")

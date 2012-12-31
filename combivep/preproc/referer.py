@@ -54,19 +54,7 @@ class Referer(combivep_cfg.Configure):
         return hash scores if the snp is precomputed and None otherwise
 
         """
-        for rec in self.__ljb_reader.fetch_hash_snps(chrom, int(pos)-1, int(pos)):
-#            print rec
-#            if rec[combivep_settings.LJB_PARSED_0_INDEX_REF] != ref:
-#                continue
-#            if rec[combivep_settings.LJB_PARSED_0_INDEX_ALT] != alt:
-#                continue
-#            return rec[combivep_settings.KEY_SCORES_SECTION]
-            if rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_LJB_REF] != ref:
-                continue
-            if rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_LJB_ALT] != alt:
-                continue
-            return rec[combivep_settings.KEY_SCORES_SECTION]
-        return None
+        return self.__ljb_reader.get_scores(chrom, pos, ref, alt)
 
 
 

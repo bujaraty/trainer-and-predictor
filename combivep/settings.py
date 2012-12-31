@@ -12,12 +12,15 @@ DEBUG_MODE = 0
 PROJECT_ROOT                        = os.path.dirname(os.path.dirname(__file__))
 
 #'central' data for testing and for demo. 'central' is for preventing redundancy
-COMBIVEP_CENTRAL_TEST_DATA_ROOT     = os.path.join(PROJECT_ROOT, 'combivep/data')
-COMBIVEP_CENTRAL_TEST_DATASET_DIR   = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'dataset')
-COMBIVEP_CENTRAL_TEST_VARIBENCH_DIR = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'VariBench')
-COMBIVEP_CENTRAL_TEST_VCF_DIR       = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'vcf')
-COMBIVEP_CENTRAL_TEST_UCSC_DIR      = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'UCSC')
-COMBIVEP_CENTRAL_TEST_LJB_DIR       = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'LJB')
+COMBIVEP_CENTRAL_TEST_DATA_ROOT          = os.path.join(PROJECT_ROOT, 'combivep/data')
+COMBIVEP_CENTRAL_TEST_DATASET_DIR        = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'dataset')
+COMBIVEP_CENTRAL_TEST_CVF_DIR            = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'CVF')
+COMBIVEP_CENTRAL_TEST_VCF_DIR            = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'VCF')
+COMBIVEP_CENTRAL_TEST_UCSC_DIR           = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'UCSC')
+COMBIVEP_CENTRAL_TEST_LJB_DIR            = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'LJB')
+COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'config.txt')
+COMBIVEP_CENTRAL_TEST_PARAMETER_DIR      = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'params')
+COMBIVEP_CENTRAL_TEST_PARAMETER_FILE     = os.path.join(COMBIVEP_CENTRAL_TEST_PARAMETER_DIR, 'params.npz')
 
 
 # > > > > > > > > > > > > > User files & folders < < < < < < < < < <
@@ -56,17 +59,18 @@ TMP_LJB_CLEAN_DB_FILE        = os.path.join(COMBIVEP_WORKING_DIR, 'tmp_ljb_clean
 MLP_COEFFICIENT       = 0.9
 STEP_SIZE             = 0.00016
 MAXIMUM_ALLOWED_ERROR = 0.35
-MINIMUM_IMPROVEMENT   = 0.0000001
+MINIMUM_IMPROVEMENT   = 0.00000001
 
 #default model argument values
-DEFAULT_HIDDEN_NODES  = 4
+DEFAULT_ITERATIONS    = 30000
+DEFAULT_HIDDEN_NODES  = 6
 DEFAULT_SEED          = None
 DEFAULT_FIGURE_DIR    = None
 
 #proportion of data partitioning
 PROPORTION_TRAINING_DATA   = 70
 PROPORTION_VALIDATION_DATA = 15
-PROPORTION_TEST_DATA       = 15
+#PROPORTION_TEST_DATA       = 15
 
 
 # > > > > > > > > > > > > > Demo configuration < < < < < < < < < <
@@ -123,8 +127,8 @@ KEY_ALT   = 'alt'
 KEY_TARGETS = 'targets'
 
 #file type
-FILE_TYPE_VARIBENCH = 'VariBench'
-FILE_TYPE_VCF       = 'VCF'
+FILE_TYPE_CVF = 'CVF' #CombiVEP format
+FILE_TYPE_VCF = 'VCF'
 
 
 # > > > > > > > > > > > > > LJB format configuration < < < < < < < < < <
@@ -184,21 +188,21 @@ VCF_0_INDEX_REF   = 3
 VCF_0_INDEX_ALT   = 4
 
 
-# > > > > > > > > > > > > > VariBench format configuration < < < < < < < < < <
+# > > > > > > > > > > > > > CVF format (CombiVEP format) configuration < < < < < < < < < <
 #SNP information key
-KEY_VARIBENCH_CHROM   = 'varibench_chrom'
-KEY_VARIBENCH_POS     = 'varibench_pos'
-KEY_VARIBENCH_REF     = 'varibench_ref'
-KEY_VARIBENCH_ALT     = 'varibench_alt'
-KEY_VARIBENCH_TARGETS = 'varibench_targets'
+KEY_CVF_CHROM   = 'CVF_chrom'
+KEY_CVF_POS     = 'CVF_pos'
+KEY_CVF_REF     = 'CVF_ref'
+KEY_CVF_ALT     = 'CVF_alt'
+KEY_CVF_TARGETS = 'CVF_targets'
 
-#VariBench index
+#CVF index
 #0-based index, used by python
-VARIBENCH_0_INDEX_CHROM   = 0
-VARIBENCH_0_INDEX_POS     = 1
-VARIBENCH_0_INDEX_REF     = 2
-VARIBENCH_0_INDEX_ALT     = 3
-VARIBENCH_0_INDEX_TARGETS = 4
+CVF_0_INDEX_CHROM   = 0
+CVF_0_INDEX_POS     = 1
+CVF_0_INDEX_REF     = 2
+CVF_0_INDEX_ALT     = 3
+CVF_0_INDEX_TARGETS = 4
 
 
 

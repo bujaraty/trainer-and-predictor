@@ -95,7 +95,7 @@ class TestLjbReader(test_template.SafePreProcTester):
         self.init_ljb_reader_instance()
         test_file = os.path.join(self.data_dir, 'test_ljb_reader.txt.gz')
         self.__ljb_reader.read(test_file)
-        records = list(self.__ljb_reader.fetch_hash_snps('3', 108541777, 108541779))
+        records = list(self.__ljb_reader.fetch_hash_snps('3', 108541778, 108541779))
         self.assertEqual(len(records), 3, "Incorrect number of records are being fetched")
 
     def test_valid_indexing2(self):
@@ -103,7 +103,7 @@ class TestLjbReader(test_template.SafePreProcTester):
         self.init_ljb_reader_instance()
         test_file = os.path.join(self.data_dir, 'test_ljb_reader.txt.gz')
         self.__ljb_reader.read(test_file)
-        records = list(self.__ljb_reader.fetch_hash_snps('3', 108541777, 108541778))
+        records = list(self.__ljb_reader.fetch_hash_snps('3', 108541778, 108541778))
         self.assertEqual(len(records), 2, "Incorrect number of records are being fetched")
 
     def test_valid_indexing3(self):
@@ -111,7 +111,7 @@ class TestLjbReader(test_template.SafePreProcTester):
         self.init_ljb_reader_instance()
         test_file = os.path.join(self.data_dir, 'test_ljb_reader.txt.gz')
         self.__ljb_reader.read(test_file)
-        records = list(self.__ljb_reader.fetch_hash_snps('3', 108541778, 108541779))
+        records = list(self.__ljb_reader.fetch_hash_snps('3', 108541779, 108541779))
         self.assertEqual(len(records), 1, "Incorrect number of records are being fetched")
 
     def test_formatting(self):
@@ -120,7 +120,7 @@ class TestLjbReader(test_template.SafePreProcTester):
         test_file = os.path.join(self.data_dir, 'test_ljb_reader.txt.gz')
         self.__ljb_reader.read(test_file)
         readable = False
-        for rec in self.__ljb_reader.fetch_hash_snps('3', 108541777, 108541779):
+        for rec in self.__ljb_reader.fetch_hash_snps('3', 108541778, 108541779):
             readable = True
             self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_LJB_CHROM], '3', "Incorrect LJB formatting")
             self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_LJB_POS], '108541778', "Incorrect LJB formatting")
@@ -170,40 +170,40 @@ class TestVcfReader(test_template.SafePreProcTester):
         self.remove_working_dir()
 
 
-class TestVariBenchReader(test_template.SafePreProcTester):
+class TestCvfReader(test_template.SafePreProcTester):
 
 
     def __init__(self, test_name):
         test_template.SafePreProcTester.__init__(self, test_name)
 
     def setUp(self):
-        self.test_class = 'varibench_reader'
+        self.test_class = 'cvf_reader'
 
-    def init_varibench_reader_instance(self):
-        self.__varibench_reader = combivep_reader.VariBenchReader()
+    def init_cvf_reader_instance(self):
+        self.__cvf_reader = combivep_reader.CvfReader()
 
     def test_formatting(self):
         self.init_test('test_formatting')
-        self.init_varibench_reader_instance()
-        test_file = os.path.join(self.data_dir, 'test_formatting.varibench')
-        self.__varibench_reader.read(test_file)
+        self.init_cvf_reader_instance()
+        test_file = os.path.join(self.data_dir, 'test_formatting.cvf')
+        self.__cvf_reader.read(test_file)
         readable = False
-        for rec in self.__varibench_reader.fetch_hash_snps():
+        for rec in self.__cvf_reader.fetch_hash_snps():
             readable = True
-            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_CHROM], '1', "Incorrect VariBench formatting")
-            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_POS], '19566382', "Incorrect VariBench formatting")
-            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_REF], 'T', "Incorrect VariBench formatting")
-            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_ALT], 'C', "Incorrect VariBench formatting")
-            self.assertEqual(rec[combivep_settings.KEY_PREDICTION_SECTION][combivep_settings.KEY_VARIBENCH_TARGETS], '1', "Incorrect VariBench formatting")
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_CHROM], '1', "Incorrect CVF formatting")
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_POS], '19566382', "Incorrect CVF formatting")
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_REF], 'T', "Incorrect CVF formatting")
+            self.assertEqual(rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_ALT], 'C', "Incorrect CVF formatting")
+            self.assertEqual(rec[combivep_settings.KEY_PREDICTION_SECTION][combivep_settings.KEY_CVF_TARGETS], '1', "Incorrect CVF formatting")
             break
-        self.assertTrue(readable, "VariBench reader does not work properly")
+        self.assertTrue(readable, "CVF reader does not work properly")
 
     def test_counting(self):
         self.init_test('test_formatting')
-        self.init_varibench_reader_instance()
-        test_file = os.path.join(self.data_dir, 'test_formatting.varibench')
-        self.__varibench_reader.read(test_file)
-        self.assertEqual(len(list(self.__varibench_reader.fetch_hash_snps())), 11, 'VariBenchReader does not read input file properly')
+        self.init_cvf_reader_instance()
+        test_file = os.path.join(self.data_dir, 'test_formatting.cvf')
+        self.__cvf_reader.read(test_file)
+        self.assertEqual(len(list(self.__cvf_reader.fetch_hash_snps())), 11, 'CvfReader does not read input file properly')
 
     def tearDown(self):
         self.remove_working_dir()

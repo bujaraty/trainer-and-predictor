@@ -22,7 +22,7 @@ class Trainer(combivep_mlp.Mlp):
         self.__n_hidden_nodes     = n_hidden_nodes
         self.__figure_dir         = figure_dir
 
-    def train(self, iteration):
+    def train(self, iterations=combivep_settings.DEFAULT_ITERATIONS):
         self.__training_error   = []
         self.__validation_error = []
         running_round    = 0
@@ -60,7 +60,7 @@ class Trainer(combivep_mlp.Mlp):
 
             #check if it reach maximum iteration
             running_round += 1
-            if running_round >= iteration:
+            if running_round >= iterations:
                 break
 
         if self.__figure_dir:

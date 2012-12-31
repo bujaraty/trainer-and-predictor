@@ -24,13 +24,8 @@ class DataSet(list):
     def set_shuffle_seed(self, shuffle_seed):
         self.shuffle_seed = shuffle_seed
 
-    def append(self, item):
-        super(DataSet, self).append(item)
-#        self.__set_feature_vector_arrays(item)
-
-#    def __set_feature_vector_arrays(self, item):
-#        if combivep_settings.KEY_SCORES_SECTION not in item:
-#            return
+#    def append(self, item):
+#        super(DataSet, self).append(item)
 
     def __add__(self, other):
         for item in other:
@@ -88,24 +83,22 @@ class DataSet(list):
 class DataSetManager(main_template.CombiVEPBase):
 
 
-    def __init__(self):
+    def __init__(self, config_file=combivep_settings.COMBIVEP_CONFIGURATION_FILE):
         main_template.CombiVEPBase.__init__(self)
 
         self.referer = combivep_referer.Referer()
+        self.referer.config_file = config_file
         self.referer.load_config()
-
         self.dataset = DataSet()
 
     def __clear_data(self):
         self.dataset.clear()
-#        self.validated  = False
-#        self.has_scores = False
 
     def load_data(self, file_name, file_type=combivep_settings.FILE_TYPE_VCF):
         if file_type == combivep_settings.FILE_TYPE_VCF:
             return self.__load_vcf_data(file_name)
-        if file_type == combivep_settings.FILE_TYPE_VARIBENCH:
-            return self.__load_varibench_data(file_name)
+        if file_type == combivep_settings.FILE_TYPE_CVF:
+            return self.__load_cvf_data(file_name)
 
     def __load_vcf_data(self, file_name):
         self.__clear_data()
@@ -121,22 +114,23 @@ class DataSetManager(main_template.CombiVEPBase):
             self.dataset.append({combivep_settings.KEY_SNP_INFO_SECTION   : snp_data,
                                  combivep_settings.KEY_PREDICTION_SECTION : prediction})
 
-    def __load_varibench_data(self, file_name):
+    def __load_cvf_data(self, file_name):
         self.__clear_data()
-        varibench_reader = combivep_reader.VariBenchReader()
-        varibench_reader.read(file_name)
-        for rec in varibench_reader.fetch_hash_snps():
-            snp_data = {combivep_settings.KEY_CHROM : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_CHROM],
-                        combivep_settings.KEY_POS   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_POS],
-                        combivep_settings.KEY_REF   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_REF],
-                        combivep_settings.KEY_ALT   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VARIBENCH_ALT],
+        cvf_reader = combivep_reader.CvfReader()
+        cvf_reader.read(file_name)
+        for rec in cvf_reader.fetch_hash_snps():
+            snp_data = {combivep_settings.KEY_CHROM : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_CHROM],
+                        combivep_settings.KEY_POS   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_POS],
+                        combivep_settings.KEY_REF   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_REF],
+                        combivep_settings.KEY_ALT   : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CVF_ALT],
                         }
-            prediction = {combivep_settings.KEY_TARGETS : rec[combivep_settings.KEY_PREDICTION_SECTION][combivep_settings.KEY_VARIBENCH_TARGETS]}
+            prediction = {combivep_settings.KEY_TARGETS : rec[combivep_settings.KEY_PREDICTION_SECTION][combivep_settings.KEY_CVF_TARGETS]}
             self.dataset.append({combivep_settings.KEY_SNP_INFO_SECTION : snp_data,
                                  combivep_settings.KEY_PREDICTION_SECTION : prediction})
 
     def validate_data(self):
-        #remove items from self.dataset if they are not valid
+        #to prevent misintepret due to different version between each data point by 
+        #removing items from self.dataset if they are not exist in certain UCSC database
         self.dataset[:] = [item for item in self.dataset if self.referer.validate_snp(item[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CHROM],
                                                                                       item[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_POS],
                                                                                       item[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_REF],
@@ -157,12 +151,10 @@ class DataSetManager(main_template.CombiVEPBase):
     def partition_data(self,
                        proportion_training_data   = combivep_settings.PROPORTION_TRAINING_DATA,
                        proportion_validation_data = combivep_settings.PROPORTION_VALIDATION_DATA,
-                       proportion_test_data       = combivep_settings.PROPORTION_TEST_DATA,
                        ):
-        total_proportion = proportion_training_data + proportion_validation_data + proportion_test_data
+        total_proportion = proportion_training_data + proportion_validation_data
         self.training_data_size   = int(math.floor(len(self.dataset) * proportion_training_data / total_proportion))
-        self.validation_data_size = int(math.floor(len(self.dataset) * proportion_validation_data / total_proportion))
-        self.test_data_size       = len(self.dataset) - self.training_data_size - self.validation_data_size
+        self.validation_data_size = len(self.dataset) - self.training_data_size
 
     def get_training_data(self):
         dataset = DataSet()
@@ -172,13 +164,7 @@ class DataSetManager(main_template.CombiVEPBase):
 
     def get_validation_data(self):
         dataset = DataSet()
-        for i in xrange(self.training_data_size, self.training_data_size + self.validation_data_size):
-            dataset.append(self.dataset[i])
-        return dataset
-
-    def get_test_data(self):
-        dataset = DataSet()
-        for i in xrange(self.training_data_size + self.validation_data_size, len(self.dataset)):
+        for i in xrange(self.training_data_size, len(self.dataset)):
             dataset.append(self.dataset[i])
         return dataset
 

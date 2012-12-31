@@ -26,6 +26,8 @@ class Mlp(object):
 
     def forward_propagation(self, dataset):
         #calculate sum of product in the hidden layer
+#        print self.__weights1.shape
+#        print dataset.feature_vectors.shape
         in1  = np.dot(self.__weights1,
                       np.concatenate((dataset.feature_vectors, 
                                       np.ones((1, dataset.n_data))

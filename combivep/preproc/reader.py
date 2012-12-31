@@ -44,10 +44,10 @@ class LjbReader(main_template.CombiVEPBase):
 
     def read(self, ljb_file):
         self.db_file_name = ljb_file
+        self.__tabix_file = pysam.Tabixfile(ljb_file)
 
     def fetch_array_snps(self, chromosome, start_pos, end_pos):
-        tabix_file = pysam.Tabixfile(self.db_file_name)
-        for line in tabix_file.fetch(chromosome, start_pos, end_pos):
+        for line in self.__tabix_file.fetch(chromosome, int(start_pos)-1, int(end_pos)):
             yield line.rstrip('\n').split('\t')
 
     def fetch_hash_snps(self, chromosome, start_pos, end_pos):
@@ -70,6 +70,19 @@ class LjbReader(main_template.CombiVEPBase):
                    combivep_settings.KEY_SCORES_SECTION   : scores,
                    }
 
+    def get_scores(self, chromosome, pos, ref, alt):
+        for rec in self.fetch_array_snps(chromosome, pos, pos):
+            if rec[combivep_settings.LJB_PARSED_0_INDEX_REF] != ref:
+                continue
+            if rec[combivep_settings.LJB_PARSED_0_INDEX_ALT] != alt:
+                continue
+            return {combivep_settings.KEY_PHYLOP_SCORE  : rec[combivep_settings.LJB_PARSED_0_INDEX_PHYLOP_SCORE],
+                    combivep_settings.KEY_SIFT_SCORE    : rec[combivep_settings.LJB_PARSED_0_INDEX_SIFT_SCORE],
+                    combivep_settings.KEY_PP2_SCORE     : rec[combivep_settings.LJB_PARSED_0_INDEX_PP2_SCORE],
+                    combivep_settings.KEY_LRT_SCORE     : rec[combivep_settings.LJB_PARSED_0_INDEX_LRT_SCORE],
+                    combivep_settings.KEY_MT_SCORE      : rec[combivep_settings.LJB_PARSED_0_INDEX_MT_SCORE],
+                    combivep_settings.KEY_GERP_SCORE    : rec[combivep_settings.LJB_PARSED_0_INDEX_GERP_SCORE],
+                    }
 
 class VcfReader(main_template.CombiVEPBase):
     """to read parsed VCF file"""
@@ -98,31 +111,37 @@ class VcfReader(main_template.CombiVEPBase):
             yield {combivep_settings.KEY_SNP_INFO_SECTION : snp_info}
 
 
-class VariBenchReader(main_template.CombiVEPBase):
-    """to read parsed VariBench file"""
+class CvfReader(main_template.CombiVEPBase):
+    """
+
+    to read parsed SNPS file
+    The format are CHROM, POS, REF, ALT, EFFECT.
+    All fields are tab separated.
+
+    """
 
 
     def __init__(self):
         main_template.CombiVEPBase.__init__(self)
 
-    def read(self, varibench_file):
-        self.varibench_file_name = varibench_file
+    def read(self, cvf_file):
+        self.cvf_file_name = cvf_file
 
     def fetch_array_snps(self):
-        varibench_file = open(self.varibench_file_name)
-        for line in varibench_file:
+        cvf_file = open(self.cvf_file_name)
+        for line in cvf_file:
             if line[0] == '#':
                 continue
             yield line.rstrip('\n').split('\t')
 
     def fetch_hash_snps(self):
         for rec in self.fetch_array_snps():
-            snp_info = {combivep_settings.KEY_VARIBENCH_CHROM : rec[combivep_settings.VARIBENCH_0_INDEX_CHROM],
-                        combivep_settings.KEY_VARIBENCH_POS   : rec[combivep_settings.VARIBENCH_0_INDEX_POS],
-                        combivep_settings.KEY_VARIBENCH_REF   : rec[combivep_settings.VARIBENCH_0_INDEX_REF],
-                        combivep_settings.KEY_VARIBENCH_ALT   : rec[combivep_settings.VARIBENCH_0_INDEX_ALT],
+            snp_info = {combivep_settings.KEY_CVF_CHROM : rec[combivep_settings.CVF_0_INDEX_CHROM],
+                        combivep_settings.KEY_CVF_POS   : rec[combivep_settings.CVF_0_INDEX_POS],
+                        combivep_settings.KEY_CVF_REF   : rec[combivep_settings.CVF_0_INDEX_REF],
+                        combivep_settings.KEY_CVF_ALT   : rec[combivep_settings.CVF_0_INDEX_ALT],
                         }
-            prediction = {combivep_settings.KEY_VARIBENCH_TARGETS : rec[combivep_settings.VARIBENCH_0_INDEX_TARGETS]}
+            prediction = {combivep_settings.KEY_CVF_TARGETS : rec[combivep_settings.CVF_0_INDEX_TARGETS]}
             yield {combivep_settings.KEY_SNP_INFO_SECTION   : snp_info,
                    combivep_settings.KEY_PREDICTION_SECTION : prediction,
                    }

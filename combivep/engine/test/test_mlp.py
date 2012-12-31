@@ -42,7 +42,7 @@ class TestMlp(test_template.SafeEngineTester):
                                                                    'dummy_training_dataset'))
         mlp = combivep_mlp.Mlp(training_dataset.n_features, seed=20)
         out = mlp.forward_propagation(training_dataset)
-        self.assertEqual(round(out[0][0], 4), 0.5008, msg='forward propagation does not functional properly')
+        self.assertEqual(round(out[0][0], 4), 0.5022, msg='forward propagation does not functional properly')
 
     def test_one_round_forward_backward_weight_update(self):
         """

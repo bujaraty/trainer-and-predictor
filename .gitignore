@@ -1,6 +1,7 @@
 *.pyc
 *.bak
 *~
+*.cvf
 MANIFEST
 build/
 dist/

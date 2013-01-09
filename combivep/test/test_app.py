@@ -19,7 +19,7 @@ class TestApp(test_template.SafeGeneralTester):
 
     def test_train_combivep_using_cbv_data(self):
         #init
-        self.individual_debug = True
+#        self.individual_debug = True
         self.init_test('train_combivep_using_cbv_data')
         test_file    = os.path.join(self.data_dir, 'test_train_combivep.cbv')
         params_file  = os.path.join(self.working_dir, 'params.npz')
@@ -37,21 +37,27 @@ class TestApp(test_template.SafeGeneralTester):
 
     def test_predict_deleterious_probability_cbv(self):
         #init
-        self.individual_debug = True
+#        self.individual_debug = True
         self.init_test('predict_deleterious_probability_cbv')
         test_file = os.path.join(self.data_dir, 'test_test_combivep.cbv')
         output_file  = os.path.join(self.working_dir, 'cbv_output.txt')
         #run test
+        args = {}
+        args["params_file"] = combivep_settings.COMBIVEP_CENTRAL_TEST_PARAMETER_FILE
+        args["file_type"]   = combivep_settings.FILE_TYPE_CBV
+        args["config_file"] = combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE
+        args["output_file"] = output_file
         combivep_app.predict_deleterious_probability(test_file,
-                                                     params_file=combivep_settings.COMBIVEP_CENTRAL_TEST_PARAMETER_FILE,
-                                                     file_type=combivep_settings.FILE_TYPE_CBV,
-                                                     config_file=combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE,
-                                                     output_file=output_file,
+                                                     **args
                                                      )
+        self.assertTrue(os.path.exists(output_file), msg='Predictor does not functional properly')
+        f = open(output_file, 'r')
+        self.assertEqual(f.readline().strip(), '#CHROM\tPOS\tREF\tALT\tACTUAL_DELETERIOUS_EFFECT\tPREDICTED_DELETERIOUS_PROBABILITY')
+        self.assertEqual(f.readline().strip(), '1\t35227264\tT\tC\t1\t0.2605')
+        f.close()
 
     def test_predict_deleterious_probability_vcf(self):
         #init
-        self.individual_debug = True
         self.init_test('predict_deleterious_probability_vcf')
         test_file = os.path.join(self.data_dir, 'test_test_combivep.vcf')
         output_file  = os.path.join(self.working_dir, 'vcf_output.txt')
@@ -62,7 +68,11 @@ class TestApp(test_template.SafeGeneralTester):
                                                      config_file=combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE,
                                                      output_file=output_file,
                                                      )
-
+        self.assertTrue(os.path.exists(output_file), msg='Predictor does not functional properly')
+        f = open(output_file, 'r')
+        self.assertEqual(f.readline().strip(), '#CHROM\tPOS\tREF\tALT\tACTUAL_DELETERIOUS_EFFECT\tPREDICTED_DELETERIOUS_PROBABILITY')
+        self.assertEqual(f.readline().strip(), '3\t361508\tC\tT\tNone\t0.0001')
+        f.close()
 
     def tearDown(self):
         self.remove_working_dir()

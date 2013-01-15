@@ -1,10 +1,11 @@
 import math
 import random
 import numpy as np
-import combivep.template as main_template
+from combivep.template import CombiVEPBase
 import combivep.settings as combivep_settings
-import combivep.preproc.reader as combivep_reader
-import combivep.preproc.referer as combivep_referer
+from combivep.preproc.reader import VcfReader
+from combivep.preproc.reader import CbvReader
+from combivep.preproc.referer import Referer
 
 
 class DataSet(list):
@@ -80,13 +81,13 @@ class DataSet(list):
         return len(self)
 
 
-class DataSetManager(main_template.CombiVEPBase):
+class DataSetManager(CombiVEPBase):
 
 
     def __init__(self, config_file=combivep_settings.COMBIVEP_CONFIGURATION_FILE):
-        main_template.CombiVEPBase.__init__(self)
+        CombiVEPBase.__init__(self)
 
-        self.referer = combivep_referer.Referer()
+        self.referer = Referer()
         self.referer.config_file = config_file
         self.referer.load_config()
         self.dataset = DataSet()
@@ -102,7 +103,7 @@ class DataSetManager(main_template.CombiVEPBase):
 
     def __load_vcf_data(self, file_name):
         self.__clear_data()
-        vcf_reader = combivep_reader.VcfReader()
+        vcf_reader = VcfReader()
         vcf_reader.read(file_name)
         for rec in vcf_reader.fetch_hash_snps():
             snp_data = {combivep_settings.KEY_CHROM : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_VCF_CHROM],
@@ -116,7 +117,7 @@ class DataSetManager(main_template.CombiVEPBase):
 
     def __load_cbv_data(self, file_name):
         self.__clear_data()
-        cbv_reader = combivep_reader.CbvReader()
+        cbv_reader = CbvReader()
         cbv_reader.read(file_name)
         for rec in cbv_reader.fetch_hash_snps():
             snp_data = {combivep_settings.KEY_CHROM : rec[combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CBV_CHROM],

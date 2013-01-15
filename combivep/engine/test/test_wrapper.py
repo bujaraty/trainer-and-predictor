@@ -1,16 +1,17 @@
 import unittest
 import shutil
 import os
-import combivep.engine.dataset as combivep_dataset
-import combivep.engine.test.template as test_template
+from combivep.engine.dataset import DataSet
+from combivep.engine.test.template import SafeEngineTester
 import combivep.settings as combivep_settings
-import combivep.engine.wrapper as combivep_wrapper
+from combivep.engine.wrapper import Trainer
+from combivep.engine.wrapper import Predictor
 
-class TestTrainer(test_template.SafeEngineTester):
+class TestTrainer(SafeEngineTester):
 
 
     def __init__(self, test_name):
-        test_template.SafeEngineTester.__init__(self, test_name)
+        SafeEngineTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'trainer'
@@ -27,11 +28,11 @@ class TestTrainer(test_template.SafeEngineTester):
         self.individual_debug = True
         self.init_test('test_trainer')
         self.init_trainer_instance()
-        training_dataset   = combivep_dataset.DataSet(os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
+        training_dataset   = DataSet(os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
                                                                    'training_dataset'))
-        validation_dataset = combivep_dataset.DataSet(os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
+        validation_dataset = DataSet(os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
                                                                    'validation_dataset'))
-        trainer = combivep_wrapper.Trainer(training_dataset, validation_dataset, seed=20, n_hidden_nodes=7, figure_dir=self.working_dir)
+        trainer = Trainer(training_dataset, validation_dataset, seed=20, n_hidden_nodes=7, figure_dir=self.working_dir)
         trainer.train(iterations=50)
 
         params_file  = os.path.join(self.working_dir, 'params.npz')
@@ -43,11 +44,11 @@ class TestTrainer(test_template.SafeEngineTester):
     def tearDown(self):
         self.remove_working_dir()
 
-class TestPredictor(test_template.SafeEngineTester):
+class TestPredictor(SafeEngineTester):
 
 
     def __init__(self, test_name):
-        test_template.SafeEngineTester.__init__(self, test_name)
+        SafeEngineTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'predictor'
@@ -65,8 +66,8 @@ class TestPredictor(test_template.SafeEngineTester):
         self.init_test('test_predictor')
         self.init_predictor_instance()
 
-        predictor = combivep_wrapper.Predictor()
-        test_dataset = combivep_dataset.DataSet(os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
+        predictor = Predictor()
+        test_dataset = DataSet(os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_DATASET_DIR,
                                                              'test_dataset'))
         params_file  = os.path.join(self.data_dir, 'params.npz')
         predictor.import_parameters(params_file=params_file)

@@ -1,13 +1,13 @@
 import pysam
 import combivep.settings as combivep_settings
-import combivep.template as main_template
+from combivep.template import CombiVEPBase
 
 
-class UcscReader(main_template.CombiVEPBase):
+class UcscReader(CombiVEPBase):
     """to read UCSC parsed file in tabix format"""
 
     def __init__(self):
-        main_template.CombiVEPBase.__init__(self)
+        CombiVEPBase.__init__(self)
 
     def read(self, tabix_file):
         self.db_file_name = tabix_file
@@ -35,12 +35,12 @@ class UcscReader(main_template.CombiVEPBase):
             yield {combivep_settings.KEY_SNP_INFO_SECTION : snp_info}
 
 
-class LjbReader(main_template.CombiVEPBase):
+class LjbReader(CombiVEPBase):
     """to read parsed LJB file"""
 
 
     def __init__(self):
-        main_template.CombiVEPBase.__init__(self)
+        CombiVEPBase.__init__(self)
 
     def read(self, ljb_file):
         self.db_file_name = ljb_file
@@ -84,12 +84,12 @@ class LjbReader(main_template.CombiVEPBase):
                     combivep_settings.KEY_GERP_SCORE    : rec[combivep_settings.LJB_PARSED_0_INDEX_GERP_SCORE],
                     }
 
-class VcfReader(main_template.CombiVEPBase):
+class VcfReader(CombiVEPBase):
     """to read parsed VCF file"""
 
 
     def __init__(self):
-        main_template.CombiVEPBase.__init__(self)
+        CombiVEPBase.__init__(self)
 
     def read(self, vcf_file):
         self.vcf_file_name = vcf_file
@@ -111,7 +111,7 @@ class VcfReader(main_template.CombiVEPBase):
             yield {combivep_settings.KEY_SNP_INFO_SECTION : snp_info}
 
 
-class CbvReader(main_template.CombiVEPBase):
+class CbvReader(CombiVEPBase):
     """
 
     to read parsed SNPS file
@@ -122,7 +122,7 @@ class CbvReader(main_template.CombiVEPBase):
 
 
     def __init__(self):
-        main_template.CombiVEPBase.__init__(self)
+        CombiVEPBase.__init__(self)
 
     def read(self, cbv_file):
         self.cbv_file_name = cbv_file

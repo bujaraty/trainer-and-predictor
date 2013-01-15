@@ -2,17 +2,18 @@ import sys
 import os
 import pysam
 import combivep.settings as combivep_settings
-import combivep.refdb.updater as combivep_updater
-import combivep.cfg as combivep_cfg
+from combivep.refdb.updater import UcscUpdater
+from combivep.refdb.updater import LjbUpdater
+from combivep.cfg import Configure
 
 
-class UcscController(combivep_updater.UcscUpdater, combivep_cfg.Configure):
+class UcscController(UcscUpdater, Configure):
     """UCSC database controller"""
 
 
     def __init__(self):
-        combivep_updater.UcscUpdater.__init__(self)
-        combivep_cfg.Configure.__init__(self)
+        UcscUpdater.__init__(self)
+        Configure.__init__(self)
 
     def update(self):
         self.load_config()
@@ -46,13 +47,13 @@ class UcscController(combivep_updater.UcscUpdater, combivep_cfg.Configure):
                                  zerobased = True)
 
 
-class LjbController(combivep_updater.LjbUpdater, combivep_cfg.Configure):
+class LjbController(LjbUpdater, Configure):
     """LJB database controller"""
 
 
     def __init__(self):
-        combivep_updater.LjbUpdater.__init__(self)
-        combivep_cfg.Configure.__init__(self)
+        LjbUpdater.__init__(self)
+        Configure.__init__(self)
         self.chromosome_list = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', 'X', 'Y']
 
     def update(self):

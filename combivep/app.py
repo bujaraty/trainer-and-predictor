@@ -3,10 +3,14 @@ import sys
 import os
 import numpy as np
 import combivep.settings as combivep_settings
-import combivep.preproc.dataset as combivep_dataset
-import combivep.engine.wrapper as combivep_wrapper
-import combivep.refdb.control as combivep_control
-#import pkg_resources as pkgr
+from combivep.preproc.dataset import DataSetManager
+#import combivep.preproc.dataset as combivep_dataset
+from combivep.engine.wrapper import Trainer
+from combivep.engine.wrapper import Predictor
+#import combivep.engine.wrapper as combivep_wrapper
+from combivep.refdb.control import UcscController
+from combivep.refdb.control import LjbController
+#import combivep.refdb.control as combivep_control
 
 
 
@@ -16,10 +20,10 @@ import combivep.refdb.control as combivep_control
 
 def app_combivep_reference_updater():
     #update LJB reference database
-    ljb_controller = combivep_control.LjbController()
+    ljb_controller = LjbController()
     ljb_controller.update()
     #update UCSC reference database
-    ucsc_controller = combivep_control.UcscController()
+    ucsc_controller = UcscController()
     ucsc_controller.update()
 
 def app_combivep_trainer():
@@ -70,7 +74,7 @@ def train_combivep_using_cbv_data(training_data_file,
     """
     #pre-processing dataset
     print >> sys.stderr, 'pre-processing dataset, this may take a while (around 750 SNPs/mins). . . . '
-    dm = combivep_dataset.DataSetManager(config_file=config_file)
+    dm = DataSetManager(config_file=config_file)
     dm.load_data(training_data_file, file_type=combivep_settings.FILE_TYPE_CBV)
     dm.validate_data()
     dm.calculate_scores()
@@ -84,7 +88,7 @@ def train_combivep_using_cbv_data(training_data_file,
 
     #train !!!
     print >> sys.stderr, 'Training combiner, please wait (around 500 SNPs/mins) . . . . '
-    trainer = combivep_wrapper.Trainer(training_dataset, validation_dataset, random_seed, n_hidden_nodes, figure_dir)
+    trainer = Trainer(training_dataset, validation_dataset, random_seed, n_hidden_nodes, figure_dir)
     trainer.train(iterations)
     if not os.path.exists(combivep_settings.USER_PARAMETERS_DIR):
         os.makedirs(combivep_settings.USER_PARAMETERS_DIR)
@@ -106,13 +110,13 @@ def predict_deleterious_probability(SNPs_file,
     """
     #pre-processing test dataset
     print >> sys.stderr, 'pre-processing test dataset, this may take a while (12-20 SNPs/second) . . . . '
-    dm = combivep_dataset.DataSetManager(config_file=config_file)
+    dm = DataSetManager(config_file=config_file)
     dm.load_data(SNPs_file, file_type=file_type)
     dm.validate_data()
     dm.calculate_scores()
 
     #predict
-    predictor = combivep_wrapper.Predictor()
+    predictor = Predictor()
     predictor.import_parameters(params_file=params_file)
     out = (np.array(predictor.predict(dm.dataset)).reshape(-1,))
 

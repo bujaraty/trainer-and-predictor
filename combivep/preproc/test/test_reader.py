@@ -1,15 +1,15 @@
 import unittest
 import os
-import combivep.preproc.test.template as test_template
+from combivep.preproc.test.template import SafePreProcTester
 import combivep.settings as combivep_settings
 import combivep.preproc.reader as combivep_reader
 
 
-class TestUcscReader(test_template.SafePreProcTester):
+class TestUcscReader(SafePreProcTester):
 
 
     def __init__(self, test_name):
-        test_template.SafePreProcTester.__init__(self, test_name)
+        SafePreProcTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'ucsc_reader'
@@ -78,11 +78,11 @@ class TestUcscReader(test_template.SafePreProcTester):
         self.remove_working_dir()
 
 
-class TestLjbReader(test_template.SafePreProcTester):
+class TestLjbReader(SafePreProcTester):
 
 
     def __init__(self, test_name):
-        test_template.SafePreProcTester.__init__(self, test_name)
+        SafePreProcTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'ljb_reader'
@@ -139,11 +139,11 @@ class TestLjbReader(test_template.SafePreProcTester):
         self.remove_working_dir()
 
 
-class TestVcfReader(test_template.SafePreProcTester):
+class TestVcfReader(SafePreProcTester):
 
 
     def __init__(self, test_name):
-        test_template.SafePreProcTester.__init__(self, test_name)
+        SafePreProcTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'vcf_reader'
@@ -170,11 +170,11 @@ class TestVcfReader(test_template.SafePreProcTester):
         self.remove_working_dir()
 
 
-class TestCbvReader(test_template.SafePreProcTester):
+class TestCbvReader(SafePreProcTester):
 
 
     def __init__(self, test_name):
-        test_template.SafePreProcTester.__init__(self, test_name)
+        SafePreProcTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'cbv_reader'

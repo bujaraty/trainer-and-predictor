@@ -1,5 +1,4 @@
 import numpy as np
-import combivep
 
 class DataSet(object):
     """

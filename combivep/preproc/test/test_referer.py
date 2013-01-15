@@ -1,21 +1,21 @@
 import unittest
 import os
-import combivep.preproc.test.template as test_template
+from combivep.preproc.test.template import SafePreProcTester
 import combivep.settings as combivep_settings
-import combivep.preproc.referer as combivep_referer
+from combivep.preproc.referer import Referer
 
 
-class TestReferer(test_template.SafePreProcTester):
+class TestReferer(SafePreProcTester):
 
 
     def __init__(self, test_name):
-        test_template.SafePreProcTester.__init__(self, test_name)
+        SafePreProcTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'referer'
 
     def init_referer_instance(self):
-        self.__referer = combivep_referer.Referer()
+        self.__referer = Referer()
 
     def test_validate_snp(self):
         self.init_test('test_validate_snp')

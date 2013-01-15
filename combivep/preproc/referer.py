@@ -1,20 +1,21 @@
 import combivep.settings as combivep_settings
-import combivep.cfg as combivep_cfg
-import combivep.preproc.reader as combivep_reader
+from combivep.cfg import Configure
+from combivep.preproc.reader import UcscReader
+from combivep.preproc.reader import LjbReader
 
 
-class Referer(combivep_cfg.Configure):
+class Referer(Configure):
     """To connect to reference database"""
 
 
     def __init__(self):
-        combivep_cfg.Configure.__init__(self)
+        Configure.__init__(self)
 
     def load_config(self):
-        combivep_cfg.Configure.load_config(self)
-        self.__ucsc_reader = combivep_reader.UcscReader()
+        Configure.load_config(self)
+        self.__ucsc_reader = UcscReader()
         self.__ucsc_reader.read(self.config_values[combivep_settings.LATEST_UCSC_FILE_NAME])
-        self.__ljb_reader = combivep_reader.LjbReader()
+        self.__ljb_reader = LjbReader()
         self.__ljb_reader.read(self.config_values[combivep_settings.LATEST_LJB_FILE_PREFIX] + '.txt.gz')
 
     def validate_snp(self, chrom, pos, ref, alt):

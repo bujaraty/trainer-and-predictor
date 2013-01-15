@@ -1,21 +1,21 @@
 import unittest
 import os
-import combivep.preproc.test.template as test_template
+from combivep.preproc.test.template import SafePreProcTester
 import combivep.settings as combivep_settings
-import combivep.preproc.dataset as combivep_dataset
+from combivep.preproc.dataset import DataSetManager
 
 
-class TestDataSetManager(test_template.SafePreProcTester):
+class TestDataSetManager(SafePreProcTester):
 
 
     def __init__(self, test_name):
-        test_template.SafePreProcTester.__init__(self, test_name)
+        SafePreProcTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'dataset_manager'
 
     def init_dataset_instance(self):
-        self.__dataset_manager = combivep_dataset.DataSetManager(config_file=combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE)
+        self.__dataset_manager = DataSetManager(config_file=combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE)
 
     def test_vcf_load(self):
         self.init_test('test_vcf_load')
@@ -104,7 +104,7 @@ class TestDataSetManager(test_template.SafePreProcTester):
     def test_add_dataset(self):
         self.init_test('test_add_dataset')
         test_file = os.path.join(self.data_dir, 'test_add_dataset1.cbv')
-        self.dataset_manager1 = combivep_dataset.DataSetManager(config_file=combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE)
+        self.dataset_manager1 = DataSetManager(config_file=combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE)
         self.dataset_manager1.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CBV)
         self.dataset_manager1.validate_data()
         self.dataset_manager1.calculate_scores()
@@ -112,7 +112,7 @@ class TestDataSetManager(test_template.SafePreProcTester):
         self.dataset_manager1.partition_data()
         training_dataset1 = self.dataset_manager1.get_training_data()
         test_file = os.path.join(self.data_dir, 'test_add_dataset2.cbv')
-        self.dataset_manager2 = combivep_dataset.DataSetManager(config_file=combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE)
+        self.dataset_manager2 = DataSetManager(config_file=combivep_settings.COMBIVEP_CENTRAL_TEST_CONFIGURATION_FILE)
         self.dataset_manager2.load_data(test_file, file_type=combivep_settings.FILE_TYPE_CBV)
         self.dataset_manager2.validate_data()
         self.dataset_manager2.calculate_scores()

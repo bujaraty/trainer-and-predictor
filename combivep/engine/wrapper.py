@@ -2,9 +2,9 @@ import os.path
 import numpy as np
 import matplotlib.pyplot as plt
 import combivep.settings as combivep_settings
-import combivep.engine.mlp as combivep_mlp
+from combivep.engine.mlp import Mlp
 
-class Trainer(combivep_mlp.Mlp):
+class Trainer(Mlp):
     """This class is to produce parameters used by the Predictor class"""
 
 
@@ -13,7 +13,7 @@ class Trainer(combivep_mlp.Mlp):
                        seed=combivep_settings.DEFAULT_SEED, 
                        n_hidden_nodes=combivep_settings.DEFAULT_HIDDEN_NODES, 
                        figure_dir=combivep_settings.DEFAULT_FIGURE_DIR):
-        combivep_mlp.Mlp.__init__(self, training_dataset.n_features,
+        Mlp.__init__(self, training_dataset.n_features,
                                         seed=seed,
                                         n_hidden_nodes=n_hidden_nodes)
 
@@ -91,7 +91,7 @@ class Trainers:
     def __init__(self):
         pass
 
-class Predictor(combivep_mlp.Mlp):
+class Predictor(Mlp):
     """
 
     This class is to predict a probability how a variant likely to be deleterious.

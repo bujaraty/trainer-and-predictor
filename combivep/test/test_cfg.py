@@ -1,22 +1,22 @@
 import unittest
 import os
 import filecmp
-import combivep.test.template as test_template
+from combivep.test.template import SafeGeneralTester
 import combivep.settings as combivep_settings
-import combivep.cfg as combivep_cfg
+from combivep.cfg import Configure
 
 
-class TestConfigure(test_template.SafeGeneralTester):
+class TestConfigure(SafeGeneralTester):
 
 
     def __init__(self, test_name):
-        test_template.SafeGeneralTester.__init__(self, test_name)
+        SafeGeneralTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'configure'
 
     def init_configure_instance(self):
-        self.__configure = combivep_cfg.Configure()
+        self.__configure = Configure()
 
     def test_initial(self):
         #init

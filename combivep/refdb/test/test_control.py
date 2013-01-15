@@ -1,23 +1,25 @@
 import unittest
 import os
 import filecmp
-import combivep.refdb.test.template as test_template
+from combivep.refdb.test.template import SafeRefDBTester
 import combivep.settings as combivep_settings
-import combivep.refdb.control as combivep_control
-import combivep.preproc.reader as combivep_reader
+from combivep.refdb.control import UcscController
+from combivep.refdb.control import LjbController
+from combivep.preproc.reader import UcscReader
+from combivep.preproc.reader import LjbReader
 
 
-class TestUcscController(test_template.SafeRefDBTester):
+class TestUcscController(SafeRefDBTester):
 
 
     def __init__(self, test_name):
-        test_template.SafeRefDBTester.__init__(self, test_name)
+        SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'ucsc_controller'
 
     def init_ucsc_controller_instance(self):
-        self.__ucsc_controller = combivep_control.UcscController()
+        self.__ucsc_controller = UcscController()
 
 #    def test_clean_raw_database(self):
 #        #initialize variables
@@ -49,7 +51,7 @@ class TestUcscController(test_template.SafeRefDBTester):
         self.assertTrue(os.path.exists(out_file+'.tbi'), "Tabix doesn't work correctly")
 
         #test if it is readable
-        ucsc_reader = combivep_reader.UcscReader()
+        ucsc_reader = UcscReader()
         ucsc_reader.read(out_file)
         readable = False
         for rec in ucsc_reader.fetch_array_snps('chr3', 108572604, 108572605):
@@ -71,17 +73,17 @@ class TestUcscController(test_template.SafeRefDBTester):
         self.remove_working_dir()
 
 
-class TestLjbController(test_template.SafeRefDBTester):
+class TestLjbController(SafeRefDBTester):
 
 
     def __init__(self, test_name):
-        test_template.SafeRefDBTester.__init__(self, test_name)
+        SafeRefDBTester.__init__(self, test_name)
 
     def setUp(self):
         self.test_class = 'ljb_controller'
 
     def init_ljb_controller_instance(self):
-        self.__ljb_controller = combivep_control.LjbController()
+        self.__ljb_controller = LjbController()
 
     def test_clean_raw_database(self):
         #initialize variables
@@ -113,7 +115,7 @@ class TestLjbController(test_template.SafeRefDBTester):
         self.assertTrue(os.path.exists(out_file+'.tbi'), "Tabix doesn't work correctly")
 
         #test if it is readable
-        ljb_reader = combivep_reader.LjbReader()
+        ljb_reader = LjbReader()
         ljb_reader.read(out_file)
         readable = False
         for rec in ljb_reader.fetch_array_snps('3', 108549516, 108549517): #to be tested again

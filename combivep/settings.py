@@ -14,7 +14,7 @@ PROJECT_ROOT                        = os.path.dirname(os.path.dirname(__file__))
 #'central' data for testing and for demo. 'central' is for preventing redundancy
 COMBIVEP_CENTRAL_TEST_DATA_ROOT          = os.path.join(PROJECT_ROOT, 'combivep/data')
 COMBIVEP_CENTRAL_TEST_DATASET_DIR        = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'dataset')
-COMBIVEP_CENTRAL_TEST_CVF_DIR            = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'CVF')
+COMBIVEP_CENTRAL_TEST_CBV_DIR            = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'CBV')
 COMBIVEP_CENTRAL_TEST_VCF_DIR            = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'VCF')
 COMBIVEP_CENTRAL_TEST_UCSC_DIR           = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'UCSC')
 COMBIVEP_CENTRAL_TEST_LJB_DIR            = os.path.join(COMBIVEP_CENTRAL_TEST_DATA_ROOT, 'LJB')

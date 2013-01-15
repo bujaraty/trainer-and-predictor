@@ -17,13 +17,14 @@ class TestApp(test_template.RiskyGeneralTester):
     def init_configure_instance(self):
         pass
 
-    def test_demo_train_combivep_using_cvf_data(self):
+    @unittest.skip("temporary disable due to long running time(last test on Jan 9)(execution time 60 mins)")
+    def test_demo_train_combivep_using_cbv_data(self):
         #init
         self.individual_debug = True
-        self.init_test('demo_train_combivep_using_cvf_data')
-        training_file = os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_CVF_DIR, 'training.cvf')
+        self.init_test('demo_train_combivep_using_cbv_data')
+        training_file = os.path.join(combivep_settings.COMBIVEP_CENTRAL_TEST_CBV_DIR, 'training.cbv')
         #run test
-        combivep_app.train_combivep_using_cvf_data(training_file, random_seed=20, figure_dir=self.working_dir)
+        combivep_app.train_combivep_using_cbv_data(training_file, random_seed=20, figure_dir=self.working_dir)
         self.assertTrue(combivep_settings.COMBIVEP_CONFIGURATION_FILE, msg='Trainer does not functional properly')
         figure_file  = os.path.join(self.working_dir, '%02d.eps' % int(combivep_settings.DEFAULT_HIDDEN_NODES))
         self.assertTrue(os.path.exists(figure_file), msg='Trainer does not functional properly')

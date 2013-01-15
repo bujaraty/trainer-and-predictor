@@ -1,5 +1,4 @@
 from setuptools import setup
-#from distutils.core import setup
 import sys
 import glob
 import pkgutil
@@ -20,7 +19,7 @@ setup(
                 ],
 	url='http://pypi.python.org/pypi/combivep/',
 	license='LICENSE.txt',
-	description='CombiVEP',
+	description='Combined Variant Effect Predictors',
 	long_description=open('README.txt').read(),
 	install_requires=[
 	    "pysam >= 0.7",

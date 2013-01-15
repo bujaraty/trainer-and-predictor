@@ -2,11 +2,11 @@ import argparse
 import sys
 import os
 import numpy as np
-#import pkg_resources as pkgr
 import combivep.settings as combivep_settings
 import combivep.preproc.dataset as combivep_dataset
 import combivep.engine.wrapper as combivep_wrapper
 import combivep.refdb.control as combivep_control
+#import pkg_resources as pkgr
 
 
 
@@ -31,7 +31,7 @@ def app_combivep_trainer():
     tmp_help.append("SNP Position(POS) is 1-based index.")
     argp.add_argument('training_data_file', help=' '.join(tmp_help))
     args = argp.parse_args()
-    train_combivep_using_cbv_data(args.training_data_file, file_type=combivep_settings.FILE_TYPE_CBV)
+    train_combivep_using_cbv_data(args.training_data_file)
 
 def app_combivep_predictor():
     argp = argparse.ArgumentParser(description="An application to predict how likely the given SNPs will have deleterious effect")
@@ -69,7 +69,7 @@ def train_combivep_using_cbv_data(training_data_file,
 
     """
     #pre-processing dataset
-    print >> sys.stderr, 'pre-processing dataset . . . . '
+    print >> sys.stderr, 'pre-processing dataset, this may take a while (around 750 SNPs/mins). . . . '
     dm = combivep_dataset.DataSetManager(config_file=config_file)
     dm.load_data(training_data_file, file_type=combivep_settings.FILE_TYPE_CBV)
     dm.validate_data()
@@ -83,7 +83,7 @@ def train_combivep_using_cbv_data(training_data_file,
     validation_dataset    = dm.get_validation_data() 
 
     #train !!!
-    print >> sys.stderr, 'Training combiner . . . . '
+    print >> sys.stderr, 'Training combiner, please wait (around 500 SNPs/mins) . . . . '
     trainer = combivep_wrapper.Trainer(training_dataset, validation_dataset, random_seed, n_hidden_nodes, figure_dir)
     trainer.train(iterations)
     if not os.path.exists(combivep_settings.USER_PARAMETERS_DIR):
@@ -105,7 +105,7 @@ def predict_deleterious_probability(SNPs_file,
 
     """
     #pre-processing test dataset
-    print >> sys.stderr, 'pre-processing test dataset . . . . '
+    print >> sys.stderr, 'pre-processing test dataset, this may take a while (12-20 SNPs/second) . . . . '
     dm = combivep_dataset.DataSetManager(config_file=config_file)
     dm.load_data(SNPs_file, file_type=file_type)
     dm.validate_data()

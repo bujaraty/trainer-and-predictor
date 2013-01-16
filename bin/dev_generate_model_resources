@@ -1,0 +1,7 @@
+#!/usr/bin/python
+from combivep.devtools.report import generate_model_resources
+
+generate_model_resources()
+
+
+

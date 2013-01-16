@@ -83,6 +83,7 @@ class LjbReader(CombiVEPBase):
                     combivep_settings.KEY_MT_SCORE      : rec[combivep_settings.LJB_PARSED_0_INDEX_MT_SCORE],
                     combivep_settings.KEY_GERP_SCORE    : rec[combivep_settings.LJB_PARSED_0_INDEX_GERP_SCORE],
                     }
+        return None
 
 class VcfReader(CombiVEPBase):
     """to read parsed VCF file"""

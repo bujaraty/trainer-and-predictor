@@ -4,19 +4,11 @@ import os
 import numpy as np
 import combivep.settings as combivep_settings
 from combivep.preproc.dataset import DataSetManager
-#import combivep.preproc.dataset as combivep_dataset
 from combivep.engine.wrapper import Trainer
 from combivep.engine.wrapper import Predictor
-#import combivep.engine.wrapper as combivep_wrapper
 from combivep.refdb.control import UcscController
 from combivep.refdb.control import LjbController
-#import combivep.refdb.control as combivep_control
 
-
-
-#def app_combivep_demo():
-#    foo_config = pkgr.resource_filename(__name__, 'data/CBV/test.cbv')
-#    print foo_config
 
 def app_combivep_reference_updater():
     #update LJB reference database

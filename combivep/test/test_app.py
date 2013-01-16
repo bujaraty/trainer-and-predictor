@@ -1,11 +1,9 @@
 import os
 import unittest
 from combivep.test.template import SafeGeneralTester
-#import combivep.test.template as test_template
 import combivep.settings as combivep_settings
 from combivep.app import train_combivep_using_cbv_data
 from combivep.app import predict_deleterious_probability
-#import combivep.app as combivep_app
 
 
 class TestApp(SafeGeneralTester):

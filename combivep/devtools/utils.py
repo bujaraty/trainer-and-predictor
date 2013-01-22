@@ -1,6 +1,6 @@
 import os
 import sys
-import pysam
+import numpy as np
 from combivep.preproc.dataset import DataSetManager
 import combivep.settings as combivep_settings
 from combivep.cfg import Configure
@@ -61,6 +61,15 @@ def filter_cbv_data(cbv_file,
     print "%-25s: %5d" % ("Validation neutral", len([item for item in validation_dataset if item[combivep_settings.KEY_PREDICTION_SECTION][combivep_settings.KEY_TARGETS] == '0']))
     print "%-25s: %5d\n" % ("Total", len(validation_dataset))
 
+def calculate_roc(pathogenic_dataset, neutral_dataset, roc_range):
+    false_positive_rates = np.zeros([len(roc_range), pathogenic_dataset.shape[1]])
+    true_positive_rates  = np.zeros([len(roc_range), neutral_dataset.shape[1]])
+    pathogenic_data_size = pathogenic_dataset.shape[0]
+    neutral_data_size    = neutral_dataset.shape[0]
+    for i in xrange(len(roc_range)):
+        false_positive_rates[i, :] = np.matrix(np.sum(neutral_dataset > roc_range[i], axis=0).astype(np.float))/ neutral_data_size
+        true_positive_rates[i, :]  = np.matrix(np.sum(pathogenic_dataset > roc_range[i], axis=0).astype(np.float))/ pathogenic_data_size
+    return (false_positive_rates, true_positive_rates)
 #def ucsc_join(cbv_file):
 #    cfg = Configure()
 #    cfg.load_config()

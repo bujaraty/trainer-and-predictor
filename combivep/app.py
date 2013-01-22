@@ -79,7 +79,7 @@ def train_combivep_using_cbv_data(training_data_file,
     validation_dataset    = dm.get_validation_data() 
 
     #train !!!
-    print >> sys.stderr, 'Training combiner, please wait (around 500 SNPs/mins) . . . . '
+    print >> sys.stderr, 'Training CombiVEP, please wait (around 500 SNPs/mins) . . . . '
     trainer = Trainer(training_dataset, validation_dataset, random_seed, n_hidden_nodes, figure_dir)
     trainer.train(iterations)
     if not os.path.exists(combivep_settings.USER_PARAMETERS_DIR):
@@ -101,7 +101,7 @@ def predict_deleterious_probability(SNPs_file,
 
     """
     #pre-processing test dataset
-    print >> sys.stderr, 'pre-processing test dataset, this may take a while (12-20 SNPs/second) . . . . '
+    print >> sys.stderr, 'pre-processing dataset, this may take a while (around 750 SNPs/mins). . . . '
     dm = DataSetManager(config_file=config_file)
     dm.load_data(SNPs_file, file_type=file_type)
     dm.validate_data()
@@ -115,14 +115,20 @@ def predict_deleterious_probability(SNPs_file,
     #print output
     if output_file is not None:
         sys.stdout = open(output_file, 'w')
-    print >> sys.stdout, "#%s\t%s\t%s\t%s\t%s\t%s" % ("CHROM", "POS", "REF", "ALT", "ACTUAL_DELETERIOUS_EFFECT", "PREDICTED_DELETERIOUS_PROBABILITY")
+    print >> sys.stdout, "#%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s" % ("CHROM", "POS", "REF", "ALT", "ACTUAL_DELETERIOUS_EFFECT", "PREDICTED_DELETERIOUS_PROBABILITY", "PHYLOP_SCORE", "SIFT_SCORE", "PP2_SCORE", "LRT_SCORT", "MT_SCORE", "GERP_SCORE")
     for i in xrange(len(dm.dataset)):
-        print >> sys.stdout, "%s\t%s\t%s\t%s\t%s\t%6.4f" % (dm.dataset[i][combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CHROM],
+        print >> sys.stdout, "%s\t%s\t%s\t%s\t%s\t%6.4f\t%s\t%s\t%s\t%s\t%s\t%s" % (dm.dataset[i][combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_CHROM],
                                                         dm.dataset[i][combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_POS],
                                                         dm.dataset[i][combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_REF],
                                                         dm.dataset[i][combivep_settings.KEY_SNP_INFO_SECTION][combivep_settings.KEY_ALT],
                                                         dm.dataset[i][combivep_settings.KEY_PREDICTION_SECTION][combivep_settings.KEY_TARGETS],
                                                         out[i],
+                                                        dm.dataset[i][combivep_settings.KEY_SCORES_SECTION][combivep_settings.KEY_PHYLOP_SCORE],
+                                                        dm.dataset[i][combivep_settings.KEY_SCORES_SECTION][combivep_settings.KEY_SIFT_SCORE],
+                                                        dm.dataset[i][combivep_settings.KEY_SCORES_SECTION][combivep_settings.KEY_PP2_SCORE],
+                                                        dm.dataset[i][combivep_settings.KEY_SCORES_SECTION][combivep_settings.KEY_LRT_SCORE],
+                                                        dm.dataset[i][combivep_settings.KEY_SCORES_SECTION][combivep_settings.KEY_MT_SCORE],
+                                                        dm.dataset[i][combivep_settings.KEY_SCORES_SECTION][combivep_settings.KEY_GERP_SCORE],
                                                         )
     sys.stdout = sys.__stdout__
 
